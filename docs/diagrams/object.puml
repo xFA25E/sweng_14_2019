@@ -1,0 +1,35 @@
+@startuml
+title Object Diagram
+
+object currSorgente {
+    id = 100
+    timer = currTimer
+    previsione24H = {EventoTerr, Evento1}
+    mysqlConn = currConnection
+}
+
+object currDBMS {
+    ListaEventi: {Evento1, Evento2, ...}
+}
+
+object currUtente {
+    capPreferiti = {"91026", "22100"}
+    mysqlConn = currConnection
+}
+
+object currFiltroRicerca {
+    listaCAP = {"91026"}
+    tipo = "terremoto"
+    istanteTemporale = 30/03/2020 18:00
+}
+
+object currGestioneNotifica {
+    utente = currUtente
+    timer = currTimer
+}
+
+currSorgente - currDBMS
+currDBMS - currUtente
+currUtente -- currFiltroRicerca
+currUtente -- currGestioneNotifica
+@enduml

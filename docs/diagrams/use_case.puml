@@ -1,0 +1,43 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor Sorgente
+actor Sistema_Centrale
+actor Applicazione_Mobile
+actor Utente
+rectangle "Sistema di Allerta" {
+    Sorgente -- (Aggiornare Dati Previsioni)
+    (Aggiornare Dati Previsioni) ..> (Elaborazione Dati Previsione) : include
+    (Aggiornare Dati Previsioni) ..> (Invio Dati) : include
+    Sistema_Centrale -- (Aggiornare Dati Previsioni) : Ricevere Previsioni
+    Sistema_Centrale -- (Gestione Previsioni)
+    (Gestione Previsioni) ..> (Valutazione Evento Successo o Rientrato) : include
+    Applicazione_Mobile -- (Formulare Query)
+    Sistema_Centrale -- (Formulare Query) : Ricezione Query ed Invio Risposte
+    (Formulare Query) ..> (Query Previsioni) : include
+    (Formulare Query) ..> (Query Allarmi) : include
+    (Formulare Query) ..> (Query Notifiche) : include
+    (Formulare Query) <.. (Query Storico) : extends
+    Applicazione_Mobile -- (Gestione Dati Utente)
+    Sistema_Centrale -- (Gestione Dati Utente) : Ricevere Dati per Query
+    Utente -- (Gestione Dati Utente) : Comunicare Dati
+    (Gestione Dati Utente) ..> (Memorizzare CAP) : include
+    (Gestione Dati Utente) <.. (Memorizzare Dati Identificazione) : extends
+    (Gestione Dati Utente) <.. (Gestione Dati Ricerca) : extends
+    Applicazione_Mobile -- (Inviare Notifica)
+    Utente -- (Inviare Notifica) : Essere Notificato
+    Applicazione_Mobile -- (Gestione Eventi)
+    (Gestione Eventi) ..> (Visualizzare Previsioni) : include
+    (Gestione Eventi) ..> (Visualizzare Allarmi) : include
+    Utente -- (Inserimento Dati)
+    (Inserimento Dati) ..> (Inserimento CAP) : include
+    (Inserimento Dati) <.. (Inserimetno Dati Identificazione) : extends
+    Utente -- (Effettuare Ricerca)
+    (Effettuare Ricerca) <|-- (Scelta Dati di Ricerca)
+    (Scelta Dati di Ricerca) <.. (Scelta Regione) : extends
+    (Scelta Dati di Ricerca) <.. (Scelta Provincia) : extends
+    (Scelta Dati di Ricerca) <.. (Scelta Comune) : extends
+    (Scelta Dati di Ricerca) <.. (Scelta Tipo) : extends
+    (Scelta Dati di Ricerca) <.. (Scelta Istante Temporale) : extends
+}
+@enduml

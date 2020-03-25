@@ -1,0 +1,24 @@
+@startuml
+title State Diagram Sorgente
+
+[*] --> Acceso: accensione
+
+state Acceso {
+    [*] --> GenPrev
+    state "Generazione Previsioni" as GenPrev
+    GenPrev: calcola le differenze con le previsioni precedenti
+
+    GenPrev --> Sonno: non ci sono differenze
+    Sonno: do/ aspetta 4 ore
+
+    GenPrev -right-> InvDat: ci sono differenze
+    state "Invio Dati" as InvDat
+    InvDat: do/ invio dati al sistema centrale
+
+    InvDat --> Sonno
+
+    Sonno --> GenPrev
+}
+
+Acceso --> [*]: spegnimento
+@enduml
