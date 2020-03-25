@@ -5,6 +5,10 @@ partition Sorgente {
 	===S1=== --> "Rilevazione Nuovo Evento"
 	--> "Elaborazione Dati"
 	--> "Inserimento Dati in Registro 24h"
+	--> if "Continuare Rilevazione"
+		--> [true] "Rilevazione Nuovo Evento"
+	else
+		--> (*top)
 	--> "Rilevazione Nuovo Evento"
 	===S1=== --> "Gestione Invio Dati"
 	--> if "4h Trascorse" then
