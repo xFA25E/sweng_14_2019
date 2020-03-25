@@ -1,0 +1,18 @@
+@startuml
+title Communication Diagram
+
+class Sorgente
+class "Sistema Centrale"
+class "App Mobile"
+class Utente
+
+Sorgente -> "Sistema Centrale" : 1.1 Previsioni 24H aggiornate
+"Sistema Centrale" --> "App Mobile" : 1.4 Risultato Query\nstorico
+"App Mobile" --> "Sistema Centrale"  : 1.3 Invio Query\nstorico
+"App Mobile" <- Utente : 1.2 Invio dati ricerca
+"App Mobile" -> Utente : 1.5 Ricezione dati ricerca
+
+
+hide empty members
+hide circle
+@enduml
