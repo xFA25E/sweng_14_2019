@@ -1,0 +1,29 @@
+@startuml
+
+partition Sorgente {
+	(*) --> ===S1===
+	===S1=== --> "Rilevazione Nuovo Evento"
+	--> "Elaborazione Dati"
+	--> "Inserimento Dati in Registro 24h"
+	--> if "Continuare Rilevazione"
+		--> [true] "Rilevazione Nuovo Evento"
+	else
+		--> (*top)
+	--> "Rilevazione Nuovo Evento"
+	===S1=== --> "Gestione Invio Dati"
+	--> if "4h Trascorse" then
+		--> [true] "Invio Previsioni 24h"
+	else
+		--> [false] "Gestione Invio Dati"
+}
+
+partition "Sistema Centrale" {
+	"Invio Previsioni 24h" --> "Ricezione Previsioni 24h"
+	--> if "Verificare Variazioni"
+		--> [true] "Aggiornamento Database"
+	else
+		--> (*)
+	"Aggiornamento Database" --> (*)
+}
+
+@enduml
