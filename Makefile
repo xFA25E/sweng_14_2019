@@ -11,7 +11,7 @@ diagrams: $(shell find $(DIAGRAMS_SRC_DIR) -type f -name *.puml)
 		target_file="$${target_dir}/$$(basename "$${puml}" .puml).png"; \
 		\
 		mkdir -p "$${target_dir}"; \
-		plantuml -p <"$${puml}" >"$${target_file}"; \
+		plantuml -tpng -p <"$${puml}" >"$${target_file}"; \
 	done
 
 clean:
