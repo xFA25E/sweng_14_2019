@@ -4,7 +4,11 @@ DOCS_DIR := docs
 DIAGRAMS_SRC_DIR := $(DOCS_DIR)/diagrams
 DIAGRAMS_TARGET_DIR := $(BUILD_DIR)/diagrams
 DIAGRAMS_EXT := png
-DIAGRAMS_ARG := -t$(DIAGRAMS_EXT)
+ifeq ($(DIAGRAMS_EXT), tex)
+	DIAGRAMS_ARG := -tlatex
+else
+	DIAGRAMS_ARG := -t$(DIAGRAMS_EXT)
+endif
 
 diagrams: $(shell find $(DIAGRAMS_SRC_DIR) -type f -name *.puml)
 	for puml in $?; do \
