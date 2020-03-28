@@ -17,7 +17,7 @@ node AppMobile[
 allarmMobile.jar
 ]
 
-frame Server {
+node Server {
     node Server [
     <b>AppServer
     {JVM}
@@ -25,12 +25,14 @@ frame Server {
     ---
     allarmServer.jar
     ]
+
     database DB [
-    <b>DBMS SQL
+    <b>SQLite
     ]
 }
 
-Sorgente -- Server : TCP/IP RMI
-AppMobile -- Server : TCP/IP RMI
-Server -- DB : JDBC
+Sorgente -- Server : RMI\nTCP/IP
+AppMobile -- Server : RMI\nTCP/IP
+Server -- DB : \lJDBC
+Server .(0. DB :  "  DBMS SQL"
 @enduml
