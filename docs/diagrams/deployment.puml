@@ -26,7 +26,7 @@ frame Server {
     allarmServer.jar
     ]
     database DB [
-    <b>DBMS MySQL
+    <b>DBMS SQL
     ]
 }
 
