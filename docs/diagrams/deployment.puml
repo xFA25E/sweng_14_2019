@@ -2,25 +2,35 @@
 title Deployment Diagram
 
 node Sorgente  [
-<b> Sorgente
-{OS = Linux/Windows/MacOS}
+<b>Sorgente
+{JVM}
 
 ---
 allarmSorgente.jar
 ]
 
-node AppMobile [
-<b> Applicazione Mobile
-{OS = Android/IOS}
+node AppMobile[
+<b>Applicazione Mobile
+{JVM}
 
 ---
 allarmMobile.jar
 ]
 
-database DB [
-<b> DBMS MySQL
-]
+frame Server {
+    node Server [
+    <b>AppServer
+    {JVM}
 
-Sorgente -- DB : JDBC
-AppMobile -- DB : JDBC
+    ---
+    allarmServer.jar
+    ]
+    database DB [
+    <b>DBMS MySQL
+    ]
+}
+
+Sorgente -- Server : TCP/IP RMI
+AppMobile -- Server : TCP/IP RMI
+Server -- DB : JDBC
 @enduml
