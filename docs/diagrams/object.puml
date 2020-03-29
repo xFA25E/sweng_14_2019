@@ -1,20 +1,21 @@
 @startuml
 title Object Diagram
+object currGestorePrevisioni {
+    previsione24H = {EventoTerr, Evento1}
+}
 
 object currSorgente {
     id = 100
     timer = currTimer
-    previsione24H = {EventoTerr, Evento1}
-    mysqlConn = currConnection
 }
 
-object currDBMS {
-    ListaEventi: {Evento1, Evento2, ...}
+object currServer {
+    jdbcConnection = currConnection
 }
 
 object currUtente {
     capPreferiti = {"91026", "22100"}
-    mysqlConn = currConnection
+    GestoreNotifica = currGestoreNotifica
 }
 
 object currFiltroRicerca {
@@ -23,13 +24,14 @@ object currFiltroRicerca {
     istanteTemporale = 30/03/2020 18:00
 }
 
-object currGestioneNotifica {
+object currGestoreNotifica {
     utente = currUtente
     timer = currTimer
 }
 
-currSorgente - currDBMS
-currDBMS - currUtente
+currSorgente -- currGestorePrevisioni
+currSorgente - currServer
+currServer - currUtente
 currUtente -- currFiltroRicerca
-currUtente -- currGestioneNotifica
+currUtente -- currGestoreNotifica
 @enduml
