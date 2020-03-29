@@ -1,70 +1,123 @@
 @startuml
 title Class Diagram
+package source {
+    interface IGestorePrevisioni<<interface>> {
+        - previsioni24H: ListaEventi {ordered}
+        + GetPrevisioni24H() : ListaEventi
+        + SetPrevisioni24H(ListaEventi)
+        + GeneraPrevisioni(): ListaEventi {Query}
+    }
 
-class Sorgente {
-    - id: integer [1]
-    - timer: Timer [1]
-    - previsioni24H: Evento [*] {ordered}
-    - mysqlConn: Connection  [0..1]
-    + GeneraPrevisioni(): ListaEventi {Query}
-    - CalcolaDifferenze()
-    + InviaPrevisioni(ListaEventi) {Query}
-}
-note bottom of Sorgente: Il timer ha una durata\ndi 4h e ogni volta che termina\nviene chiamato il metodo "GeneraPrevisioni()"
+    class GestorePrevisioni {
+        - previsioni24H: ListaEventi {ordered}
+        - timer: Timer [1]
+        + GetPrevisioni24H() : ListaEventi
+        + SetPrevisioni24H(ListaEventi)
+        + GeneraPrevisioni(): ListaEventi {Query}
+        - CalcolaDifferenze()
+    }
 
-class Evento<<dataType>> {
-    + id: integer [1]
-    + CAP: String  [1]
-    + testo: String [0..1]
-    + tipo: String [0..1]
-    + istanteTemporale: DataTime [1]
-    + Gravità: integer [1]
-}
+    class Sorgente {
+        - id: integer [1]
+        - timer: Timer [1]
+        + InviaPrevisioni(ListaEventi)
+    }
+    note bottom of Sorgente: Il timer ha una durata di 4h e ogni volta che termina\nviene chiamato il metodo "InviaPrevisioni(previsioni24H)".
+    note bottom of GestorePrevisioni: Il timer ha una durata\ndi 5sec e ogni volta che termina\nviene chiamato il metodo "GeneraPrevisioni()".\nSe ci sono degli eventi in corso, vengono\nsubito inviati al Server attraverso il metodo\n"InviaPrevisioni(EventiInCorso)" di Sorgente.
 
-enum StatoEvento {
-    Previsto
-    In Corso
-    Accaduto
-    Rientrato
-}
-
-class ListaEventi <<dataType>>
-note top of ListaEventi:"DBMS MySQL"
-
-ListaEventi "*" --> Evento: Insieme di
-StatoEvento "1 " -> Evento: È
-Sorgente .> ListaEventi
-
-class Utente {
-    - CAPpreferiti: ListaCAP [0..1]
-    - mysqlConn: Connection  [0..1]
-    + SetCapPreferiti(ListaCAP)
-    + GetAllarmiInEvidenza(): ListaEventi {query} {ordered}
-    + EffettuaRicerca(FiltroRicerca)
-}
-ListaEventi <. Utente
-
-class ListaCAP <<dataType>> {
-    + CAP: String [*]
+    IGestorePrevisioni "0..1" <-> "1" Sorgente : \t\t\t
+    IGestorePrevisioni <|.. GestorePrevisioni
 }
 
-class FiltroRicerca {
-    - ListaCAP: ListaCAP [1]
-    - Tipo:String [0..1]
-    - IstanteTemporale: DateTime [1]
-    + SetListaCAP(ListaCAP)
-    + GeneraListaCapFromArea(regione:string, provincia:string, città:string)
+package server{
+    interface "Remote (from RMI)" as Remote <<interface>>
+
+    interface IServer<<interface>> {
+        + StoreEventi(ListaEventi, Sorgente)
+        + GetEventi(FiltroRicerca): ListaEventi {query} {ordered}
+    }
+
+    class Server {
+        - sqlConn: Connection  [0..1]
+        + StoreEventi(ListaEventi, Sorgente)
+        + GetEventi(FiltroRicerca): ListaEventi {query} {ordered}
+    }
+
+    class "UnicastRemoteObject\n(from server)" as UnicastRemoteObject
+
+    class ListaEventi <<dataType>>
+
+    interface List<<interface>>
+
+    class Evento<<dataType>> {
+        + id: integer [1]
+        + CAP: String  [1]
+        + testo: String [0..1]
+        + tipo: String [0..1]
+        + istanteTemporale: DataTime [1]
+        + Gravità: integer [1]
+    }
+
+    enum StatoEvento {
+        Previsto
+        In Corso
+        Accaduto
+        Rientrato
+    }
+
+    Remote <|-- IServer
+    IServer <|.. Server
+    Server --|> UnicastRemoteObject
+    Server ..> ListaEventi
+    ListaEventi .|> List
+    ListaEventi *--> " * " Evento: Composta da
+    StatoEvento "1 " <- Evento: È
 }
 
-class GestioneNotifica {
-    - utente: Utente
-    - timer: Timer
-    + ControllaPrevisioni()
-    - NotificaEventi(ListaEventi)
-}
-note right of GestioneNotifica: Il timer ha una durata di 10sec\ned ogni volta che termina, viene\neffettuata una query sulle nuove previsioni\nnei cap preferiti dall'utente
+Sorgente .> IServer
 
-Utente <. GestioneNotifica
+package user {
+    class Utente {
+        - CAPpreferiti: ListaCAP [0..1]
+        + SetCapPreferiti(ListaCAP)
+        + GetAllarmiInEvidenza(): ListaEventi {query} {ordered}
+        + EffettuaRicerca(FiltroRicerca)
+    }
+
+    class ListaCAP <<dataType>> {
+        + CAP: String [*]
+    }
+
+    interface Set<<interface>>
+
+    class FiltroRicerca {
+        - ListaCAP: ListaCAP [1]
+        - Tipo:String [0..1]
+        - IstanteTemporale: DateTime [1]
+        + SetListaCAP(ListaCAP)
+        + GeneraListaCapFromArea(regione:string, provincia:string, città:string)
+    }
+
+    interface IGestoreNotifica {
+        + NotificaEventi(ListaEventi)
+    }
+
+    class GestoreNotifica {
+        - timer: Timer
+        + ControllaPrevisioni()
+        - NotificaEventi(ListaEventi)
+    }
+    note bottom of GestoreNotifica: Il timer ha una durata di 10sec\ned ogni volta che termina, viene\neffettuata una query sulle nuove previsioni\nnei cap preferiti dall'utente
+
+    Utente "1" <--> "1" IGestoreNotifica
+    IGestoreNotifica <|.. GestoreNotifica
+    Utente .> ListaCAP
+    Utente .> FiltroRicerca
+    FiltroRicerca ..> ListaCAP
+    ListaCAP ..|> Set
+}
+
+IServer <. Utente
 
 'Layout only
 hide empty members
