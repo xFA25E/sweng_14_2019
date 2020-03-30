@@ -43,7 +43,7 @@ package server{
         + GetEventi(FiltroRicerca): ListaEventi {query} {ordered}
     }
 
-    class "UnicastRemoteObject\n(from server)" as UnicastRemoteObject
+    class "UnicastRemoteObject\n(from rmi.server)" as UnicastRemoteObject
 
     class ListaEventi <<dataType>>
 
@@ -69,9 +69,9 @@ package server{
     IServer <|.. Server
     Server --|> UnicastRemoteObject
     Server ..> ListaEventi
-    ListaEventi .|> List
+    ListaEventi .|> List: \t
     ListaEventi *--> " * " Evento: Composta da
-    StatoEvento "1 " <- Evento: È
+    Evento -> "1" StatoEvento: \tÈ\t
 }
 
 Sorgente .> IServer
@@ -122,6 +122,5 @@ IServer <. Utente
 'Layout only
 hide empty members
 skinparam classAttributeIconSize 0
-Utente --[hidden]> ListaCAP
-Utente --[hidden]> FiltroRicerca
+IGestoreNotifica -[hidden]> ListaCAP : \t\t\t\t\t\t
 @enduml
