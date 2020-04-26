@@ -1,13 +1,13 @@
 #+TITLE: Protezione Civile
-* Da fare [0/8] [0%]
-** TODO Modalita' generazione previsioni
-   Gestore previsioni ogni 5 secondi generera' previsioni per le prossime 24 ore.
-   Sorgente, ogni 4 ore, inviera' semplicemente queste previsioni eliminando
-   previsioni passate.
-** TODO Modalita' notifiche utente
+* Da fare [0/11]
+** TODO Modalita' generazione previsioni (class diag)
+   Gestore previsioni ogni 5 secondi generera' previsioni per le prossime 24
+   ore. Sorgente, ogni 4 ore, inviera' semplicemente queste previsioni
+   eliminando previsioni passate.
+** TODO Modalita' notifiche utente (class diag)
    Utente si terra' una copia della lista delle previsioni. Facendo il polling,
    inviera' una notifica all'utente se trova che ci siano degli aggiornamenti.
-** TODO Modalita' di generazione delle previsioni in corsa
+** TODO Modalita' di generazione delle previsioni in corsa (class diag)
    Quando viene invocato GeneraPrevisioni, se trova delle previsioni che sono in
    corso, li invia subito, eliminando dalle previsioni24h gli eventi che lo
    riguardavano.
@@ -19,7 +19,19 @@
    Create package for utils like FiltroRicerca and ListaEventi
 ** TODO Modificare state diagrams
    Sorgente non calcola piu' differenze, ma lo fa l'applicazione
+
+   C'e' un'altro stato parallelo nella sorgente
 ** TODO Modificare sequence diagrams
    Cap preferiti deve essere modificato con getNotifiche (cap preferiti)
 
    Mettere un loop su notifiche
+** TODO Modificare use case diagrams
+   eliminare Applicazioni_Mobile
+
+   GestionePrevisioni - lo fa Sorgente
+** TODO Modificare Makefile
+   Scaricare pluntuml.jar se non esiste e usarlo per generare immagini
+** TODO Modificare activity diagriam
+   Eliminare la freccia che fa in alto
+
+   Se un evento e' in corso, deve inviarlo subito
