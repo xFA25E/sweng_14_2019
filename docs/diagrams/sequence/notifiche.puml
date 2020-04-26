@@ -5,16 +5,22 @@ actor Utente
 Utente -> "Applicazione Mobile": CAP preferiti
 activate "Applicazione Mobile"
 
-"Applicazione Mobile" -> "Sistema Centrale": Query per Notifica
+"Applicazione Mobile" -> "Sistema Centrale": Get Notifica
 activate "Sistema Centrale"
 
-"Sistema Centrale" -> "Applicazione Mobile": Risultato Query Notifica
+"Sistema Centrale" -> "Database": Query al Database
+activate "Database"
+
+"Database" -> "Sistema Centrale": Risultato Query
+deactivate "Database"
+
+"Sistema Centrale" -> "Applicazione Mobile": Notifica
 deactivate "Sistema Centrale"
 
 "Applicazione Mobile" --> "Applicazione Mobile": Notifica non ancora effettuata
 
 alt Notifica non ancora effettuata
-    "Applicazione Mobile" -> Utente: Notifica
+	"Applicazione Mobile" -> Utente: Notifica
 end
 deactivate "Applicazione Mobile"
 @enduml
