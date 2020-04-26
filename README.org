@@ -1,12 +1,21 @@
-#+TITLE: Non dimenticare
-
-Gestore previsioni ogni 5 secondi generera' previsioni per le prossime 24 ore.
-Sorgente, ogni 4 ore, inviera' semplicemente queste previsioni eliminando
-previsioni passate.
-
-Utente si terra' una copia della lista delle previsioni. Facendo il polling,
-inviera' una notifica all'utente se trova che ci siano degli aggiornamenti.
-
-Quando viene invocato GeneraPrevisioni, se trova delle previsioni che sono in
-corso, li invia subito, eliminando dalle previsioni24h gli eventi che lo
-riguardavano.
+#+TITLE: Protezione Civile
+* Non dimenticare, non dimenticarmi
+** Modalita' generazione previsioni
+   Gestore previsioni ogni 5 secondi generera' previsioni per le prossime 24 ore.
+   Sorgente, ogni 4 ore, inviera' semplicemente queste previsioni eliminando
+   previsioni passate.
+** Modalita' notifiche utente
+   Utente si terra' una copia della lista delle previsioni. Facendo il polling,
+   inviera' una notifica all'utente se trova che ci siano degli aggiornamenti.
+** Modalita' di generazione delle previsioni in corsa
+   Quando viene invocato GeneraPrevisioni, se trova delle previsioni che sono in
+   corso, li invia subito, eliminando dalle previsioni24h gli eventi che lo
+   riguardavano.
+** Struttura dati per ListaEventi
+   Magari usare TreeSet (o SortedSet) per la ListaEventi
+** Cambiare nome in class diagram
+   GeneraListaCapFromArea : s/From/By/
+** Organizzazioni dei packages nel progetto
+   Create package for utils like FiltroRicerca and ListaEventi
+** Modificare state diagrams
+   Sorgente non calcola piu' differenze, ma lo fa l'applicazione
