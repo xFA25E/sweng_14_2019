@@ -5,10 +5,16 @@ actor Utente
 Utente -> "Applicazione Mobile": Dati Ricerca
 activate "Applicazione Mobile"
 
-"Applicazione Mobile" -> "Sistema Centrale": Invio Query Storico
+"Applicazione Mobile" -> "Sistema Centrale": Get Previsioni
 activate "Sistema Centrale"
 
-"Sistema Centrale" -> "Applicazione Mobile": Risultato Query Storico
+"Sistema Centrale" -> "Database": Query al Database
+activate "Database"
+
+"Database" -> "Sistema Centrale": Risultato Query
+deactivate "Database"
+
+"Sistema Centrale" -> "Applicazione Mobile": Previsioni
 deactivate "Sistema Centrale"
 
 "Applicazione Mobile" -> Utente: Dati Ricerca
