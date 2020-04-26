@@ -1,6 +1,6 @@
 #+TITLE: Protezione Civile
-* Da fare [0/8] [0%]
-** TODO Modalita' generazione previsioni
+* Da fare [1/8] [12%]
+** DONE Modalita' generazione previsioni
    Gestore previsioni ogni 5 secondi generera' previsioni per le prossime 24 ore.
    Sorgente, ogni 4 ore, inviera' semplicemente queste previsioni eliminando
    previsioni passate.
