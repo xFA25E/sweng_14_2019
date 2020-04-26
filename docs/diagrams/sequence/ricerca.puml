@@ -2,7 +2,7 @@
 title Sequence Diagram Ricerca
 actor Utente
 
-Utente -> "Applicazione Mobile": Dati Ricerca
+Utente -> "Applicazione Mobile": Get Previsioni (Dati Ricerca)
 activate "Applicazione Mobile"
 
 "Applicazione Mobile" -> "Sistema Centrale": Get Previsioni
@@ -17,6 +17,6 @@ deactivate "Database"
 "Sistema Centrale" -> "Applicazione Mobile": Previsioni
 deactivate "Sistema Centrale"
 
-"Applicazione Mobile" -> Utente: Dati Ricerca
+"Applicazione Mobile" -> Utente: Previsioni
 deactivate "Applicazione Mobile"
 @enduml
