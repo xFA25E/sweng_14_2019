@@ -45,33 +45,9 @@ package server{
 
     class "UnicastRemoteObject\n(from rmi.server)" as UnicastRemoteObject
 
-    class ListaEventi <<dataType>>
-
-    interface List<<interface>>
-
-    class Evento<<dataType>> {
-        + id: integer [1]
-        + CAP: String  [1]
-        + testo: String [0..1]
-        + tipo: String [0..1]
-        + istanteTemporale: DataTime [1]
-        + Gravità: integer [1]
-    }
-
-    enum StatoEvento {
-        Previsto
-        In Corso
-        Accaduto
-        Rientrato
-    }
-
     Remote <|-- IServer
     IServer <|.. Server
-    Server --|> UnicastRemoteObject
-    Server ..> ListaEventi
-    ListaEventi .|> List: \t
-    ListaEventi *--> " * " Evento: Composta da
-    Evento -> "1" StatoEvento: \tÈ\t
+    Server -|> UnicastRemoteObject
 }
 
 Sorgente .> IServer
@@ -82,20 +58,6 @@ package user {
         + SetCapPreferiti(ListaCAP)
         + GetAllarmiInEvidenza(): ListaEventi {query} {ordered}
         + EffettuaRicerca(FiltroRicerca)
-    }
-
-    class ListaCAP <<dataType>> {
-        + CAP: String [*]
-    }
-
-    interface Set<<interface>>
-
-    class FiltroRicerca {
-        - ListaCAP: ListaCAP [1]
-        - Tipo:String [0..1]
-        - IstanteTemporale: DateTime [1]
-        + SetListaCAP(ListaCAP)
-        + GeneraListaCapFromArea(regione:string, provincia:string, città:string)
     }
 
     interface IGestoreNotifica {
@@ -109,18 +71,60 @@ package user {
     }
     note bottom of GestoreNotifica: Il timer ha una durata di 10sec\ned ogni volta che termina, viene\neffettuata una query sulle nuove previsioni\nnei cap preferiti dall'utente
 
-    Utente "1" <--> "1" IGestoreNotifica
+    Utente "1" <-> "1" IGestoreNotifica :\t
     IGestoreNotifica <|.. GestoreNotifica
-    Utente .> ListaCAP
-    Utente .> FiltroRicerca
-    FiltroRicerca ..> ListaCAP
-    ListaCAP ..|> Set
 }
 
-IServer <. Utente
+Utente ..> IServer
+
+package common {
+    enum StatoEvento {
+        Previsto
+        In Corso
+        Accaduto
+        Rientrato
+    }
+
+    class Evento<<dataType>> {
+        + id: integer [1]
+        + CAP: String  [1]
+        + testo: String [0..1]
+        + tipo: String [0..1]
+        + istanteTemporale: DataTime [1]
+        + Gravità: integer [1]
+    }
+
+    class ListaEventi <<dataType>>
+
+    interface List<<interface>>
+
+    ListaEventi ..|> List: \t
+    StatoEvento "1" <- Evento: \tÈ\t
+    Evento " * " <-*  ListaEventi: Composta da
+
+    class FiltroRicerca {
+        - ListaCAP: ListaCAP [1]
+        - Tipo:String [0..1]
+        - IstanteTemporale: DateTime [1]
+        + SetListaCAP(ListaCAP)
+        + GeneraListaCapFromArea(regione:string, provincia:string, città:string)
+    }
+
+    class ListaCAP <<dataType>> {
+        + CAP: String [*]
+    }
+
+    interface Set<<interface>>
+
+    ListaCAP .|> Set
+    FiltroRicerca .> ListaCAP
+}
 
 'Layout only
 hide empty members
 skinparam classAttributeIconSize 0
-IGestoreNotifica -[hidden]> ListaCAP : \t\t\t\t\t\t
+ListaEventi -[hidden] FiltroRicerca
+GestorePrevisioni -[hidden]-- StatoEvento
+Server .[hidden].> ListaEventi
+Utente .[hidden].> FiltroRicerca
 @enduml
