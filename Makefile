@@ -12,7 +12,7 @@ endif
 DIAGRAMS_SOURCES := $(shell find $(DIAGRAMS_SRC_DIR) -type f -name *.puml)
 PLANTUML_JAR := build/plantuml.jar
 
-diagrams: $(DIAGRAMS_SOURCES) $(PLANTUML_JAR)
+diagrams: $(DIAGRAMS_SOURCES)
 	for puml in $(DIAGRAMS_SOURCES); do \
 		target_dir=$$(dirname .$${puml#$(DIAGRAMS_SRC_DIR)}); \
 		target_dir=$(DIAGRAMS_TARGET_DIR)/$${target_dir}; \
@@ -22,7 +22,7 @@ diagrams: $(DIAGRAMS_SOURCES) $(PLANTUML_JAR)
 		java -jar $(PLANTUML_JAR) $(DIAGRAMS_ARG) -p <"$${puml}" >"$${target_file}"; \
 	done
 
-$(PLANTUML_JAR): $(BUILD_DIR)
+plantuml: $(BUILD_DIR)
 	wget -O $(PLANTUML_JAR) "https://sourceforge.net/projects/plantuml/files/plantuml.jar/download"
 
 $(BUILD_DIR):
