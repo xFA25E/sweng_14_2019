@@ -4,37 +4,40 @@ title State Diagram Applicazione
 [*] --> Acceso: accensione
 
 state Acceso {
-    [*] --> RicNot
-    state "Richiesta Notifiche" as RicNot
-    RicNot: richiedi notifiche
+    state "Richiesta Eventi" as RichiestaEventi
+    state "Notifica Utente" as NotificaUtente
+    state "Sonno" as Sonno
 
-    RicNot --> Sonno: non ci sono notifiche
+    [*] --> RichiestaEventi
+
+    RichiestaEventi: richiedi eventi
+    RichiestaEventi: calcola differenze
+    RichiestaEventi --> Sonno: non ci sono differenze
+    RichiestaEventi -right-> NotificaUtente: ci sono differenze
+
+    NotificaUtente: do/ notifica l'utente
+    NotificaUtente --> Sonno
+
     Sonno: do/ aspetta 10 secondi
-
-    RicNot -right-> RicNuo: notifiche nuove
-    state "Notifice Nuove" as RicNuo
-    RicNuo: do/ notifica l'utente
-
-    RicNuo --> Sonno
-
-    Sonno --> RicNot
+    Sonno --> RichiestaEventi
 
     --
 
-    [*] -right-> AspRic
-    state "Aspetto Richiesta" as AspRic
+    state "Aspetto Richiesta" as AspettoRichiesta
+    state "Richiesta Ricerca" as RichiestaRicerca
+    state "Mostra Dati" as MostraDati
 
-    AspRic --> RicRic: utente effetua ricerca
-    state "Richiesta Ricerca" as RicRic
-    RicRic: do/ richiedi dati di ricerca
+    [*] -right-> AspettoRichiesta
 
-    RicRic --> AspRic: cancella ricerca
+    AspettoRichiesta: aspetta la richesta di ricerca d'utente
+    AspettoRichiesta --> RichiestaRicerca: utente effetua ricerca
 
-    RicRic -right-> MoDa
-    state "Mostra Dati" as MoDa
-    MoDa: mostra dati all'utente
+    RichiestaRicerca: do/ richiedi dati di ricerca
+    RichiestaRicerca --> AspettoRichiesta: cancella ricerca
+    RichiestaRicerca -right-> MostraDati
 
-    MoDa --> AspRic: indietro
+    MostraDati: mostra dati all'utente
+    MostraDati --> AspettoRichiesta: indietro
 }
 
 Acceso --> [*]: spegnimento
