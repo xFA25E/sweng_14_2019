@@ -1,5 +1,11 @@
 #+TITLE: Protezione Civile
 * Da fare
+** quando il client fa il poll, bisogna aggirnari gli stati
+   if expected_at < now
+     if status = "expected"
+       status = "canceled"
+     else if status = "ongoing"
+       status = "occured"
 ** Modalita' generazione previsioni (class diag)
    Gestore previsioni ogni 5 secondi generera' previsioni per le prossime 24
    ore. Sorgente, ogni 4 ore, inviera' semplicemente queste previsioni
@@ -19,7 +25,6 @@
    Create package for utils like FiltroRicerca and ListaEventi
 ** Modificare sequence diagrams
    Cap preferiti deve essere modificato con getNotifiche (cap preferiti)
-
    Mettere un loop su notifiche
 ** Modificare use case diagrams
    eliminare Applicazioni_Mobile
