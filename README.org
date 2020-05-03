@@ -1,5 +1,5 @@
 #+TITLE: Protezione Civile
-* Da fare [0/11]
+* Da fare [2/11]
 ** TODO Modalita' generazione previsioni (class diag)
    Gestore previsioni ogni 5 secondi generera' previsioni per le prossime 24
    ore. Sorgente, ogni 4 ore, inviera' semplicemente queste previsioni
@@ -17,7 +17,7 @@
    GeneraListaCapFromArea : s/From/By/
 ** TODO Organizzazioni dei packages nel progetto
    Create package for utils like FiltroRicerca and ListaEventi
-** TODO Modificare state diagrams
+** DONE Modificare state diagrams
    Sorgente non calcola piu' differenze, ma lo fa l'applicazione
 
    C'e' un'altro stato parallelo nella sorgente
@@ -29,7 +29,7 @@
    eliminare Applicazioni_Mobile
 
    GestionePrevisioni - lo fa Sorgente
-** TODO Modificare Makefile
+** DONE Modificare Makefile
    Scaricare pluntuml.jar se non esiste e usarlo per generare immagini
 ** TODO Modificare activity diagriam
    Eliminare la freccia che fa in alto
