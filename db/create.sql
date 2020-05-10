@@ -3,7 +3,8 @@
 -- This is a TABLE with raw event data. Use a VIEW to retrieve nicely formatted
 -- data.
 CREATE TABLE IF NOT EXISTS raw_event (
-  event_id INTEGER PRIMARY KEY,
+  source_id INTEGER NOT NULL,
+  event_id INTEGER NOT NULL,
   -- Integers are used for CAPs instead of strings because the nature of data is
   -- known. Strings would involve complicated regular expressions (like
   -- /[0-9]{5}/) to ensure the integrity of database, which are not supported by
@@ -34,14 +35,16 @@ CREATE TABLE IF NOT EXISTS raw_event (
     OR `status` == 'canceled'
   ),
   -- Event KINDs are not known in advance.
-  kind TEXT NOT NULL CHECK(LENGTH(`kind`) <> 0)
+  kind TEXT NOT NULL CHECK(LENGTH(`kind`) <> 0),
+  PRIMARY KEY (`source_id`, `event_id`)
 );
 
 -- This VIEW is used to retrieve data. It automatically inserts the necessary
 -- number of zeroes at the beginning of a `cap` and converts Unix Epoch of
 -- `expected_at` to a valid DATETIME string.
 CREATE VIEW IF NOT EXISTS event AS
-  SELECT event_id,
+  SELECT source_id,
+         event_id,
          printf('%05d', cap) AS cap,
          message,
          DATETIME(expected_at, 'unixepoch') AS expected_at,
