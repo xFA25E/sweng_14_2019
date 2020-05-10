@@ -12,7 +12,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polimi.project14.common.EventList;
 import it.polimi.project14.common.SearchFilter;
 import it.polimi.project14.server.IServer;
 
