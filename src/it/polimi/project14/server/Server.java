@@ -9,9 +9,11 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import it.polimi.project14.common.Event;
+import it.polimi.project14.common.EventStatus;
 import it.polimi.project14.common.SearchFilter;
 import it.polimi.project14.server.IServer;
 
@@ -64,17 +66,15 @@ public class Server implements IServer {
         }
     }
 
-    public void storeEvents(EventList eventList) throws SQLException {
-        List<Event> list = new ArrayList<Event>();
-
-        if (list.size() > 0) {
+    public void storeEvents(Set<Event> eventList) throws SQLException {
+        if (eventList != null && eventList.size() > 0) {
 
             StringBuilder builder = new StringBuilder();
             builder.append("INSERT INTO raw_event (source_id, event_id, cap, message,"
                            + "                     expected_at, severity, status, kind)"
                            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
-            for (int i = 1; i < list.size(); i++) {
+            for (int i = 1; i < eventList.size(); i++) {
                 builder.append(",(?, ?, ?, ?, ?, ?, ?, ?)");
             }
 
@@ -83,9 +83,9 @@ public class Server implements IServer {
             try (Connection conn = DriverManager.getConnection(url)) {
                 try (PreparedStatement pstmt = conn.prepareStatement(query)) {
                     int i = 0;
-                    for (Event event : list) {
+                    for (Event event : eventList) {
                         String status = null;
-                        switch (event.status) {
+                        switch (event.getStatus()) {
                         case EXPECTED:
                             status = "expected";
                             break;
@@ -100,14 +100,14 @@ public class Server implements IServer {
                             break;
                         }
 
-                        pstmt.setLong(i + 1, event.sourceId);
-                        pstmt.setLong(i + 2, event.eventId);
-                        pstmt.setInt(i + 3, Integer.parseInt(event.cap));
-                        pstmt.setString(i + 4, event.message);
-                        pstmt.setLong(i + 5, event.expectedAt.toEpochSecond(ZoneOffset.UTC));
-                        pstmt.setInt(i + 6, event.severity);
+                        pstmt.setLong(i + 1, event.getSourceId());
+                        pstmt.setLong(i + 2, event.getEventId());
+                        pstmt.setInt(i + 3, Integer.parseInt(event.getCap()));
+                        pstmt.setString(i + 4, event.getMessage());
+                        pstmt.setLong(i + 5, event.getExpectedAt().toEpochSecond(ZoneOffset.UTC));
+                        pstmt.setInt(i + 6, event.getSeverity());
                         pstmt.setString(i + 7, status);
-                        pstmt.setString(i + 8, event.kind);
+                        pstmt.setString(i + 8, event.getKind());
 
                         i += 8;
                     }
@@ -118,65 +118,70 @@ public class Server implements IServer {
         }
     }
 
-    public EventList getEvents(SearchFilter searchFilter) throws SQLException {
-        String query = "SELECT * FROM event";
+    public Set<Event> getEvents(SearchFilter searchFilter) throws SQLException {
+        StringBuilder builder = new StringBuilder("SELECT * FROM event");
 
-        EventList eventList = new EventList();
-        List<Event> list = new ArrayList<Event>();
+        if (searchFilter != null) {
+            Set<String> wheres = new HashSet<String>();
+
+            LocalDateTime expectedAt = searchFilter.getExpectedAt();
+            if (expectedAt != null) {
+                wheres.add("expected_at = " + expectedAt.toEpochSecond(ZoneOffset.UTC));
+            }
+
+            String kind = searchFilter.getKind();
+            if (kind != null) {
+                wheres.add("kind = " + kind);
+            }
+
+            Set<String> capList = searchFilter.getCapList();
+            if (capList != null) {
+                wheres.add("cap IN (" + String.join(", ", capList) + ") ");
+            }
+
+            if (wheres.size() > 0) {
+                builder.append("WHERE " + String.join(" AND ", wheres));
+            }
+        }
+
+        String query = builder.toString();
+
+        Set<Event> eventList = new HashSet<Event>();
 
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement();
              ResultSet rset = stmt.executeQuery(query)) {
             while (rset.next()) {
                 Event event = new Event();
-                event.sourceId = rset.getLong("source_id");
-                event.eventId = rset.getLong("event_id");
-                event.cap = rset.getString("cap");
-                event.message = rset.getString("message");
-                event.expectedAt
-                    = LocalDateTime.parse(rset.getString("expected_at"), formatter);
-                event.severity = rset.getInt("severity");
-
-                Status status = null;
-
+                EventStatus status = null;
                 switch (rset.getString("status")) {
                 case "expected":
-                    status = Status.EXPECTED;
+                    status = EventStatus.EXPECTED;
                     break;
                 case "ongoing":
-                    status = Status.ONGOING;
+                    status = EventStatus.ONGOING;
                     break;
                 case "occured":
-                    status = Status.OCCURED;
+                    status = EventStatus.OCCURED;
                     break;
                 case "canceled":
-                    status = Status.CANCELED;
+                    status = EventStatus.CANCELED;
                     break;
                 }
 
-                event.status = status;
+                event.setSourceId(rset.getLong("source_id"));
+                event.setEventId(rset.getLong("event_id"));
+                event.setCap(rset.getString("cap"));
+                event.setMessage(rset.getString("message"));
+                event.setExpectedAt(LocalDateTime.parse(rset.getString("expected_at"), formatter));
+                event.setSeverity(rset.getInt("severity"));
+                event.setStatus(status);
+                event.setKind(rset.getString("kind"));
 
-                event.kind = rset.getString("kind");
-
-                list.add(event);
+                eventList.add(event);
             }
         }
 
         return eventList;
     }
-}
-
-enum Status {
-    EXPECTED, ONGOING, OCCURED, CANCELED
-}
-
-class Event {
-    public long sourceId;
-    public long eventId;
-    public String cap;
-    public String message;
-    public LocalDateTime expectedAt;
-    public int severity;
-    public Status status ;
-    public String kind;
 }
