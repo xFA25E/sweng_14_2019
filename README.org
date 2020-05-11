@@ -39,3 +39,4 @@ if expected_at < now
 ** Add runtime checks for SearchFilter caps in Server
    It should check strings for this [0-9]{5} pattern and include only conforming
    strings.
+** Look for java Map Entry APIs and maybe use generic Map and Set everywhere
