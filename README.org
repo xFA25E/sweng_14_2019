@@ -43,5 +43,6 @@ if expected_at < now
    Or maybe use SortedSet (or TreeSet) and find a way to sort it by expectedAt
    property
 ** Rewrite generateCapList
-   Remove edge cases
+   Remove edge cases. I've seen that there is a Collection api that uses Entries
+   to make filters
 ** Decouple SearchFilter and CapListGenerator
