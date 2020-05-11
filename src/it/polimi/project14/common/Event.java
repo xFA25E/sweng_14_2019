@@ -2,36 +2,30 @@ package it.polimi.project14.common;
 
 import java.time.LocalDateTime;
 
-enum EventStatus {
-    PREVISTO,
-    INCORSO,
-    ACCADUTO,
-    RIENTRATO;
-}
-
 public class Event {
-    private int id;
-    private int cap;
+    private long sourceId;
+    private long eventId;
+    private String cap;
     private String message;
-    private String type;
-    private LocalDateTime exeptedAt;
-    private int gravity;    
+    private LocalDateTime expectedAt;
+    private int severity;
     private EventStatus status;
-    private int source;
+    private String kind;
 
-    public int getId() {
-        return id;
+
+    public long getEventId() {
+        return eventId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEventId(long eventId) {
+        this.eventId = eventId;
     }
 
-    public int getCap() {
+    public String getCap() {
         return cap;
     }
 
-    public void setCap(int cap) {
+    public void setCap(String cap) {
         this.cap = cap;
     }
 
@@ -43,28 +37,28 @@ public class Event {
         this.message = message;
     }
 
-    public String getType() {
-        return type;
+    public String getKind() {
+        return kind;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setKind(String kind) {
+        this.kind = kind;
     }
 
-    public LocalDateTime getExeptedAt() {
-        return exeptedAt;
+    public LocalDateTime getExpectedAt() {
+        return expectedAt;
     }
 
-    public void setExeptedAt(LocalDateTime exeptedAt) {
-        this.exeptedAt = exeptedAt;
+    public void setExpectedAt(LocalDateTime expectedAt) {
+        this.expectedAt = expectedAt;
     }
 
-    public int getGravity() {
-        return gravity;
+    public int getSeverity() {
+        return severity;
     }
 
-    public void setGravity(int gravity) {
-        this.gravity = gravity;
+    public void setSeverity(int severity) {
+        this.severity = severity;
     }
 
     public EventStatus getStatus() {
@@ -75,11 +69,11 @@ public class Event {
         this.status = status;
     }
 
-    public int getSource() {
-        return source;
+    public long getSourceId() {
+        return sourceId;
     }
 
-    public void setSource(int source) {
-        this.source = source;
+    public void setSourceId(long sourceId) {
+        this.sourceId = sourceId;
     }
 }
