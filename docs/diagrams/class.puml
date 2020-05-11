@@ -1,14 +1,14 @@
 @startuml
 title Class Diagram
 package source {
-    interface IGestorePrevisioni<<interface>> {
+    interface GestorePrevisioni<<interface>> {
         - previsioni24H: ListaEventi {ordered}
         + GetPrevisioni24H() : ListaEventi
         + SetPrevisioni24H(ListaEventi)
         + GeneraPrevisioni(): ListaEventi {Query}
     }
 
-    class GestorePrevisioni {
+    class GestorePrevisioniATempo {
         - previsioni24H: ListaEventi {ordered}
         - timer: Timer [1]
         + GetPrevisioni24H() : ListaEventi
@@ -23,21 +23,21 @@ package source {
         + InviaPrevisioni(ListaEventi)
     }
     note bottom of Sorgente: Il timer ha una durata di 4h e ogni volta che termina\nviene chiamato il metodo "InviaPrevisioni(previsioni24H)".
-    note bottom of GestorePrevisioni: Il timer ha una durata\ndi 5sec e ogni volta che termina\nviene chiamato il metodo "GeneraPrevisioni()".\nSe ci sono degli eventi in corso, vengono\nsubito inviati al Server attraverso il metodo\n"InviaPrevisioni(EventiInCorso)" di Sorgente.
+    note bottom of GestorePrevisioniATempo: Il timer ha una durata\ndi 5sec e ogni volta che termina\nviene chiamato il metodo "GeneraPrevisioni()".\nSe ci sono degli eventi in corso, vengono\nsubito inviati al ServerImpl attraverso il metodo\n"InviaPrevisioni(EventiInCorso)" di Sorgente.
 
-    IGestorePrevisioni "0..1" <-> "1" Sorgente : \t\t\t
-    IGestorePrevisioni <|.. GestorePrevisioni
+    GestorePrevisioni "0..1" <-> "1" Sorgente : \t\t\t
+    GestorePrevisioni <|.. GestorePrevisioniATempo
 }
 
 package server{
     interface "Remote (from RMI)" as Remote <<interface>>
 
-    interface IServer<<interface>> {
+    interface Server<<interface>> {
         + StoreEventi(ListaEventi, Sorgente)
         + GetEventi(FiltroRicerca): ListaEventi {query} {ordered}
     }
 
-    class Server {
+    class ServerImpl {
         - sqlConn: Connection  [0..1]
         + StoreEventi(ListaEventi, Sorgente)
         + GetEventi(FiltroRicerca): ListaEventi {query} {ordered}
@@ -45,12 +45,12 @@ package server{
 
     class "UnicastRemoteObject\n(from rmi.server)" as UnicastRemoteObject
 
-    Remote <|-- IServer
-    IServer <|.. Server
-    Server -|> UnicastRemoteObject
+    Remote <|-- Server
+    Server <|.. ServerImpl
+    ServerImpl -|> UnicastRemoteObject :\t
 }
 
-Sorgente .> IServer
+Sorgente .> Server
 
 package user {
     class Utente {
@@ -60,38 +60,39 @@ package user {
         + EffettuaRicerca(FiltroRicerca)
     }
 
-    interface IGestoreNotifica {
+    interface GestoreNotifica {
         + NotificaEventi(ListaEventi)
     }
 
-    class GestoreNotifica {
+    class GestoreNotificaATempo {
         - timer: Timer
         + ControllaPrevisioni()
         - NotificaEventi(ListaEventi)
     }
-    note bottom of GestoreNotifica: Il timer ha una durata di 10sec\ned ogni volta che termina, viene\neffettuata una query sulle nuove previsioni\nnei cap preferiti dall'utente
+    note left of GestoreNotificaATempo: Il timer ha una durata di 10sec\ned ogni volta che termina, viene\neffettuata una query sulle nuove previsioni\nnei cap preferiti dall'utente
 
-    Utente "1" <-> "1" IGestoreNotifica :\t
-    IGestoreNotifica <|.. GestoreNotifica
+    Utente "1" <-> "1" GestoreNotifica :\t
+    GestoreNotifica ..|> GestoreNotificaATempo
 }
 
-Utente ..> IServer
+Server <. Utente
 
 package common {
     enum StatoEvento {
         Previsto
-        In Corso
+        InCorso
         Accaduto
         Rientrato
     }
 
     class Evento<<dataType>> {
-        + id: integer [1]
-        + CAP: String  [1]
-        + testo: String [0..1]
-        + tipo: String [0..1]
-        + istanteTemporale: DataTime [1]
-        + Gravità: integer [1]
+        - id: integer [1]
+        - cap: String  [1]
+        - sorgente: integer [1]
+        - testo: String [0..1]
+        - tipo: String [0..1]
+        - istanteTemporale: DataTime [1]
+        - gravità: integer [1]
     }
 
     class ListaEventi <<dataType>>
@@ -116,7 +117,7 @@ package common {
 
     interface Set<<interface>>
 
-    ListaCAP .|> Set
+    ListaCAP .|> Set :\t
     FiltroRicerca .> ListaCAP
 }
 
@@ -124,7 +125,6 @@ package common {
 hide empty members
 skinparam classAttributeIconSize 0
 ListaEventi -[hidden] FiltroRicerca
-GestorePrevisioni -[hidden]-- StatoEvento
-Server .[hidden].> ListaEventi
-Utente .[hidden].> FiltroRicerca
+GestorePrevisioniATempo -[hidden]-- StatoEvento
+ServerImpl .[hidden].> ListaEventi
 @enduml

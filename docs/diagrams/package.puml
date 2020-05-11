@@ -1,5 +1,5 @@
 @startuml
-title Class Diagram
+title Package Diagram
 package source {
     interface IGestorePrevisioni<<interface>> 
 
