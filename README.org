@@ -41,8 +41,9 @@ if expected_at < now
    strings.
 ** Look for java Map Entry APIs and maybe use generic Map and Set everywhere
    Or maybe use SortedSet (or TreeSet) and find a way to sort it by expectedAt
-   property
+   property.
 ** Rewrite generateCapList
    Remove edge cases. I've seen that there is a Collection api that uses Entries
    to make filters
 ** Decouple SearchFilter and CapListGenerator
+** Try to update nested HashMap
