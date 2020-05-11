@@ -47,3 +47,4 @@ if expected_at < now
    to make filters
 ** Decouple SearchFilter and CapListGenerator
 ** Try to update nested HashMap
+** Should we have a continuos connection to database?
