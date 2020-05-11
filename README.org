@@ -42,3 +42,4 @@ if expected_at < now
 ** Look for java Map Entry APIs and maybe use generic Map and Set everywhere
 ** Rewrite generateCapList
    Remove edge cases
+** Decouple SearchFilter and CapListGenerator
