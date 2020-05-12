@@ -1,6 +1,6 @@
 #+TITLE: Protezione Civile
 * Da fare
-** quando il client fa il poll, bisogna aggirnari gli stati
+** quando il client fa il poll, bisogna aggiornare gli stati
 #+BEGIN_SRC
 if expected_at < now
   if status = "expected"
@@ -19,8 +19,6 @@ if expected_at < now
    Quando viene invocato GeneraPrevisioni, se trova delle previsioni che sono in
    corso, li invia subito, eliminando dalle previsioni24h gli eventi che lo
    riguardavano.
-** Struttura dati per ListaEventi
-   Magari usare TreeSet (o SortedSet) per la ListaEventi
 ** Cambiare nome in class diagram
    GeneraListaCapFromArea : s/From/By/
 ** Organizzazioni dei packages nel progetto
@@ -36,15 +34,7 @@ if expected_at < now
    Eliminare la freccia che fa in alto
 
    Se un evento e' in corso, deve inviarlo subito
-** Add runtime checks for SearchFilter caps in Server
-   It should check strings for this [0-9]{5} pattern and include only conforming
-   strings.
-** Look for java Map Entry APIs and maybe use generic Map and Set everywhere
-   Or maybe use SortedSet (or TreeSet) and find a way to sort it by expectedAt
-   property.
-** Rewrite generateCapList
-   Remove edge cases. I've seen that there is a Collection api that uses Entries
-   to make filters
 ** Decouple SearchFilter and CapListGenerator
-** Try to update nested HashMap
+   Maybe it would be better to have a separate class CapList with generate()
+   method
 ** Should we have a continuos connection to database?
