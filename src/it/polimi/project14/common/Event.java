@@ -2,7 +2,7 @@ package it.polimi.project14.common;
 
 import java.time.LocalDateTime;
 
-public class Event {
+public class Event implements Comparable<Event> {
     private long sourceId;
     private long eventId;
     private String cap;
@@ -79,5 +79,10 @@ public class Event {
 
     public void setSourceId(long sourceId) {
         this.sourceId = sourceId;
+    }
+
+    @Override
+    public int compareTo(Event other) {
+        return this.expectedAt.compareTo(other.getExpectedAt());
     }
 }
