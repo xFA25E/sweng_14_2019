@@ -2,7 +2,7 @@
 
 -- This is a TABLE with raw event data. Use a VIEW to retrieve nicely formatted
 -- data.
-CREATE TABLE IF NOT EXISTS raw_event (
+CREATE TABLE IF NOT EXISTS event (
   source_id INTEGER NOT NULL,
   event_id INTEGER NOT NULL,
   -- Integers are used for CAPs instead of strings because the nature of data is
@@ -38,17 +38,3 @@ CREATE TABLE IF NOT EXISTS raw_event (
   kind TEXT NOT NULL CHECK(LENGTH(`kind`) <> 0),
   PRIMARY KEY (`source_id`, `event_id`)
 );
-
--- This VIEW is used to retrieve data. It automatically inserts the necessary
--- number of zeroes at the beginning of a `cap` and converts Unix Epoch of
--- `expected_at` to a valid DATETIME string.
-CREATE VIEW IF NOT EXISTS event AS
-  SELECT source_id,
-         event_id,
-         printf('%05d', cap) AS cap,
-         message,
-         DATETIME(expected_at, 'unixepoch') AS expected_at,
-         severity,
-         status,
-         kind
-    FROM raw_event;
