@@ -1,6 +1,6 @@
 #+TITLE: Protezione Civile
 * Da fare
-** quando il client fa il poll, bisogna aggiornare gli stati
+** Quando il client fa il poll, bisogna aggiornare gli stati
 #+BEGIN_SRC
 if expected_at < now
   if status = "expected"
@@ -37,4 +37,3 @@ if expected_at < now
 ** Decouple SearchFilter and CapListGenerator
    Maybe it would be better to have a separate class CapList with generate()
    method
-** Should we have a continuos connection to database?
