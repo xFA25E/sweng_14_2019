@@ -1,8 +1,8 @@
 ###############################################################################
-#                            TOP-LEVEL DIRECTORIES                             #
+#                            TOP-LEVEL DIRECTORIES                            #
 ###############################################################################
 
-BUILD_DIR := build
+TARGET_DIR := build
 DOCS_DIR := docs
 JAVA_DIR := src
 
@@ -11,7 +11,7 @@ JAVA_DIR := src
 ###############################################################################
 
 DIAGRAMS_SRC_DIR := $(DOCS_DIR)/diagrams
-DIAGRAMS_BUILD_DIR := $(BUILD_DIR)/diagrams
+DIAGRAMS_TARGET_DIR := $(TARGET_DIR)/diagrams
 
 DIAGRAMS_EXT := png
 ifeq ($(DIAGRAMS_EXT), tex)
@@ -28,7 +28,7 @@ PLANTUML_JAR := build/$(PLANTUML)
 #                                     JAVA                                    #
 ###############################################################################
 
-JAVA_TARGET_DIR := $(BUILD_DIR)/java
+JAVA_TARGET_DIR := $(TARGET_DIR)/java
 JAVA_SOURCES := $(shell find $(JAVA_SRC_DIR) -type f -name *.java)
 
 SQLITE := sqlite-jdbc-3.30.1.jar
@@ -63,7 +63,7 @@ diagrams: $(DIAGRAMS_SOURCES) $(PLANTUML_JAR)
 sqlite: $(JAVA_TARGET_DIR)
 	wget -O $(SQLITE_JAR) "https://bitbucket.org/xerial/sqlite-jdbc/downloads/$(SQLITE)"
 
-plantuml: $(BUILD_DIR)
+plantuml: $(TARGET_DIR)
 	wget -O $(PLANTUML_JAR) "https://sourceforge.net/projects/plantuml/files/$(PLANTUML)/download"
 
 # DIRECTORIES #################################################################
@@ -71,10 +71,10 @@ plantuml: $(BUILD_DIR)
 $(JAVA_TARGET_DIR):
 	make -p $(JAVA_TARGET_DIR)
 
-$(BUILD_DIR):
-	mkdir -p $(BUILD_DIR)
+$(TARGET_DIR):
+	mkdir -p $(TARGET_DIR)
 
 # CLEAN #######################################################################
 
 clean:
-	rm -r $(BUILD_DIR)
+	rm -r $(TARGET_DIR)
