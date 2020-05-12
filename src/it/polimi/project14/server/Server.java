@@ -6,11 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import it.polimi.project14.common.Event;
 import it.polimi.project14.common.EventStatus;
@@ -19,12 +20,9 @@ import it.polimi.project14.server.IServer;
 
 public class Server implements IServer {
     private static String url = "jdbc:sqlite:civil_protection.db";
-    private static DateTimeFormatter formatter
-        = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private static void createTables(Connection conn) throws SQLException {
-        String create_table_query = ""
-            + "CREATE TABLE IF NOT EXISTS raw_event ("
+    private static String createQuery = ""
+            + "CREATE TABLE IF NOT EXISTS event ("
             + "  source_id INTEGER NOT NULL,"
             + "  event_id INTEGER NOT NULL,"
             + "  cap INTEGER NOT NULL CHECK(`cap` BETWEEN 0 AND 99999),"
@@ -40,148 +38,167 @@ public class Server implements IServer {
             + "    OR `status` == 'canceled'"
             + "  ),"
             + "  kind TEXT NOT NULL CHECK(LENGTH(`kind`) <> 0),"
-            + "  PRIMARY KEY (`source_id`, `event_id`)" + ")";
+            + "  PRIMARY KEY (`source_id`, `event_id`)"
+            + ")";
 
-        String create_view_query = ""
-            + "CREATE VIEW IF NOT EXISTS event AS"
-            + "  SELECT source_id,"
-            + "         event_id,"
-            + "         printf('%05d', cap) AS cap,"
-            + "         message,"
-            + "         DATETIME(expected_at, 'unixepoch') AS expected_at,"
-            + "         severity,"
-            + "         status,"
-            + "         kind"
-            + "    FROM raw_event";
+    private static String insertQuery = ""
+        + "INSERT INTO event (source_id, event_id, cap, message,"
+        + "                     expected_at, severity, status, kind)"
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Statement stmt = conn.createStatement()) {
-            stmt.execute(create_table_query);
-            stmt.execute(create_view_query);
-        }
-    }
+    private static String selectQuery = ""
+        + "SELECT source_id,"
+        + "       event_id,"
+        + "       printf(\"%05d\", cap) AS cap,"
+        + "       message,"
+        + "       expected_at,"
+        + "       severity,"
+        + "       status,"
+        + "       kind"
+        + "  FROM event"
+        + " WHERE (? IS NULL OR kind = ?)"
+        + "   AND (? IS NULL OR expected_at BETWEEN ? AND ? + 3600)";
 
     public Server() throws SQLException {
-        try (Connection conn = DriverManager.getConnection(url)) {
-            Server.createTables(conn);
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(createQuery);
         }
     }
 
     public void storeEvents(Set<Event> eventList) throws SQLException {
         if (eventList != null && eventList.size() > 0) {
+            try (Connection conn = DriverManager.getConnection(url);
+                 PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
 
-            StringBuilder builder = new StringBuilder();
-            builder.append("INSERT INTO raw_event (source_id, event_id, cap, message,"
-                           + "                     expected_at, severity, status, kind)"
-                           + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                for (Event event : eventList) {
+                    pstmt.setLong(1, event.getSourceId());
+                    pstmt.setLong(2, event.getEventId());
+                    pstmt.setInt(3, stringToInt(event.getCap()));
+                    pstmt.setString(4, event.getMessage());
+                    pstmt.setLong(5, dateTimeToEpoch(event.getExpectedAt()));
+                    pstmt.setInt(6, event.getSeverity());
+                    pstmt.setString(7, statusToString(event.getStatus()));
+                    pstmt.setString(8, event.getKind());
 
-            for (int i = 1; i < eventList.size(); i++) {
-                builder.append(",(?, ?, ?, ?, ?, ?, ?, ?)");
-            }
-
-            String query = builder.toString();
-
-            try (Connection conn = DriverManager.getConnection(url)) {
-                try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-                    int i = 0;
-                    for (Event event : eventList) {
-                        String status = null;
-                        switch (event.getStatus()) {
-                        case EXPECTED:
-                            status = "expected";
-                            break;
-                        case ONGOING:
-                            status = "ongoing";
-                            break;
-                        case OCCURED:
-                            status = "occured";
-                            break;
-                        case CANCELED:
-                            status = "canceled";
-                            break;
-                        }
-
-                        pstmt.setLong(i + 1, event.getSourceId());
-                        pstmt.setLong(i + 2, event.getEventId());
-                        pstmt.setInt(i + 3, Integer.parseInt(event.getCap()));
-                        pstmt.setString(i + 4, event.getMessage());
-                        pstmt.setLong(i + 5, event.getExpectedAt().toEpochSecond(ZoneOffset.UTC));
-                        pstmt.setInt(i + 6, event.getSeverity());
-                        pstmt.setString(i + 7, status);
-                        pstmt.setString(i + 8, event.getKind());
-
-                        i += 8;
-                    }
-
-                    pstmt.executeUpdate();
+                    pstmt.addBatch();
                 }
+                pstmt.executeUpdate();
             }
         }
     }
 
     public Set<Event> getEvents(SearchFilter searchFilter) throws SQLException {
-        StringBuilder builder = new StringBuilder("SELECT * FROM event");
-
-        if (searchFilter != null) {
-            Set<String> wheres = new HashSet<String>();
-
-            LocalDateTime expectedAt = searchFilter.getExpectedAt();
-            if (expectedAt != null) {
-                wheres.add("expected_at = " + expectedAt.toEpochSecond(ZoneOffset.UTC));
-            }
-
-            String kind = searchFilter.getKind();
-            if (kind != null) {
-                wheres.add("kind = " + kind);
-            }
-
-            Set<String> capList = searchFilter.getCapList();
-            if (capList != null) {
-                wheres.add("cap IN (" + String.join(", ", capList) + ") ");
-            }
-
-            if (wheres.size() > 0) {
-                builder.append("WHERE " + String.join(" AND ", wheres));
-            }
-        }
-
-        String query = builder.toString();
-
+        String kind = getKind(searchFilter);
+        Long expectedAt = getExpectedAt(searchFilter);
+        String query = generateSelectQuery(searchFilter);
         Set<Event> eventList = new HashSet<Event>();
 
         try (Connection conn = DriverManager.getConnection(url);
-             Statement stmt = conn.createStatement();
-             ResultSet rset = stmt.executeQuery(query)) {
-            while (rset.next()) {
-                Event event = new Event();
-                EventStatus status = null;
-                switch (rset.getString("status")) {
-                case "expected":
-                    status = EventStatus.EXPECTED;
-                    break;
-                case "ongoing":
-                    status = EventStatus.ONGOING;
-                    break;
-                case "occured":
-                    status = EventStatus.OCCURED;
-                    break;
-                case "canceled":
-                    status = EventStatus.CANCELED;
-                    break;
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setObject(1, kind, Types.VARCHAR);
+            pstmt.setObject(2, kind, Types.VARCHAR);
+            pstmt.setObject(3, expectedAt, Types.INTEGER);
+            pstmt.setObject(4, expectedAt, Types.INTEGER);
+            pstmt.setObject(5, expectedAt, Types.INTEGER);
+
+            try (ResultSet rSet = pstmt.executeQuery()) {
+                while (rSet.next()) {
+                    Event event = new Event();
+                    event.setSourceId(rSet.getLong("source_id"));
+                    event.setEventId(rSet.getLong("event_id"));
+                    event.setCap(rSet.getString("cap"));
+                    event.setMessage(rSet.getString("message"));
+                    event.setExpectedAt(epochToDateTime(rSet.getLong("expected_at")));
+                    event.setSeverity(rSet.getInt("severity"));
+                    event.setStatus(stringToStatus(rSet.getString("status")));
+                    event.setKind(rSet.getString("kind"));
+
+                    eventList.add(event);
                 }
-
-                event.setSourceId(rset.getLong("source_id"));
-                event.setEventId(rset.getLong("event_id"));
-                event.setCap(rset.getString("cap"));
-                event.setMessage(rset.getString("message"));
-                event.setExpectedAt(LocalDateTime.parse(rset.getString("expected_at"), formatter));
-                event.setSeverity(rset.getInt("severity"));
-                event.setStatus(status);
-                event.setKind(rset.getString("kind"));
-
-                eventList.add(event);
             }
         }
-
         return eventList;
+    }
+
+    // It seems that sqlite does not support arrays. We have to escape and add
+    // strings manually. This basically adds a string to query like:
+    // "AND cap IN ('cap1', 'cap2'..)"
+    private static String generateSelectQuery(SearchFilter searchFilter) {
+        StringBuilder builder = new StringBuilder(selectQuery);
+        if (searchFilter != null) {
+            Set<String> capList = searchFilter.getCapList();
+            if (capList != null) {
+                builder.append(capList.stream()
+                               .filter(c -> c.matches("\\d{5}"))
+                               .map(c -> "'" + c + "'")
+                               .collect(Collectors
+                                        .joining(", ", " AND cap IN (", ")")));
+            }
+        }
+        return builder.toString();
+    }
+
+    private static Long getExpectedAt(SearchFilter searchFilter) {
+        Long expectedAt = null;
+        if (searchFilter != null) {
+            expectedAt = dateTimeToEpoch(searchFilter.getExpectedAt());
+        }
+        return expectedAt;
+    }
+
+    private static String getKind(SearchFilter searchFilter) {
+        String kind = null;
+        if (searchFilter != null) {
+            kind = searchFilter.getKind();
+        }
+        return kind;
+    }
+
+    private static int stringToInt(String cap) {
+        return Integer.parseInt(cap);
+    }
+
+    private static Long dateTimeToEpoch(LocalDateTime dateTime) {
+        if (dateTime != null) {
+            return dateTime.toEpochSecond(ZoneOffset.UTC);
+        } else {
+            return null;
+        }
+    }
+
+    private static LocalDateTime epochToDateTime(long epoch) {
+        return LocalDateTime.ofEpochSecond(epoch, 0, ZoneOffset.UTC);
+    }
+
+    public static EventStatus stringToStatus(String status) {
+        switch (status) {
+        case "expected":
+            return EventStatus.EXPECTED;
+        case "ongoing":
+            return EventStatus.ONGOING;
+        case "occured":
+            return EventStatus.OCCURED;
+        case "canceled":
+            return EventStatus.CANCELED;
+        default:
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public String statusToString(EventStatus status) {
+        switch (status) {
+        case EXPECTED:
+            return "expected";
+        case ONGOING:
+            return "ongoing";
+        case OCCURED:
+            return "occured";
+        case CANCELED:
+            return "canceled";
+        default:
+            throw new IllegalArgumentException();
+        }
     }
 }
