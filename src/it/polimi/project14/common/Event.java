@@ -25,8 +25,12 @@ public class Event {
         return cap;
     }
 
-    public void setCap(String cap) {
-        this.cap = cap;
+    public void setCap(String cap) throws IllegalArgumentException {
+        if (cap.matches("\\d{5}")) {
+            this.cap = cap;
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
     public String getMessage() {
