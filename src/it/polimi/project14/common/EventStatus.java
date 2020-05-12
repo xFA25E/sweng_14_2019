@@ -4,5 +4,5 @@ public enum EventStatus {
     EXPECTED,
     ONGOING,
     OCCURED,
-    CANCELED,
+    CANCELED;
 }
