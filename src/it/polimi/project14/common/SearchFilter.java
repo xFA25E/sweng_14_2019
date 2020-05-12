@@ -20,57 +20,33 @@ public class SearchFilter implements java.io.Serializable {
     static HashMap<String, HashMap<String, HashSet<String>>> caps;
 
     static {
-        BufferedReader csvReader = null;
-        try {
-            csvReader = new BufferedReader(new FileReader("data/provincia_comune_cap.csv"));
+        try (BufferedReader csvReader
+             = new BufferedReader(new FileReader("data/provincia_comune_cap.csv"))) {
 
-            try {
-                String row;
-                caps = new HashMap<>();
-                while ((row = csvReader.readLine()) != null) {
-                    String[] data = row.split(",");
+            String row;
+            caps = new HashMap<>();
+            while ((row = csvReader.readLine()) != null) {
+                String[] data = row.split(",");
 
-                    String
-                        province = data[0],
-                        municipality = data[1],
-                        cap = data[2];
+                String
+                    province = data[0],
+                    municipality = data[1],
+                    cap = data[2];
 
-                    HashMap<String, HashSet<String>> municipalityMap = caps.get(province);
-                    if (municipalityMap == null) {
-                        municipalityMap = new HashMap<>();
-                    }
-
-                    HashSet<String> capSet = municipalityMap.get(municipality);
-                    if (capSet == null) {
-                        capSet = new HashSet<>();
-                    }
-
-                    capSet.add(cap);
-                    municipalityMap.put(municipality, capSet);
-                    caps.put(province, municipalityMap);
-
+                if (!caps.containsKey(province)) {
+                    caps.put(province, new HashMap<>());
                 }
-            } catch (NumberFormatException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
 
+                if (!caps.get(province).containsKey(municipality)) {
+                    caps.get(province).put(municipality, new HashSet<>());
+                }
+
+                caps.get(province).get(municipality).add(cap);
+            }
         } catch (FileNotFoundException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
-
-        } finally {
-            if (csvReader != null) {
-                try {
-                    csvReader.close();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
