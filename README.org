@@ -19,21 +19,7 @@ if expected_at < now
    Quando viene invocato GeneraPrevisioni, se trova delle previsioni che sono in
    corso, li invia subito, eliminando dalle previsioni24h gli eventi che lo
    riguardavano.
-** Cambiare nome in class diagram
-   GeneraListaCapFromArea : s/From/By/
-** Organizzazioni dei packages nel progetto
-   Create package for utils like FiltroRicerca and ListaEventi
-** Modificare sequence diagrams
-   Cap preferiti deve essere modificato con getNotifiche (cap preferiti)
-   Mettere un loop su notifiche
-** Modificare use case diagrams
-   eliminare Applicazioni_Mobile
-
-   GestionePrevisioni - lo fa Sorgente
-** Modificare activity diagriam
-   Eliminare la freccia che fa in alto
-
-   Se un evento e' in corso, deve inviarlo subito
 ** Decouple SearchFilter and CapListGenerator
    Maybe it would be better to have a separate class CapList with generate()
    method
+** add on duplicate key update to storeEvents
