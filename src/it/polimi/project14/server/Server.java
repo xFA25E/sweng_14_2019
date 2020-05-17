@@ -9,7 +9,9 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -57,7 +59,8 @@ public class Server implements IServer {
         + "       kind"
         + "  FROM event"
         + " WHERE (? IS NULL OR kind = ?)"
-        + "   AND (? IS NULL OR expected_at BETWEEN ? AND ? + 3600)";
+        + "   AND (? IS NULL OR ? < expected_at)"
+        + "   AND (? IS NULL OR expected_at < ?)";
 
     public Server() throws SQLException {
         try (Connection conn = DriverManager.getConnection(url);
@@ -90,7 +93,8 @@ public class Server implements IServer {
 
     public Set<Event> getEvents(SearchFilter searchFilter) throws SQLException {
         String kind = getKind(searchFilter);
-        Long expectedAt = getExpectedAt(searchFilter);
+        Long expectedSince = getExpectedSince(searchFilter);
+        Long expectedUntil = getExpectedUntil(searchFilter);
         String query = generateSelectQuery(searchFilter);
         Set<Event> eventList = new HashSet<Event>();
 
@@ -99,9 +103,10 @@ public class Server implements IServer {
 
             pstmt.setObject(1, kind, Types.VARCHAR);
             pstmt.setObject(2, kind, Types.VARCHAR);
-            pstmt.setObject(3, expectedAt, Types.INTEGER);
-            pstmt.setObject(4, expectedAt, Types.INTEGER);
-            pstmt.setObject(5, expectedAt, Types.INTEGER);
+            pstmt.setObject(3, expectedSince, Types.INTEGER);
+            pstmt.setObject(4, expectedSince, Types.INTEGER);
+            pstmt.setObject(5, expectedUntil, Types.INTEGER);
+            pstmt.setObject(6, expectedUntil, Types.INTEGER);
 
             try (ResultSet rSet = pstmt.executeQuery()) {
                 while (rSet.next()) {
@@ -119,6 +124,20 @@ public class Server implements IServer {
                 }
             }
         }
+
+        if (isMaxSeverity(searchFilter)) {
+            OptionalInt maybeMax = eventList.stream()
+                .mapToInt(e -> e.getSeverity())
+                .max();
+
+            if (maybeMax.isPresent()) {
+                int max = maybeMax.getAsInt();
+                eventList = eventList.stream()
+                    .filter(e -> e.getSeverity() == max)
+                    .collect(Collectors.toCollection(HashSet::new));
+            }
+        }
+
         return eventList;
     }
 
@@ -140,12 +159,24 @@ public class Server implements IServer {
         return builder.toString();
     }
 
-    private static Long getExpectedAt(SearchFilter searchFilter) {
-        Long expectedAt = null;
+    private static boolean isMaxSeverity(SearchFilter searchFilter) {
+        return searchFilter != null && searchFilter.isMaxSeverity();
+    }
+
+    private static Long getExpectedSince(SearchFilter searchFilter) {
+        Long expectedSince = null;
         if (searchFilter != null) {
-            expectedAt = dateTimeToEpoch(searchFilter.getExpectedAt());
+            expectedSince = dateTimeToEpoch(searchFilter.getExpectedSince());
         }
-        return expectedAt;
+        return expectedSince;
+    }
+
+    private static Long getExpectedUntil(SearchFilter searchFilter) {
+        Long expectedUntil = null;
+        if (searchFilter != null) {
+            expectedUntil = dateTimeToEpoch(searchFilter.getExpectedUntil());
+        }
+        return expectedUntil;
     }
 
     private static String getKind(SearchFilter searchFilter) {
