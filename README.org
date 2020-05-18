@@ -23,3 +23,4 @@ if expected_at < now
    Maybe it would be better to have a separate class CapList with generate()
    method
 ** add on duplicate key update to storeEvents
+** state diagram
