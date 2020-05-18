@@ -71,7 +71,7 @@ package user {
         - timer: Timer
         - controllaPrevisioni()
     }
-    note bottom of NotificheATempo: Il timer ha una durata di 10sec\ne al suo scadere, viene\neffettuata una query delle previsioni\ncon i cap preferiti dell'utente.\nSe gli eventi ottenuti non sono\ncontenuti nella lista "eventiNotificati",\nvengono inviati al visualizzatore e quindi,\nin caso di corretta recezione, inseriti\nnella lista "evntiNotificati"
+    note bottom of NotificheATempo: Il timer ha una durata di 10sec\ne al suo scadere, viene\neffettuata una query delle previsioni\ncon i cap preferiti dell'utente.\nSe gli eventi ottenuti non sono\ncontenuti nella lista "eventiNotificati",\nvengono inviati al visualizzatore,\nattraverso inviaEventiDaNotificare e quindi,\nvisualizza dell'interfaccia VisualizzaNotifica\ne, in caso di corretta recezione, inseriti\nnella lista "evntiNotificati"
 
     class Caps {
         - {static} caps: HashMap<String, HashMap<String, HashSet<String>>>
@@ -112,10 +112,18 @@ package common {
     }
 }
 
+package gui {
+    interface VisualizzaNotifica {
+        + visualizza(Set<Evento>)
+    }
+}
+
+VisualizzaNotifica "\n1" <-- Notifiche
+
 'Layout only
 hide empty members
 skinparam classAttributeIconSize 0
-PrevisioniATempo -[hidden]-- StatoEvento
+Sorgente -[hidden]--- StatoEvento
 ArchivioEventi .[hidden].> Server
 ArchivioEventiImpl .[hidden].> Evento
 Notifiche .[hidden].> FiltroRicerca
