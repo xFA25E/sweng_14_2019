@@ -1,4 +1,4 @@
-package it.polimi.project14.common;
+package it.polimi.project14.user;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
