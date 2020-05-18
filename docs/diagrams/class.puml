@@ -1,81 +1,88 @@
 @startuml
 title Class Diagram
 package source {
-    interface GestorePrevisioni<<interface>> {
-        - previsioni24H: ListaEventi {ordered}
-        + GetPrevisioni24H() : ListaEventi
-        + SetPrevisioni24H(ListaEventi)
-        + GeneraPrevisioni(): ListaEventi {Query}
+    interface Previsioni<<interface>> {
+        + getPrevisioni() : Set<Evento>
     }
 
-    class GestorePrevisioniATempo {
-        - previsioni24H: ListaEventi {ordered}
+    class PrevisioniATempo {
+        - previsioni24H: Set<Evento>
         - timer: Timer [1]
-        + GetPrevisioni24H() : ListaEventi
-        + SetPrevisioni24H(ListaEventi)
-        + GeneraPrevisioni(): ListaEventi {Query}
-        - CalcolaDifferenze()
+        + getPrevisioni() : Set<Evento>
+        + setPrevisioni(Set<Evento>)
+        + generaPrevisioni(): Set<Evento> {Query}
+        - calcolaDifferenze()
     }
 
     class Sorgente {
         - id: integer [1]
         - timer: Timer [1]
-        + InviaPrevisioni(ListaEventi)
+        + inviaPrevisioni(Set<Evento>)
     }
-    note bottom of Sorgente: Il timer ha una durata di 4h e ogni volta che termina\nviene chiamato il metodo "InviaPrevisioni(previsioni24H)".
-    note bottom of GestorePrevisioniATempo: Il timer ha una durata\ndi 5sec e ogni volta che termina\nviene chiamato il metodo "GeneraPrevisioni()".\nSe ci sono degli eventi in corso, vengono\nsubito inviati al ServerImpl attraverso il metodo\n"InviaPrevisioni(EventiInCorso)" di Sorgente.
+    note bottom of Sorgente: Il timer esegue due azioni allo scadere\ndi 2 intervalli differenti\n1 - ogni 4h viene chiamato il metodo\n     "InviaPrevisioni(Previsioni.getPrevisioni())".\n2 - ogni 5sec vengono inviati e cancellati\n     dalla lista previsioni gli eventi immutabili\n     e vengono inviati e non cancellati(necessari\n     per gestire il passaggio a terminato)\n     quelli InCorso\n\n\nGli eventi immutabili sono quelli passati e nello\nstato Avvenuto o Cancellato      
+    note bottom of PrevisioniATempo: Il timer ha una durata di 5sec e allo scadere,\nviene chiamato il metodo "GeneraPrevisioni()".\nGli eventi generati vengono inseriti nella lista\nPrevisioni24h. Se il tempo < now (passato),\nmodifica lo stato (previsto to cancellato).\nSe l'evento è in corso ed è passato un tempo minimo,\nmodifica lo stato (InCorso to avvenuto)\n
 
-    GestorePrevisioni "0..1" <-> "1" Sorgente : \t\t\t
-    GestorePrevisioni <|.. GestorePrevisioniATempo
+    Previsioni "1" <- Sorgente : \t\t\t
+    Previsioni <|.. PrevisioniATempo
 }
 
 package server{
     interface "Remote (from RMI)" as Remote <<interface>>
 
-    interface Server<<interface>> {
-        + StoreEventi(ListaEventi, Sorgente)
-        + GetEventi(FiltroRicerca): ListaEventi {query} {ordered}
+    interface ArchivioEventi<<interface>> {
+        + storeEventi(Set<Evento>, Sorgente)
+        + getEventi(FiltroRicerca): Set<Evento> {query} {ordered}
     }
 
-    class ServerImpl {
+    class ArchivioEventiImpl {
         - sqlConn: Connection  [0..1]
-        + StoreEventi(ListaEventi, Sorgente)
-        + GetEventi(FiltroRicerca): ListaEventi {query} {ordered}
+        + storeEventi(Set<Evento>, Sorgente)
+        + getEventi(FiltroRicerca): Set<Evento> {query} {ordered}
     }
 
-    class "UnicastRemoteObject\n(from rmi.server)" as UnicastRemoteObject
+    class "UnicastRemoteObject\n(from rmi.ArchivioEventi)" as UnicastRemoteObject
 
-    Remote <|-- Server
-    Server <|.. ServerImpl
-    ServerImpl -|> UnicastRemoteObject :\t
+    class Server {
+        + main(String[] args)
+    }
+
+    Remote <|-- ArchivioEventi
+    ArchivioEventi <|.. ArchivioEventiImpl
+    ArchivioEventiImpl -|> UnicastRemoteObject :\t
+    Server .> ArchivioEventiImpl
 }
 
-Sorgente .> Server
+Sorgente .> ArchivioEventi
 
 package user {
     class Utente {
-        - CAPpreferiti: ListaCAP [0..1]
-        + SetCapPreferiti(ListaCAP)
-        + GetAllarmiInEvidenza(): ListaEventi {query} {ordered}
-        + EffettuaRicerca(FiltroRicerca)
+        - capPreferiti: Set<String> [0..1]
+        + setCapPreferiti(Set<String>)
+        + getAllarmiInEvidenza(): SortedSet<Evento> {query} {ordered}
+        + effettuaRicerca(FiltroRicerca): SortedSet<Evento> {query} {ordered}
     }
 
-    interface GestoreNotifica {
-        + NotificaEventi(ListaEventi)
+    abstract Notifiche {
+        - eventiNotificati: Set<Evento>
+        - inviaEventiDaNotificare(Set<Evento>)
     }
 
-    class GestoreNotificaATempo {
+    class NotificheATempo {
         - timer: Timer
-        + ControllaPrevisioni()
-        - NotificaEventi(ListaEventi)
+        - controllaPrevisioni()
     }
-    note left of GestoreNotificaATempo: Il timer ha una durata di 10sec\ned ogni volta che termina, viene\neffettuata una query sulle nuove previsioni\nnei cap preferiti dall'utente
+    note bottom of NotificheATempo: Il timer ha una durata di 10sec\ne al suo scadere, viene\neffettuata una query delle previsioni\ncon i cap preferiti dell'utente.\nSe gli eventi ottenuti non sono\ncontenuti nella lista "eventiNotificati",\nvengono inviati al visualizzatore e quindi,\nin caso di corretta recezione, inseriti\nnella lista "evntiNotificati"
 
-    Utente "1" <-> "1" GestoreNotifica :\t
-    GestoreNotifica ..|> GestoreNotificaATempo
+    class Caps {
+        - {static} caps: HashMap<String, HashMap<String, HashSet<String>>>
+        {static} filtra(String comune, String provincia) : Set<String>
+    }
+
+    Utente " 1" <- Notifiche :\t
+    Notifiche <|-- NotificheATempo
 }
 
-Server <. Utente
+ArchivioEventi <. Utente
 
 package common {
     enum StatoEvento {
@@ -95,36 +102,23 @@ package common {
         - gravità: integer [1]
     }
 
-    class ListaEventi <<dataType>>
-
-    interface List<<interface>>
-
-    ListaEventi ..|> List: \t
     StatoEvento "1" <- Evento: \tÈ\t
-    Evento " * " <-*  ListaEventi: Composta da
 
     class FiltroRicerca {
-        - ListaCAP: ListaCAP [1]
-        - Tipo:String [0..1]
-        - IstanteTemporale: DateTime [1]
-        + SetListaCAP(ListaCAP)
-        + GeneraListaCapFromArea(regione:string, provincia:string, città:string)
+        - listaCAP: Set<String> [1]
+        - tipo:String [0..1]
+        - istanteTemporale: DateTime [1]
+        + setListaCAP(Set<String>)
     }
-
-    class ListaCAP <<dataType>> {
-        + CAP: String [*]
-    }
-
-    interface Set<<interface>>
-
-    ListaCAP .|> Set :\t
-    FiltroRicerca .> ListaCAP
 }
 
 'Layout only
 hide empty members
 skinparam classAttributeIconSize 0
-ListaEventi -[hidden] FiltroRicerca
-GestorePrevisioniATempo -[hidden]-- StatoEvento
-ServerImpl .[hidden].> ListaEventi
+PrevisioniATempo -[hidden]-- StatoEvento
+ArchivioEventi .[hidden].> Server
+ArchivioEventiImpl .[hidden].> Evento
+Notifiche .[hidden].> FiltroRicerca
+Caps -[hidden]> NotificheATempo: \t
+
 @enduml
