@@ -6,6 +6,6 @@ import it.polimi.project14.common.Event;
 
 public interface Forecast {
 	
-	public Set<Event> getForecastes();
+	public Set<Event> getForecasts();
 	
 }

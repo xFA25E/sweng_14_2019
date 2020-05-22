@@ -21,7 +21,7 @@ public class TimedForecast implements Forecast {
 	 * this.forecast24H = forecast24H; this.timer = timer; }
 	 */
 
-	public Set<Event> getForecastes() {
+	public Set<Event> getForecasts() {
 		return forecast24H;
 	}
 
