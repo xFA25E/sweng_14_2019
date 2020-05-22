@@ -1,37 +1,37 @@
-package it.project.project14;
+package it.polimi.project14.source;
 
-import java.util.ArrayList;
+import java.util.Set;
 import java.util.Timer;
 
-public class Source{
-	
+import it.polimi.project14.common.Event;
+
+public class Source {
+
 	private int id;
 	private Timer timer;
-	
-	public Source(int id, Timer timer){
+
+	public Source(int id, Timer timer) {
 		this.id = id;
 		this.timer = timer;
 	}
-	
-	public int getId(){
+
+	public int getId() {
 		return id;
 	}
-	
-	public void setId(int id){
+
+	public void setId(int id) {
 		this.id = id;
 	}
-	
-	public Timer getTimer(){
+
+	public Timer getTimer() {
 		return timer;
 	}
-	
-	public void setTimer(Timer timer){
+
+	public void setTimer(Timer timer) {
 		this.timer = timer;
 	}
-	
-	public ArrayList<Event> sendForecast(){
-		
-		ArrayList<Event> EventList = new ArrayList<Event>();
-		return EventList;
+
+	public void sendForecast(Set<Event> eventList){
+		// return EventList;
 	}
 }
