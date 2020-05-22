@@ -1,5 +1,7 @@
 package it.polimi.project14.server;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,9 +20,9 @@ import java.util.stream.Collectors;
 import it.polimi.project14.common.Event;
 import it.polimi.project14.common.EventStatus;
 import it.polimi.project14.common.SearchFilter;
-import it.polimi.project14.server.IServer;
+import it.polimi.project14.server.EventStorage;
 
-public class Server implements IServer {
+public class EventStorageImpl extends UnicastRemoteObject implements EventStorage {
     private static String url = "jdbc:sqlite:civil_protection.db";
 
     private static String createQuery = ""
@@ -62,14 +64,14 @@ public class Server implements IServer {
         + "   AND (? IS NULL OR ? < expected_at)"
         + "   AND (? IS NULL OR expected_at < ?)";
 
-    public Server() throws SQLException {
+    public EventStorageImpl() throws SQLException, RemoteException  {
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement()) {
             stmt.execute(createQuery);
         }
     }
 
-    public void storeEvents(Set<Event> eventList) throws SQLException {
+    public void storeEvents(Set<Event> eventList) throws SQLException, RemoteException {
         if (eventList != null && eventList.size() > 0) {
             try (Connection conn = DriverManager.getConnection(url);
                  PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
@@ -91,7 +93,7 @@ public class Server implements IServer {
         }
     }
 
-    public Set<Event> getEvents(SearchFilter searchFilter) throws SQLException {
+    public Set<Event> getEvents(SearchFilter searchFilter) throws SQLException, RemoteException {
         String kind = getKind(searchFilter);
         Long expectedSince = getExpectedSince(searchFilter);
         Long expectedUntil = getExpectedUntil(searchFilter);
