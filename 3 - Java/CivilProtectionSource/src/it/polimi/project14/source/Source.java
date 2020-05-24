@@ -1,5 +1,8 @@
 package it.polimi.project14.source;
 
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.Set;
 import java.util.Timer;
 
@@ -37,9 +40,16 @@ public class Source {
 		this.timer = timer;
 	}
 
-	public void sendForecast(Set<Event> eventList) {
-		it.polimi.project14.server.EventStorage remoteEventStorage = (EventStorage) Naming.lookup(urlServer + "EVENT_STORAGE");
-		remoteEventStorage.storeEvents(eventList);
+	public void sendForecast(Set<Event> eventList) throws Exception {
+		//RMI
+		try {
+			EventStorage remoteEventStorage = (EventStorage) Naming.lookup(urlServer + "EVENT_STORAGE");
+			remoteEventStorage.storeEvents(eventList);
+		} catch (SQLException e) {
+			throw new Exception(e.getMessage());
+		} catch (RemoteException e) {
+			throw new Exception(e.getMessage());
+		}
 		// return EventList;
 	}
 }

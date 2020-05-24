@@ -3,7 +3,6 @@ package it.polimi.project14.user;
 import java.util.Set;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -21,8 +20,7 @@ public class User {
 		System.setProperty("java.security.policy", "policy.all");
 	}
 
-	public User(String host, Set<String> favouriteCaps) {
-		this.host = host;
+	public User(Set<String> favouriteCaps) {
 		this.favoriteCaps = favouriteCaps;
 	}
 
@@ -35,8 +33,9 @@ public class User {
 		searchFilter.setCapList(favoriteCaps);
 		searchFilter.setExpectedSince(LocalDate.now().atStartOfDay());
 		searchFilter.setMaxSeverity(true);
+
+		//RMI
 		try {
-			//RMI
             EventStorage remoteEventStorage = (EventStorage) Naming.lookup(urlServer + "EVENT_STORAGE");
 			return remoteEventStorage.getEvents(searchFilter);
 		} catch (SQLException e) {
@@ -47,8 +46,8 @@ public class User {
 	}
 
 	public Set<Event> searchEvents(SearchFilter searchFilter) throws Exception {
+		//RMI
 		try {
-			//RMI
 			EventStorage remoteEventStorage = (EventStorage) Naming.lookup(urlServer + "EVENT_STORAGE");
 			return remoteEventStorage.getEvents(searchFilter);
 		} catch (SQLException e) {

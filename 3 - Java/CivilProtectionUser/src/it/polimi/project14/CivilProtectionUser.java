@@ -1,17 +1,10 @@
 package it.polimi.project14;
 
-import java.rmi.Naming;
-import java.rmi.registry.LocateRegistry;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-
-import it.polimi.project14.common.EventStorage;
-import it.polimi.project14.common.Event;
-
 public class CivilProtectionUser {
     public static void main(String[] args) {
         try {
+            // Create User and GUI objects and pass data between
+
             // // Test
             // System.setProperty("java.security.policy", "policy.all");
             // String urlServer = "rmi://localhost:6666/";

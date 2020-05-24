@@ -1,6 +1,5 @@
 package it.polimi.project14.source;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
 
