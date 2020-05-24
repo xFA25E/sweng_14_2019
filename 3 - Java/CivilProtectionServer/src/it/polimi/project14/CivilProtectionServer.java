@@ -2,8 +2,6 @@ package it.polimi.project14;
 
 import java.rmi.Naming;
 import java.rmi.Remote;
-// import java.rmi.registry.LocateRegistry;
-// import java.rmi.registry.Registry;
 import java.rmi.registry.LocateRegistry;
 
 import it.polimi.project14.server.EventStorageImpl;
