@@ -1,3 +1,5 @@
+package it.polimi.project14.user.gui.components;
+
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
