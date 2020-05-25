@@ -27,6 +27,10 @@ public class User {
 	public void setFavotiteCaps(Set<String> favoriteCaps) {
 		this.favoriteCaps = favoriteCaps;
 	}
+	
+	public Set<String> getFavoriteCaps() {
+		return this.favoriteCaps;
+	}
 
 	public Set<Event> getUrgentEvents() throws Exception {
 		SearchFilter searchFilter = new SearchFilter();

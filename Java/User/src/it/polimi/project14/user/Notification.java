@@ -15,8 +15,12 @@ public abstract class Notification {
     }
     
     private void checkForecasts() {
-        
+		Sea
+        user.searchEvents(); //?????
+		//sottrazione eventi
     }
 
-    protected abstract void sendEventsToNotify(Set<Event> eventsToNotify);
+    protected abstract void sendEventsToNotify(Set<Event> eventsToNotify) {
+		
+	}
 }
