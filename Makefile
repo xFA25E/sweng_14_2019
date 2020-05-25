@@ -77,8 +77,8 @@ join-cp = $(subst $(null) $(null),$(SEP),$(strip $1))
 
 uml: $(UML_TARGETS)
 
-$(UML_TARGET)/%.$(UML_TARGET_EXT): $(UML_SRC)/%.$(UML_SRC_EXT) | $(PLANTUML_JAR)
-	mkdir -p $(shell dirname $@)
+$(UML_TARGET)/%.$(UML_TARGET_EXT): $(UML_SRC)/%.$(UML_SRC_EXT) $(PLANTUML_JAR)
+	mkdir -p $(@D)
 	java -jar $(PLANTUML_JAR) $(PLANTUML_ARGS) <$< >$@
 
 plantuml: $(UML_LIB)
