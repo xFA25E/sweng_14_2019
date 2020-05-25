@@ -71,7 +71,9 @@ join-cp = $(subst $(null) $(null),$(SEP),$(strip $1))
 #                                   RECEPIES                                  #
 ###############################################################################
 
-.PHONY: uml common server user source run-server run-user run-source pluntuml sqlite clean
+.PHONY: all uml common server user source run-server run-user run-source pluntuml sqlite clean
+
+all: uml common server user source
 
 # UML #########################################################################
 
