@@ -1,0 +1,38 @@
+@startuml
+title Deployment Diagram
+
+node Sorgente  [
+<b>Sorgente
+{JVM}
+
+---
+allarmSorgente.jar
+]
+
+node AppMobile[
+<b>Applicazione Mobile
+{JVM}
+
+---
+allarmMobile.jar
+]
+
+node Server {
+    node Server [
+    <b>AppServer
+    {JVM}
+
+    ---
+    allarmServer.jar
+    ]
+
+    database DB [
+    <b>SQLite
+    ]
+}
+
+Sorgente -- Server : RMI\nTCP/IP
+AppMobile -- Server : RMI\nTCP/IP
+Server -- DB : \lJDBC
+Server .(0. DB :  "  DBMS SQL"
+@enduml

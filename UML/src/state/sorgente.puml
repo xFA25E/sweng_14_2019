@@ -1,0 +1,44 @@
+@startuml
+title State Diagram Sorgente
+
+[*] --> Acceso: accensione
+
+state Acceso {
+    state "Controllo Previsioni" as ControlloPrevisioni
+    state "Invio Dati" as InvioDati
+    state "Sonno di Invio Eventi" as SonnoEventi
+
+    [*] --> ControlloPrevisioni
+
+    ControlloPrevisioni: controllo lista previsioni eventi
+    ControlloPrevisioni -right-> InvioDati: ci sono previsioni
+    ControlloPrevisioni --> SonnoEventi: non ci sono previsioni
+
+    InvioDati: do/ invio dati al sistema centrale
+    InvioDati: do/ svuoto la lista previsioni eventi
+    InvioDati --> SonnoEventi
+
+    SonnoEventi: do/ aspetta 4 ore
+    SonnoEventi --> ControlloPrevisioni
+
+    --
+
+    state "Generazione Previsioni" as GenerazionePrevisioni
+    state "Eventi In Corso" as EventiInCorso
+    state "Sonno di Generazione delle Previsioni" as SonnoGenerazione
+
+    [*] -right-> GenerazionePrevisioni
+
+    GenerazionePrevisioni: genera le previsioni per le prossime 24 ore
+    GenerazionePrevisioni -right-> EventiInCorso: ci sono eventi in corso
+    GenerazionePrevisioni --> SonnoGenerazione: non ci sono eventi in corso
+
+    EventiInCorso: do/ invia dati al sistema centrale
+    EventiInCorso --> SonnoGenerazione
+
+    SonnoGenerazione: do/ aspetta 5 secondi
+    SonnoGenerazione -> GenerazionePrevisioni
+}
+
+Acceso --> [*]: spegnimento
+@enduml

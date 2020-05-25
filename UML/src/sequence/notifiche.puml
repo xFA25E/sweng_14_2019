@@ -1,0 +1,29 @@
+@startuml
+title Sequence Diagram Notifiche
+actor Utente
+
+Utente -> "Applicazione Mobile": Get Notifiche (CAP preferiti)
+activate "Applicazione Mobile"
+
+"Applicazione Mobile" -> "Sistema Centrale": Get Notifiche
+activate "Sistema Centrale"
+
+"Sistema Centrale" -> "Database": Query al Database
+activate "Database"
+
+"Database" -> "Sistema Centrale": Risultato Query
+deactivate "Database"
+
+"Sistema Centrale" -> "Applicazione Mobile": Lista Notifiche
+deactivate "Sistema Centrale"
+
+loop
+"Applicazione Mobile" --> "Applicazione Mobile": Notifica non ancora effettuata
+
+opt Notifica non ancora effettuata
+	"Applicazione Mobile" -> Utente: Notifica
+end
+end
+
+deactivate "Applicazione Mobile"
+@enduml

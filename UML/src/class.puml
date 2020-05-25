@@ -1,0 +1,132 @@
+@startuml
+title Class Diagram
+package source {
+    interface Previsioni<<interface>> {
+        + getPrevisioni() : Set<Evento>
+    }
+
+    class PrevisioniATempo {
+        - previsioni24H: Set<Evento>
+        - timer: Timer [1]
+        + getPrevisioni() : Set<Evento>
+        + setPrevisioni(Set<Evento>)
+        + generaPrevisioni(): Set<Evento> {Query}
+        - calcolaDifferenze()
+    }
+
+    class Sorgente {
+        - id: integer [1]
+        - timer: Timer [1]
+        + inviaPrevisioni(Set<Evento>)
+    }
+    note bottom of Sorgente: Il timer esegue due azioni allo scadere\ndi 2 intervalli differenti\n1 - ogni 4h viene chiamato il metodo\n     "InviaPrevisioni(Previsioni.getPrevisioni())".\n2 - ogni 5sec vengono inviati e cancellati\n     dalla lista previsioni gli eventi immutabili\n     e vengono inviati e non cancellati(necessari\n     per gestire il passaggio a terminato)\n     quelli InCorso\n\n\nGli eventi immutabili sono quelli passati e nello\nstato Avvenuto o Cancellato      
+    note bottom of PrevisioniATempo: Il timer ha una durata di 5sec e allo scadere,\nviene chiamato il metodo "GeneraPrevisioni()".\nGli eventi generati vengono inseriti nella lista\nPrevisioni24h. Se il tempo < now (passato),\nmodifica lo stato (previsto to cancellato).\nSe l'evento è in corso ed è passato un tempo minimo,\nmodifica lo stato (InCorso to avvenuto)\n
+
+    Previsioni "1" <- Sorgente : \t\t\t
+    Previsioni <|.. PrevisioniATempo
+}
+
+package server{
+    interface "Remote (from RMI)" as Remote <<interface>>
+
+    interface ArchivioEventi<<interface>> {
+        + storeEventi(Set<Evento>, Sorgente)
+        + getEventi(FiltroRicerca): Set<Evento> {query} {ordered}
+    }
+
+    class ArchivioEventiImpl {
+        - sqlConn: Connection  [0..1]
+        + storeEventi(Set<Evento>, Sorgente)
+        + getEventi(FiltroRicerca): Set<Evento> {query} {ordered}
+    }
+
+    class "UnicastRemoteObject\n(from rmi.ArchivioEventi)" as UnicastRemoteObject
+
+    class Server {
+        + main(String[] args)
+    }
+
+    Remote <|-- ArchivioEventi
+    ArchivioEventi <|.. ArchivioEventiImpl
+    ArchivioEventiImpl -|> UnicastRemoteObject :\t
+    Server .> ArchivioEventiImpl
+}
+
+Sorgente .> ArchivioEventi
+
+package user {
+    class Utente {
+        - capPreferiti: Set<String> [0..1]
+        + setCapPreferiti(Set<String>)
+        + getAllarmiInEvidenza(): SortedSet<Evento> {query} {ordered}
+        + effettuaRicerca(FiltroRicerca): SortedSet<Evento> {query} {ordered}
+    }
+
+    abstract Notifiche {
+        - eventiNotificati: Set<Evento>
+        - inviaEventiDaNotificare(Set<Evento>)
+    }
+
+    class NotificheATempo {
+        - timer: Timer
+        - controllaPrevisioni()
+    }
+    note bottom of NotificheATempo: Il timer ha una durata di 10sec\ne al suo scadere, viene\neffettuata una query delle previsioni\ncon i cap preferiti dell'utente.\nSe gli eventi ottenuti non sono\ncontenuti nella lista "eventiNotificati",\nvengono inviati al visualizzatore,\nattraverso inviaEventiDaNotificare e quindi,\nvisualizza dell'interfaccia VisualizzaNotifica\ne, in caso di corretta recezione, inseriti\nnella lista "evntiNotificati"
+
+    class Caps {
+        - {static} caps: HashMap<String, HashMap<String, HashSet<String>>>
+        {static} filtra(String comune, String provincia) : Set<String>
+    }
+
+    Utente " 1" <- Notifiche :\t
+    Notifiche <|-- NotificheATempo
+}
+
+ArchivioEventi <. Utente
+
+package common {
+    enum StatoEvento {
+        Previsto
+        InCorso
+        Accaduto
+        Rientrato
+    }
+
+    class Evento<<dataType>> {
+        - id: integer [1]
+        - cap: String  [1]
+        - sorgente: integer [1]
+        - testo: String [0..1]
+        - tipo: String [0..1]
+        - istanteTemporale: DataTime [1]
+        - gravità: integer [1]
+    }
+
+    StatoEvento "1" <- Evento: \tÈ\t
+
+    class FiltroRicerca {
+        - listaCAP: Set<String> [1]
+        - tipo:String [0..1]
+        - istanteTemporale: DateTime [1]
+        + setListaCAP(Set<String>)
+    }
+}
+
+package gui {
+    interface VisualizzaNotifica {
+        + visualizza(Set<Evento>)
+    }
+}
+
+VisualizzaNotifica "\n1" <-- Notifiche
+
+'Layout only
+hide empty members
+skinparam classAttributeIconSize 0
+Sorgente -[hidden]--- StatoEvento
+ArchivioEventi .[hidden].> Server
+ArchivioEventiImpl .[hidden].> Evento
+Notifiche .[hidden].> FiltroRicerca
+Caps -[hidden]> NotificheATempo: \t
+
+@enduml

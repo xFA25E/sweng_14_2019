@@ -1,80 +1,130 @@
 ###############################################################################
-#                            TOP-LEVEL DIRECTORIES                            #
+#                                  VARIABLES                                  #
 ###############################################################################
 
-TARGET_DIR := build
-DOCS_DIR := docs
-JAVA_DIR := src
+# UML #########################################################################
 
-###############################################################################
-#                                   DIAGRAMS                                  #
-###############################################################################
+UML_DIR := UML
+UML_LIB := $(UML_DIR)/lib
+UML_SRC := $(UML_DIR)/src
+UML_SRC_EXT := puml
+UML_TARGET := $(UML_DIR)/target
+UML_TARGET_EXT := png
+UML_SOURCES := $(shell find $(UML_SRC) -type f -name *.$(UML_SRC_EXT))
+UML_TARGETS := $(UML_SOURCES:$(UML_SRC)/%.$(UML_SRC_EXT)=$(UML_TARGET)/%.$(UML_TARGET_EXT))
 
-DIAGRAMS_SRC_DIR := $(DOCS_DIR)/diagrams
-DIAGRAMS_TARGET_DIR := $(TARGET_DIR)/diagrams
-
-DIAGRAMS_EXT := png
-ifeq ($(DIAGRAMS_EXT), tex)
-	DIAGRAMS_ARG := -tlatex
+PLANTUML := plantuml.jar
+PLANTUML_JAR := $(UML_LIB)/$(PLANTUML)
+PLANTUML_ARGS := -p
+ifeq ($(UML_TARGET_EXT), tex)
+	PLANTUML_ARGS += -tlatex
 else
-	DIAGRAMS_ARG := -t$(DIAGRAMS_EXT)
+	PLANTUML_ARGS += -t$(UML_TARGET_EXT)
 endif
 
-DIAGRAMS_SOURCES := $(shell find $(DIAGRAMS_SRC_DIR) -type f -name *.puml)
-PLANTUML := plantuml.jar
-PLANTUML_JAR := build/$(PLANTUML)
+# Java ########################################################################
 
-###############################################################################
-#                                     JAVA                                    #
-###############################################################################
+JAVA_DIR := Java
+ifeq ($(OS),Windows_NT)
+	SEP := ;
+else
+	SEP := :
+endif
 
-JAVA_TARGET_DIR := $(TARGET_DIR)/java
-JAVA_SOURCES := $(shell find $(JAVA_SRC_DIR) -type f -name *.java)
+COMMON_DIR := $(JAVA_DIR)/Common
+COMMON_SRC := $(COMMON_DIR)/src
+COMMON_BIN := $(COMMON_DIR)/bin
+COMMON_TARGET := $(COMMON_DIR)/target
+COMMON_JAR := $(COMMON_TARGET)/common.jar
+COMMON_SOURCES := $(shell find $(COMMON_SRC) -type f -name *.java)
+
+SERVER_DIR := $(JAVA_DIR)/Server
+SERVER_SRC := $(SERVER_DIR)/src
+SERVER_LIB := $(SERVER_DIR)/lib
+SERVER_BIN := $(SERVER_DIR)/bin
+SERVER_TARGET := $(SERVER_DIR)/target
+SERVER_JAR := $(SERVER_TARGET)/server.jar
+SERVER_SOURCES := $(shell find $(SERVER_SRC) -type f -name *.java)
 
 SQLITE := sqlite-jdbc-3.30.1.jar
-SQLITE_JAR := $(JAVA_TARGET_DIR)/$(SQLITE)
+SQLITE_JAR := $(SERVER_LIB)/$(SQLITE)
+
+USER_DIR := $(JAVA_DIR)/User
+USER_SRC := $(USER_DIR)/src
+USER_BIN := $(USER_DIR)/bin
+USER_TARGET := $(USER_DIR)/target
+USER_JAR := $(USER_TARGET)/user.jar
+USER_SOURCES := $(shell find $(USER_SRC) -type f -name *.java)
+
+SOURCE_DIR := $(JAVA_DIR)/Source
+SOURCE_SRC := $(SOURCE_DIR)/src
+SOURCE_BIN := $(SOURCE_DIR)/bin
+SOURCE_TARGET := $(SOURCE_DIR)/target
+SOURCE_JAR := $(SOURCE_TARGET)/source.jar
+SOURCE_SOURCES := $(shell find $(SOURCE_SRC) -type f -name *.java)
+
+# OTHER #######################################################################
+
+join-cp = $(subst $(null) $(null),$(SEP),$(strip $1))
 
 ###############################################################################
 #                                   RECEPIES                                  #
 ###############################################################################
 
-# JAVA ########################################################################
+.PHONY: uml common server user source run-server run-user run-source pluntuml sqlite clean
 
-run: java $(SQLITE_JAR)
-	java -classpath '$(JAVA_TARGET_DIR):$(SQLITE_JAR)' it.polimi.project14.CivilProtection server
+# UML #########################################################################
 
-java: $(JAVA_SOURCES) $(JAVA_TARGET_DIR)
-	javac -d $(JAVA_TARGET_DIR) $(JAVA_SOURCES)
+uml: $(UML_TARGETS)
 
-# DIAGRAMS ####################################################################
+$(UML_TARGET)/%.$(UML_TARGET_EXT): $(UML_SRC)/%.$(UML_SRC_EXT) | $(PLANTUML_JAR)
+	mkdir -p $(shell dirname $@)
+	java -jar $(PLANTUML_JAR) $(PLANTUML_ARGS) <$< >$@
 
-diagrams: $(DIAGRAMS_SOURCES) $(PLANTUML_JAR)
-	for puml in $(DIAGRAMS_SOURCES); do \
-		target_dir=$$(dirname .$${puml#$(DIAGRAMS_SRC_DIR)}); \
-		target_dir=$(DIAGRAMS_TARGET_DIR)/$${target_dir}; \
-		target_file=$${target_dir}/$$(basename $$puml .puml).$(DIAGRAMS_EXT); \
-		\
-		mkdir -p "$${target_dir}"; \
-		java -jar $(PLANTUML_JAR) $(DIAGRAMS_ARG) -p <"$${puml}" >"$${target_file}"; \
-	done
-
-# DEPENDENCIES ################################################################
-
-sqlite: $(JAVA_TARGET_DIR)
-	wget -O $(SQLITE_JAR) "https://bitbucket.org/xerial/sqlite-jdbc/downloads/$(SQLITE)"
-
-plantuml: $(TARGET_DIR)
+plantuml: $(UML_LIB)
 	wget -O $(PLANTUML_JAR) "https://sourceforge.net/projects/plantuml/files/$(PLANTUML)/download"
 
-# DIRECTORIES #################################################################
+# Java ########################################################################
 
-$(JAVA_TARGET_DIR):
-	make -p $(JAVA_TARGET_DIR)
+run-server: $(SERVER_JAR) $(SQLITE_JAR) $(COMMON_JAR)
+	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionServer
 
-$(TARGET_DIR):
-	mkdir -p $(TARGET_DIR)
+run-user: $(USER_JAR) $(COMMON_JAR)
+	java -cp "$(COMMON_JAR)" -jar "$(USER_JAR)"
+
+run-source: $(SOURCE_JAR) $(COMMON_JAR)
+	java -cp "$(COMMON_JAR)" -jar "$(SOURCE_JAR)"
+
+common: $(COMMON_JAR)
+server: $(SERVER_JAR)
+user: $(USER_JAR)
+source: $(SOURCE_JAR)
+
+$(COMMON_JAR): $(COMMON_SOURCES) $(COMMON_BIN) $(COMMON_TARGET)
+	javac -target 8 -d $(COMMON_BIN) $(COMMON_SOURCES)
+	jar cf $(COMMON_JAR) -C $(COMMON_BIN) .
+
+$(SERVER_JAR): $(SERVER_SOURCES) $(SERVER_BIN) $(SERVER_TARGET) $(COMMON_JAR)
+	javac -target 8 -d $(SERVER_BIN) -cp $(COMMON_JAR) $(SERVER_SOURCES)
+	jar cfe $(SERVER_JAR) it.polimi.project14.CivilProtectionServer -C $(SERVER_BIN) .
+
+$(USER_JAR): $(USER_SOURCES) $(USER_BIN) $(USER_TARGET) $(COMMON_JAR)
+	javac -target 8 -d $(USER_BIN) -cp $(COMMON_JAR) $(USER_SOURCES)
+	jar cfe $(USER_JAR) it.polimi.project14.CivilProtectionUser -C $(USER_BIN) .
+
+$(SOURCE_JAR): $(SOURCE_SOURCES) $(SOURCE_BIN) $(SOURCE_TARGET) $(COMMON_JAR)
+	javac -target 8 -d $(SOURCE_BIN) -cp $(COMMON_JAR) $(SOURCE_SOURCES)
+	jar cfe $(SOURCE_JAR) it.polimi.project14.CivilProtectionSource -C $(SOURCE_BIN) .
+
+sqlite: $(SERVER_LIB)
+	wget -O $(SQLITE_JAR) "https://bitbucket.org/xerial/sqlite-jdbc/downloads/$(SQLITE)"
 
 # CLEAN #######################################################################
 
 clean:
-	rm -r $(TARGET_DIR)
+	rm -r $(UML_TARGET) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) || exit 0
+
+# DIRECTORIES #################################################################
+
+$(UML_LIB) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(SERVER_LIB) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET):
+	mkdir -p $@

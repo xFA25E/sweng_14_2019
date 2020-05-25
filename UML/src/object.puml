@@ -1,0 +1,37 @@
+@startuml
+title Object Diagram
+object currGestorePrevisioni {
+    previsione24H = {EventoTerr, Evento1}
+}
+
+object currSorgente {
+    id = 100
+    timer = currTimer
+}
+
+object currServer {
+    jdbcConnection = currConnection
+}
+
+object currUtente {
+    capPreferiti = {"91026", "22100"}
+    GestoreNotifica = currGestoreNotifica
+}
+
+object currFiltroRicerca {
+    listaCAP = {"91026"}
+    tipo = "terremoto"
+    istanteTemporale = 30/03/2020 18:00
+}
+
+object currGestoreNotifica {
+    utente = currUtente
+    timer = currTimer
+}
+
+currSorgente -- currGestorePrevisioni
+currSorgente - currServer
+currServer - currUtente
+currUtente -- currFiltroRicerca
+currUtente -- currGestoreNotifica
+@enduml
