@@ -51,8 +51,13 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
 
     private static String insertQuery = ""
         + "INSERT INTO event (source_id, event_id, cap, message,"
-        + "                     expected_at, severity, status, kind)"
-        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        + "                   expected_at, severity, status, kind) "
+        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?) "
+        + "ON CONFLICT(source_id, event_id) DO UPDATE"
+        + "  severity = ?,"
+        + "  message = ?,"
+        + "  status = ? "
+        + "WHERE status NOT IN ('occured', 'canceled')";
 
     private static String selectQuery = ""
         + "SELECT source_id,"
@@ -89,6 +94,9 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
                     pstmt.setInt(6, event.getSeverity());
                     pstmt.setString(7, statusToString(event.getStatus()));
                     pstmt.setString(8, event.getKind());
+                    pstmt.setInt(9, event.getSeverity());
+                    pstmt.setString(10, event.getMessage());
+                    pstmt.setString(11, statusToString(event.getStatus()));
 
                     pstmt.addBatch();
                 }
