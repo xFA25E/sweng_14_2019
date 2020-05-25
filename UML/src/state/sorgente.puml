@@ -4,40 +4,61 @@ title State Diagram Sorgente
 [*] --> Acceso: accensione
 
 state Acceso {
-    state "Controllo Previsioni" as ControlloPrevisioni
-    state "Invio Dati" as InvioDati
-    state "Sonno di Invio Eventi" as SonnoEventi
 
-    [*] --> ControlloPrevisioni
+    state "Generazione Previsioni" as GenPrev
+    state "Aggiorna: Previsto -> Rientrato" as AggPrevCanc
+    state "Aggiorna: InCorso -> Avvenuto" as AggCorAvv
+    state "Sonno di Generazione delle Previsioni" as SonnoGen
 
-    ControlloPrevisioni: controllo lista previsioni eventi
-    ControlloPrevisioni -right-> InvioDati: ci sono previsioni
-    ControlloPrevisioni --> SonnoEventi: non ci sono previsioni
+    [*] --> GenPrev
 
-    InvioDati: do/ invio dati al sistema centrale
-    InvioDati: do/ svuoto la lista previsioni eventi
-    InvioDati --> SonnoEventi
+    GenPrev: genera le previsioni per le prossime 24 ore
+    GenPrev --> AggPrevCanc: Ci sono eventi previsti scaduti
+    GenPrev --> AggCorAvv: Non ci sono eventi previsti scaduti,\nma ci sono eventi in corso scaduti
+    GenPrev --> SonnoGen: Non ci sono eventi scaduti
 
-    SonnoEventi: do/ aspetta 4 ore
-    SonnoEventi --> ControlloPrevisioni
+    AggPrevCanc: Cambia lo stato degli eventi previsti scaduti in cancellati
+    AggPrevCanc --> AggCorAvv: Ci sono eventi in corso scaduti
+    AggPrevCanc --> SonnoGen: Non ci sono eventi in corso scaduti
+
+    AggCorAvv: Cambia lo stato degli eventi in corso scaduti in avvenuti
+    AggCorAvv --> SonnoGen
+
+    SonnoGen: do/ aspetta 5 secondi
+    SonnoGen -> GenPrev
 
     --
 
-    state "Generazione Previsioni" as GenerazionePrevisioni
-    state "Eventi In Corso" as EventiInCorso
-    state "Sonno di Generazione delle Previsioni" as SonnoGenerazione
+    state "Controllo Previsioni Urgenti" as ConPrevUrg
+    state "Invio Eventi Urgenti" as InvioEvtUrg
+    state "Sonno di Previsioni Urgenti" as SonnoPrevUrg
 
-    [*] -right-> GenerazionePrevisioni
+    [*] --> ConPrevUrg
 
-    GenerazionePrevisioni: genera le previsioni per le prossime 24 ore
-    GenerazionePrevisioni -right-> EventiInCorso: ci sono eventi in corso
-    GenerazionePrevisioni --> SonnoGenerazione: non ci sono eventi in corso
+    ConPrevUrg: controllo lista previsioni eventi
+    ConPrevUrg --> InvioEvtUrg: ci sono previsioni urgenti
+    ConPrevUrg --> SonnoPrevUrg: non ci sono previsioni urgenti
 
-    EventiInCorso: do/ invia dati al sistema centrale
-    EventiInCorso --> SonnoGenerazione
+    InvioEvtUrg: do/ invio eventi urgenti al sistema centrale
+    InvioEvtUrg: do/ tolgo previsioni immutabili
+    InvioEvtUrg --> SonnoPrevUrg
 
-    SonnoGenerazione: do/ aspetta 5 secondi
-    SonnoGenerazione -> GenerazionePrevisioni
+    SonnoPrevUrg: do/ aspetta 5 secondi
+    SonnoPrevUrg --> ConPrevUrg
+
+    ---
+
+    state "Invio Previsioni" as InvPrev
+    state "Sonno di Previsioni" as SonnoPrev
+
+    [*] --> InvPrev
+
+    InvPrev: Invio previsioni al sistema centrale
+    InvPrev --> SonnoPrev
+
+    SonnoPrev: do/ aspetta 4 ore
+    SonnoPrev --> InvPrev
+
 }
 
 Acceso --> [*]: spegnimento
