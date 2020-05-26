@@ -11,13 +11,13 @@ public class TimedNotification extends Notification {
 	
     public class Notify extends TimerTask {
         public void run() {
-			if (checkForecast    //DA FINIRE
-            sendEventsToNotify(CAPS?);
+			if ( checkForecasts() )
+                sendEventsToNotify();
         }
     }
 
     Timer timer = new Timer();
     TimerTask task = new Notify();
  
-    timer.schedule( task, 0, 10000 );
+    timer.schedule(task, 0, 10000);
 }
