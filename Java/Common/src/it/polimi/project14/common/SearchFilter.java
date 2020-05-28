@@ -28,8 +28,10 @@ public class SearchFilter implements java.io.Serializable {
         return this.kind;
     }
 
-    public void setExpectedSince(LocalDateTime expectedSince) {
-        assert (this.expectedUntil == null || this.expectedUntil.isAfter(expectedSince));
+    public void setExpectedSince(LocalDateTime expectedSince) throws IllegalArgumentException {
+        if (!(this.expectedUntil == null || this.expectedUntil.isAfter(expectedSince))) {
+            throw new IllegalArgumentException("expectedSince should be smaller than expectedUntil");
+        }
         this.expectedSince = expectedSince;
     }
 
@@ -41,8 +43,10 @@ public class SearchFilter implements java.io.Serializable {
         return expectedUntil;
     }
 
-    public void setExpectedUntil(LocalDateTime expectedUntil) {
-        assert (this.expectedSince == null || this.expectedSince.isBefore(expectedUntil));
+    public void setExpectedUntil(LocalDateTime expectedUntil) throws IllegalArgumentException {
+        if (!(this.expectedSince == null || this.expectedSince.isBefore(expectedUntil))) {
+            throw new IllegalArgumentException("expectedUntil should be bigger than expectedSince");
+        }
         this.expectedUntil = expectedUntil;
     }
 
