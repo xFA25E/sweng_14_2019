@@ -8,7 +8,7 @@ public class Event implements Comparable<Event>, Serializable {
      *
      */
     private static final long serialVersionUID = -1046844052828004353L;
-    
+
     private long sourceId;
     private long eventId;
     private String cap;
@@ -35,7 +35,7 @@ public class Event implements Comparable<Event>, Serializable {
         if (cap.matches("\\d{5}")) {
             this.cap = cap;
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Cap should be a string of 5 digits");
         }
     }
 
@@ -67,8 +67,12 @@ public class Event implements Comparable<Event>, Serializable {
         return severity;
     }
 
-    public void setSeverity(int severity) {
-        this.severity = severity;
+    public void setSeverity(int severity) throws IllegalArgumentException {
+        if (0 <= severity && severity <= 10) {
+            this.severity = severity;
+        } else {
+            throw new IllegalArgumentException("Severity should be a number from 0 to 10");
+        }
     }
 
     public EventStatus getStatus() {
