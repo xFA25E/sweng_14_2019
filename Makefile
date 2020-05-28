@@ -63,6 +63,16 @@ SOURCE_TARGET := $(SOURCE_DIR)/target
 SOURCE_JAR := $(SOURCE_TARGET)/source.jar
 SOURCE_SOURCES := $(shell find $(SOURCE_SRC) -type f -name *.java)
 
+TEST_DIR := $(JAVA_DIR)/Test
+TEST_SRC := $(TEST_DIR)/src
+TEST_LIB := $(TEST_DIR)/lib
+TEST_BIN := $(TEST_DIR)/bin
+TEST_TARGET := $(TEST_DIR)/target
+TEST_JAR := $(TEST_TARGET)/test.jar
+TEST_SOURCES := $(shell find $(TEST_SRC) -type f -name *.java)
+
+JUNIT_JAR := $(TEST_LIB)/junit-4.13.jar
+
 # OTHER #######################################################################
 
 join-cp = $(subst $(null) $(null),$(SEP),$(strip $1))
@@ -71,7 +81,7 @@ join-cp = $(subst $(null) $(null),$(SEP),$(strip $1))
 #                                   RECEPIES                                  #
 ###############################################################################
 
-.PHONY: all uml common server user source run-server run-user run-source pluntuml sqlite clean
+.PHONY: all uml common server user source test run-server run-user run-source run-test junit pluntuml sqlite clean
 
 all: uml common server user source
 
@@ -97,10 +107,15 @@ run-user: $(USER_JAR) $(COMMON_JAR)
 run-source: $(SOURCE_JAR) $(COMMON_JAR)
 	java -cp "$(COMMON_JAR)" -jar "$(SOURCE_JAR)"
 
+# $(USER_JAR)
+run-test: $(TEST_JAR) $(SQLITE_JAR) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(JUNIT_JAR)
+	java -cp "$(call join-cp,$^)" -jar $(TEST_JAR)
+
 common: $(COMMON_JAR)
 server: $(SERVER_JAR)
 user: $(USER_JAR)
 source: $(SOURCE_JAR)
+test: $(TEST_JAR)
 
 $(COMMON_JAR): $(COMMON_SOURCES) $(COMMON_BIN) $(COMMON_TARGET)
 	javac -target 8 -d $(COMMON_BIN) $(COMMON_SOURCES)
@@ -118,15 +133,23 @@ $(SOURCE_JAR): $(SOURCE_SOURCES) $(SOURCE_BIN) $(SOURCE_TARGET) $(COMMON_JAR)
 	javac -target 8 -d $(SOURCE_BIN) -cp $(COMMON_JAR) $(SOURCE_SOURCES)
 	jar cfe $(SOURCE_JAR) it.polimi.project14.CivilProtectionSource -C $(SOURCE_BIN) .
 
+# $(USER_JAR)
+$(TEST_JAR): $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(JUNIT_JAR) | $(TEST_BIN) $(TEST_TARGET) $(TEST_SOURCES)
+	javac -target 8 -d $(TEST_BIN) -cp "$(call join-cp,$^)" $(TEST_SOURCES)
+	jar cfe $(TEST_JAR) it.polimi.project14.Test -C $(TEST_BIN) .
+
 sqlite: $(SERVER_LIB)
 	wget -O $(SQLITE_JAR) "https://bitbucket.org/xerial/sqlite-jdbc/downloads/$(SQLITE)"
+
+junit: $(TEST_LIB)
+	wget -O $(JUNIT_JAR) "https://search.maven.org/remotecontent?filepath=junit/junit/4.13/junit-4.13.jar"
 
 # CLEAN #######################################################################
 
 clean:
-	-rm -r $(UML_TARGET) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET)
+	-rm -r $(UML_TARGET) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) $(TEST_BIN) $(TEST_TARGET)
 
 # DIRECTORIES #################################################################
 
-$(UML_LIB) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(SERVER_LIB) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET):
+$(TEST_LIB) $(TEST_BIN) $(TEST_TARGET) $(UML_LIB) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(SERVER_LIB) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET):
 	mkdir -p $@
