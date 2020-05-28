@@ -11,8 +11,10 @@ public class TimedNotification extends Notification {
 	
     public class Notify extends TimerTask {
         public void run() {
-			if ( checkForecasts() )
+			Set<Event> eventsToNotify = getForecasts();
+			if (eventsToNotify.isEmpty()) {
                 sendEventsToNotify();
+			}
         }
     }
 

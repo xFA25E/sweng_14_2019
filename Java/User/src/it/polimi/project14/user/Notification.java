@@ -9,26 +9,24 @@ import it.polimi.project14.gui.ViewNotification;
 
 public abstract class Notification {
     private Set<Event> notifiedEvents;
-	private Set<Event> eventsToNotify;
     private User user;
-	private Set<String> favoriteCaps; //?
 
     Notification(User user) {
         this.user = user;
         notifiedEvents = new HashSet<Event>();
     }
     
-    private boolean checkForecasts() { //boolean o passo come parametro o controllo dentro check?
+    private Set<Events> getForecasts() {
 		SearchFilter searchFilter = new SearchFilter();
-		searchFilter.setCapList(favoriteCaps);
-		eventsToNotify = user.searchEvents(searchFilter);
-		eventsToNotify.removeAll(notifiedEvents); //sottrazione eventi
-		return eventsToNotify.isEmpty();
+		searchFilter.setCapList(user.getFavoriteCaps);
+		Set<Event> eventsToNotify = user.searchEvents(searchFilter);
+		eventsToNotify.removeAll(notifiedEvents); //sottrazione degli eventi già notificati
+		return eventsToNotify;
     }
 
-    protected abstract void sendEventsToNotify() {  //Set<Event> eventsToNotify) {
-		ViewNotification(eventsToNotify); //GUI non ancora fatto
-		notifiedEvents.addAll(eventsToNotify);
-		eventsToNotify.clear();
+    protected abstract void sendEventsToNotify(Set<Event> eventsToNotify) {
+		if (ViewNotification(eventsToNotify)) {
+		    notifiedEvents.addAll(eventsToNotify);
+		}
 	}
 }
