@@ -63,15 +63,16 @@ SOURCE_TARGET := $(SOURCE_DIR)/target
 SOURCE_JAR := $(SOURCE_TARGET)/source.jar
 SOURCE_SOURCES := $(shell find $(SOURCE_SRC) -type f -name *.java)
 
-TEST_DIR := $(JAVA_DIR)/Test
-TEST_SRC := $(TEST_DIR)/src
-TEST_LIB := $(TEST_DIR)/lib
-TEST_BIN := $(TEST_DIR)/bin
-TEST_TARGET := $(TEST_DIR)/target
-TEST_JAR := $(TEST_TARGET)/test.jar
-TEST_SOURCES := $(shell find $(TEST_SRC) -type f -name *.java)
+TESTS_DIR := $(JAVA_DIR)/Tests
+TESTS_SRC := $(TESTS_DIR)/src
+TESTS_LIB := $(TESTS_DIR)/lib
+TESTS_BIN := $(TESTS_DIR)/bin
+TESTS_TARGET := $(TESTS_DIR)/target
+TESTS_JAR := $(TESTS_TARGET)/tests.jar
+TESTS_SOURCES := $(shell find $(TESTS_SRC) -type f -name *.java)
 
-JUNIT_JAR := $(TEST_LIB)/junit-4.13.jar
+JUNIT_JAR := $(TESTS_LIB)/junit-4.13.jar
+HAMCREST_JAR := $(TESTS_LIB)/hamcrest-core-1.3.jar
 
 # OTHER #######################################################################
 
@@ -81,7 +82,10 @@ join-cp = $(subst $(null) $(null),$(SEP),$(strip $1))
 #                                   RECEPIES                                  #
 ###############################################################################
 
-.PHONY: all uml common server user source test run-server run-user run-source run-test junit pluntuml sqlite clean
+.PHONY: all \
+uml common server user source tests \
+run-server run-user run-source run-tests \
+junit pluntuml sqlite clean
 
 all: uml common server user source
 
@@ -108,14 +112,14 @@ run-source: $(SOURCE_JAR) $(COMMON_JAR)
 	java -cp "$(COMMON_JAR)" -jar "$(SOURCE_JAR)"
 
 # $(USER_JAR)
-run-test: $(TEST_JAR) $(SQLITE_JAR) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(JUNIT_JAR)
-	java -cp "$(call join-cp,$^)" -jar $(TEST_JAR)
+run-tests: $(TESTS_JAR) $(SQLITE_JAR) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
+	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionTests
 
 common: $(COMMON_JAR)
 server: $(SERVER_JAR)
 user: $(USER_JAR)
 source: $(SOURCE_JAR)
-test: $(TEST_JAR)
+tests: $(TESTS_JAR)
 
 $(COMMON_JAR): $(COMMON_SOURCES) $(COMMON_BIN) $(COMMON_TARGET)
 	javac -target 8 -d $(COMMON_BIN) $(COMMON_SOURCES)
@@ -134,22 +138,25 @@ $(SOURCE_JAR): $(SOURCE_SOURCES) $(SOURCE_BIN) $(SOURCE_TARGET) $(COMMON_JAR)
 	jar cfe $(SOURCE_JAR) it.polimi.project14.CivilProtectionSource -C $(SOURCE_BIN) .
 
 # $(USER_JAR)
-$(TEST_JAR): $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(JUNIT_JAR) | $(TEST_BIN) $(TEST_TARGET) $(TEST_SOURCES)
-	javac -target 8 -d $(TEST_BIN) -cp "$(call join-cp,$^)" $(TEST_SOURCES)
-	jar cfe $(TEST_JAR) it.polimi.project14.Test -C $(TEST_BIN) .
+$(TESTS_JAR): $(TESTS_SOURCES) $(TESTS_BIN) $(TESTS_TARGET) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
+	javac -target 8 -d $(TESTS_BIN) -cp "$(COMMON_JAR):$(SERVER_JAR):$(SOURCE_JAR):$(JUNIT_JAR):$(HAMCREST_JAR)" $(TESTS_SOURCES)
+	jar cfe $(TESTS_JAR) it.polimi.project14.CivilProtectionTests -C $(TESTS_BIN) .
 
 sqlite: $(SERVER_LIB)
 	wget -O $(SQLITE_JAR) "https://bitbucket.org/xerial/sqlite-jdbc/downloads/$(SQLITE)"
 
-junit: $(TEST_LIB)
+junit: $(TESTS_LIB)
 	wget -O $(JUNIT_JAR) "https://search.maven.org/remotecontent?filepath=junit/junit/4.13/junit-4.13.jar"
+
+hamcrest: $(TESTS_LIB)
+	wget -O $(HAMCREST_JAR) "https://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"
 
 # CLEAN #######################################################################
 
 clean:
-	-rm -r $(UML_TARGET) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) $(TEST_BIN) $(TEST_TARGET)
+	-rm -r $(UML_TARGET) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) $(TESTS_BIN) $(TESTS_TARGET)
 
 # DIRECTORIES #################################################################
 
-$(TEST_LIB) $(TEST_BIN) $(TEST_TARGET) $(UML_LIB) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(SERVER_LIB) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET):
+$(TESTS_LIB) $(TESTS_BIN) $(TESTS_TARGET) $(UML_LIB) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(SERVER_LIB) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET):
 	mkdir -p $@
