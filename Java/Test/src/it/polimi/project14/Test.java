@@ -1,4 +1,4 @@
-package it.polimi.project14.test;
+package it.polimi.project14;
 
 public class Test {
     public static void main(String[] args) {
