@@ -19,7 +19,7 @@ public class TimedNotification extends Notification {
     public class Notify extends TimerTask {
         public void run() {
             try {Set<Event> eventsToNotify = getForecasts();
-			if (eventsToNotify.isEmpty()) {
+			if (!eventsToNotify.isEmpty()) {
                 sendEventsToNotify(eventsToNotify);
                 } 
             } catch (Exception e) {
