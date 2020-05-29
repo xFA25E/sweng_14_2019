@@ -1,8 +1,5 @@
 package it.polimi.project14.user.gui.components;
 
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import java.awt.GridBagConstraints;
@@ -14,217 +11,215 @@ import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
-public class PnlPreferences extends JFrame {
-   static PnlPreferences thePnlPreferences;
-
-   JPanel pnlReturnPanel;
-   JLabel lblMyCaps;
+public class PnlPreferences extends JPanel {
+   
    JTextField txfMyCaps;
    JButton btnDeleteCaps;
-   
+   JLabel lblLayoutHelper;
+
    JPanel pnlFilterCaps;
-   JComboBox cmbProvince;
-   JComboBox cmbMunicipality;
+   JComboBox<String> cmbProvince;
+   JComboBox<String> cmbMunicipality;
    JLabel lblMunicipality;
    JLabel lblProvince;
    JButton btnAddCaps;
-   
+
    JPanel pnlFoundCaps;
    JLabel lblFoundCaps;
    JTextField txfFoundCaps;
 
-   public static void main(String args[]) {
-      try {
-         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      } catch (ClassNotFoundException e) {
-      } catch (InstantiationException e) {
-      } catch (IllegalAccessException e) {
-      } catch (UnsupportedLookAndFeelException e) {
-      }
-      thePnlPreferences = new PnlPreferences();
-   }
-
    public PnlPreferences() {
-      super("TITLE");
+      super();
 
-      pnlReturnPanel = new JPanel();
-      GridBagLayout gbPanel0 = new GridBagLayout();
-      GridBagConstraints gbcPanel0 = new GridBagConstraints();
-      pnlReturnPanel.setLayout(gbPanel0);
+      GridBagLayout gbPnlPreferences = new GridBagLayout();
+      GridBagConstraints gbcPnlPreferences = new GridBagConstraints();
+      this.setLayout(gbPnlPreferences);
 
-      lblMyCaps = new JLabel("I tuoi CAP :");
-      gbcPanel0.gridx = 0;
-      gbcPanel0.gridy = 0;
-      gbcPanel0.gridwidth = 1;
-      gbcPanel0.gridheight = 1;
-      gbcPanel0.fill = GridBagConstraints.BOTH;
-      gbcPanel0.weightx = 0;
-      gbcPanel0.weighty = 0;
-      gbcPanel0.anchor = GridBagConstraints.WEST;
-      gbcPanel0.insets = new Insets(10, 10, 10, 10);
-      gbPanel0.setConstraints(lblMyCaps, gbcPanel0);
-      pnlReturnPanel.add(lblMyCaps);
+      lblLayoutHelper = new JLabel("I tuoi CAP :");
+      gbcPnlPreferences.gridx = 0;
+      gbcPnlPreferences.gridy = 0;
+      gbcPnlPreferences.gridwidth = 1;
+      gbcPnlPreferences.gridheight = 1;
+      gbcPnlPreferences.fill = GridBagConstraints.BOTH;
+      gbcPnlPreferences.weightx = 0;
+      gbcPnlPreferences.weighty = 0;
+      gbcPnlPreferences.anchor = GridBagConstraints.WEST;
+      gbcPnlPreferences.insets = new Insets(10, 10, 10, 10);
+      gbPnlPreferences.setConstraints(lblLayoutHelper, gbcPnlPreferences);
+      this.add(lblLayoutHelper);
 
       txfMyCaps = new JTextField();
       txfMyCaps.setBackground(new Color(240, 240, 240));
       txfMyCaps.setEditable(false);
-      gbcPanel0.gridx = 1;
-      gbcPanel0.gridy = 0;
-      gbcPanel0.gridwidth = 2;
-      gbcPanel0.gridheight = 1;
-      gbcPanel0.fill = GridBagConstraints.HORIZONTAL;
-      gbcPanel0.weightx = 0;
-      gbcPanel0.weighty = 0;
-      gbcPanel0.anchor = GridBagConstraints.NORTH;
-      gbcPanel0.insets = new Insets(10, 10, 10, 10);
-      gbPanel0.setConstraints(txfMyCaps, gbcPanel0);
-      pnlReturnPanel.add(txfMyCaps);
+      gbcPnlPreferences.gridx = 1;
+      gbcPnlPreferences.gridy = 0;
+      gbcPnlPreferences.gridwidth = 2;
+      gbcPnlPreferences.gridheight = 1;
+      gbcPnlPreferences.fill = GridBagConstraints.HORIZONTAL;
+      gbcPnlPreferences.weightx = 0;
+      gbcPnlPreferences.weighty = 0;
+      gbcPnlPreferences.anchor = GridBagConstraints.NORTH;
+      gbcPnlPreferences.insets = new Insets(10, 10, 10, 10);
+      gbPnlPreferences.setConstraints(txfMyCaps, gbcPnlPreferences);
+      this.add(txfMyCaps);
 
       btnDeleteCaps = new JButton("Elimina Cap preferiti");
-      gbcPanel0.gridx = 2;
-      gbcPanel0.gridy = 1;
-      gbcPanel0.gridwidth = 1;
-      gbcPanel0.gridheight = 1;
-      gbcPanel0.fill = GridBagConstraints.VERTICAL;
-      gbcPanel0.weightx = 1;
-      gbcPanel0.weighty = 0;
-      gbcPanel0.anchor = GridBagConstraints.NORTHEAST;
-      gbcPanel0.insets = new Insets(3, 3, 3, 10);
-      gbPanel0.setConstraints(btnDeleteCaps, gbcPanel0);
-      pnlReturnPanel.add(btnDeleteCaps);
+      gbcPnlPreferences.gridx = 2;
+      gbcPnlPreferences.gridy = 1;
+      gbcPnlPreferences.gridwidth = 1;
+      gbcPnlPreferences.gridheight = 1;
+      gbcPnlPreferences.fill = GridBagConstraints.VERTICAL;
+      gbcPnlPreferences.weightx = 1;
+      gbcPnlPreferences.weighty = 0;
+      gbcPnlPreferences.anchor = GridBagConstraints.NORTHEAST;
+      gbcPnlPreferences.insets = new Insets(3, 3, 3, 10);
+      gbPnlPreferences.setConstraints(btnDeleteCaps, gbcPnlPreferences);
+      this.add(btnDeleteCaps);
 
       pnlFilterCaps = new JPanel();
       pnlFilterCaps.setBorder(BorderFactory.createTitledBorder("Aggiungi CAP"));
-      GridBagLayout gbPanel1 = new GridBagLayout();
-      GridBagConstraints gbcPanel1 = new GridBagConstraints();
-      pnlFilterCaps.setLayout(gbPanel1);
+      GridBagLayout gbPnlFilterCaps = new GridBagLayout();
+      GridBagConstraints gbcPnlFilterCaps = new GridBagConstraints();
+      pnlFilterCaps.setLayout(gbPnlFilterCaps);
 
       lblProvince = new JLabel("Filtra per provincia");
-      gbcPanel1.gridx = 0;
-      gbcPanel1.gridy = 0;
-      gbcPanel1.gridwidth = 1;
-      gbcPanel1.gridheight = 1;
-      gbcPanel1.fill = GridBagConstraints.NONE;
-      gbcPanel1.weightx = 0;
-      gbcPanel1.weighty = 0;
-      gbcPanel1.anchor = GridBagConstraints.WEST;
-      gbcPanel1.insets = new Insets(10, 10, 3, 15);
-      gbPanel1.setConstraints(lblProvince, gbcPanel1);
+      gbcPnlFilterCaps.gridx = 0;
+      gbcPnlFilterCaps.gridy = 0;
+      gbcPnlFilterCaps.gridwidth = 1;
+      gbcPnlFilterCaps.gridheight = 1;
+      gbcPnlFilterCaps.fill = GridBagConstraints.NONE;
+      gbcPnlFilterCaps.weightx = 0;
+      gbcPnlFilterCaps.weighty = 0;
+      gbcPnlFilterCaps.anchor = GridBagConstraints.WEST;
+      gbcPnlFilterCaps.insets = new Insets(10, 10, 3, 15);
+      gbPnlFilterCaps.setConstraints(lblProvince, gbcPnlFilterCaps);
       pnlFilterCaps.add(lblProvince);
 
       lblMunicipality = new JLabel("Filtra per comune");
-      gbcPanel1.gridx = 1;
-      gbcPanel1.gridy = 0;
-      gbcPanel1.gridwidth = 2;
-      gbcPanel1.gridheight = 1;
-      gbcPanel1.fill = GridBagConstraints.NONE;
-      gbcPanel1.weightx = 1;
-      gbcPanel1.weighty = 0;
-      gbcPanel1.anchor = GridBagConstraints.WEST;
-      gbcPanel1.insets = new Insets(10, 15, 3, 10);
-      gbPanel1.setConstraints(lblMunicipality, gbcPanel1);
+      gbcPnlFilterCaps.gridx = 1;
+      gbcPnlFilterCaps.gridy = 0;
+      gbcPnlFilterCaps.gridwidth = 1;
+      gbcPnlFilterCaps.gridheight = 1;
+      gbcPnlFilterCaps.fill = GridBagConstraints.NONE;
+      gbcPnlFilterCaps.weightx = 1;
+      gbcPnlFilterCaps.weighty = 0;
+      gbcPnlFilterCaps.anchor = GridBagConstraints.WEST;
+      gbcPnlFilterCaps.insets = new Insets(10, 15, 3, 10);
+      gbPnlFilterCaps.setConstraints(lblMunicipality, gbcPnlFilterCaps);
       pnlFilterCaps.add(lblMunicipality);
 
-      String[] dataCombo0 = {"Chocolate", "Ice Cream", "Apple Pie" };
-      cmbProvince = new JComboBox(dataCombo0);
-      gbcPanel1.gridx = 0;
-      gbcPanel1.gridy = 1;
-      gbcPanel1.gridwidth = 1;
-      gbcPanel1.gridheight = 1;
-      gbcPanel1.fill = GridBagConstraints.NONE;
-      gbcPanel1.weightx = 0;
-      gbcPanel1.weighty = 0;
-      gbcPanel1.anchor = GridBagConstraints.WEST;
-      gbcPanel1.insets = new Insets(3, 10, 10, 15);
-      gbPanel1.setConstraints(cmbProvince, gbcPanel1);
+      String[] dataCombo0 = { "Chocolate", "Ice Cream", "Apple Pie" };
+      cmbProvince = new JComboBox<String>(dataCombo0);
+      gbcPnlFilterCaps.gridx = 0;
+      gbcPnlFilterCaps.gridy = 1;
+      gbcPnlFilterCaps.gridwidth = 1;
+      gbcPnlFilterCaps.gridheight = 1;
+      gbcPnlFilterCaps.fill = GridBagConstraints.NONE;
+      gbcPnlFilterCaps.weightx = 0;
+      gbcPnlFilterCaps.weighty = 0;
+      gbcPnlFilterCaps.anchor = GridBagConstraints.WEST;
+      gbcPnlFilterCaps.insets = new Insets(3, 10, 10, 15);
+      gbPnlFilterCaps.setConstraints(cmbProvince, gbcPnlFilterCaps);
       pnlFilterCaps.add(cmbProvince);
 
       String[] dataCombo1 = { "Chocolate", "Ice Cream", "Apple Pie" };
-      cmbMunicipality = new JComboBox(dataCombo1);
-      gbcPanel1.gridx = 1;
-      gbcPanel1.gridy = 1;
-      gbcPanel1.gridwidth = 2;
-      gbcPanel1.gridheight = 1;
-      gbcPanel1.fill = GridBagConstraints.NONE;
-      gbcPanel1.weightx = 1;
-      gbcPanel1.weighty = 0;
-      gbcPanel1.anchor = GridBagConstraints.WEST;
-      gbcPanel1.insets = new Insets(3, 15, 10, 10);
-      gbPanel1.setConstraints(cmbMunicipality, gbcPanel1);
+      cmbMunicipality = new JComboBox<String>(dataCombo1);
+      gbcPnlFilterCaps.gridx = 1;
+      gbcPnlFilterCaps.gridy = 1;
+      gbcPnlFilterCaps.gridwidth = 1;
+      gbcPnlFilterCaps.gridheight = 1;
+      gbcPnlFilterCaps.fill = GridBagConstraints.NONE;
+      gbcPnlFilterCaps.weightx = 1;
+      gbcPnlFilterCaps.weighty = 0;
+      gbcPnlFilterCaps.anchor = GridBagConstraints.WEST;
+      gbcPnlFilterCaps.insets = new Insets(3, 15, 10, 10);
+      gbPnlFilterCaps.setConstraints(cmbMunicipality, gbcPnlFilterCaps);
       pnlFilterCaps.add(cmbMunicipality);
 
       pnlFoundCaps = new JPanel();
-      GridBagLayout gblFoundCaps = new GridBagLayout();
-      GridBagConstraints gblcFoundCaps = new GridBagConstraints();
-      pnlFoundCaps.setLayout(gblFoundCaps);
-      gbcPanel1.gridx = 0;
-      gbcPanel1.gridy = 3;
-      gbcPanel1.gridwidth = 3;
-      gbcPanel1.gridheight = 1;
-      gbcPanel1.fill = GridBagConstraints.BOTH;
-      gbcPanel1.weightx = 0;
-      gbcPanel1.weighty = 1;
-      gbcPanel1.anchor = GridBagConstraints.NORTH;
-      gbcPanel1.insets = new Insets(10, 10, 10, 10);
-      gbPanel1.setConstraints(pnlFoundCaps, gbcPanel1);
-      pnlFilterCaps.add(pnlFoundCaps);
+      GridBagLayout gbPnlFoundCaps = new GridBagLayout();
+      GridBagConstraints gbcPnlFoundCaps = new GridBagConstraints();
+      pnlFoundCaps.setLayout(gbPnlFoundCaps);
 
       lblFoundCaps = new JLabel("Cap trovati :");
-      gblcFoundCaps.gridx = 0;
-      gblcFoundCaps.gridy = 0;
-      gblcFoundCaps.gridwidth = 1;
-      gblcFoundCaps.gridheight = 1;
-      gblcFoundCaps.fill = GridBagConstraints.HORIZONTAL;
-      gblcFoundCaps.weightx = 0;
-      gblcFoundCaps.weighty = 0;
-      gblcFoundCaps.anchor = GridBagConstraints.WEST;
-      gblcFoundCaps.insets = new Insets(3, 3, 3, 3);
-      gblFoundCaps.setConstraints(lblFoundCaps, gblcFoundCaps);
+      gbcPnlFoundCaps.gridx = 0;
+      gbcPnlFoundCaps.gridy = 0;
+      gbcPnlFoundCaps.gridwidth = 1;
+      gbcPnlFoundCaps.gridheight = 1;
+      gbcPnlFoundCaps.fill = GridBagConstraints.HORIZONTAL;
+      gbcPnlFoundCaps.weightx = 0;
+      gbcPnlFoundCaps.weighty = 0;
+      gbcPnlFoundCaps.anchor = GridBagConstraints.WEST;
+      gbcPnlFoundCaps.insets = new Insets(3, 3, 3, 3);
+      gbPnlFoundCaps.setConstraints(lblFoundCaps, gbcPnlFoundCaps);
       pnlFoundCaps.add(lblFoundCaps);
 
       txfFoundCaps = new JTextField();
       txfFoundCaps.setBackground(new Color(240, 240, 240));
       txfFoundCaps.setEditable(false);
-      gblcFoundCaps.gridx = 1;
-      gblcFoundCaps.gridy = 0;
-      gblcFoundCaps.gridwidth = 1;
-      gblcFoundCaps.gridheight = 1;
-      gblcFoundCaps.fill = GridBagConstraints.HORIZONTAL;
-      gblcFoundCaps.weightx = 1;
-      gblcFoundCaps.weighty = 0;
-      gblcFoundCaps.anchor = GridBagConstraints.WEST;
-      gblcFoundCaps.insets = new Insets(3, 3, 3, 3);
-      gblFoundCaps.setConstraints(txfFoundCaps, gblcFoundCaps);
+      gbcPnlFoundCaps.gridx = 1;
+      gbcPnlFoundCaps.gridy = 0;
+      gbcPnlFoundCaps.gridwidth = 1;
+      gbcPnlFoundCaps.gridheight = 1;
+      gbcPnlFoundCaps.fill = GridBagConstraints.HORIZONTAL;
+      gbcPnlFoundCaps.weightx = 1;
+      gbcPnlFoundCaps.weighty = 0;
+      gbcPnlFoundCaps.anchor = GridBagConstraints.WEST;
+      gbcPnlFoundCaps.insets = new Insets(3, 3, 3, 3);
+      gbPnlFoundCaps.setConstraints(txfFoundCaps, gbcPnlFoundCaps);
       pnlFoundCaps.add(txfFoundCaps);
 
+      gbcPnlFilterCaps.gridx = 0;
+      gbcPnlFilterCaps.gridy = 2;
+      gbcPnlFilterCaps.gridwidth = 3;
+      gbcPnlFilterCaps.gridheight = 1;
+      gbcPnlFilterCaps.fill = GridBagConstraints.BOTH;
+      gbcPnlFilterCaps.weightx = 0;
+      gbcPnlFilterCaps.weighty = 1;
+      gbcPnlFilterCaps.anchor = GridBagConstraints.NORTH;
+      gbcPnlFilterCaps.insets = new Insets(10, 10, 10, 10);
+      gbPnlFilterCaps.setConstraints(pnlFoundCaps, gbcPnlFilterCaps);
+      pnlFilterCaps.add(pnlFoundCaps);
+
       btnAddCaps = new JButton("Aggiungi alla tua lista CAP");
-      gbcPanel1.gridx = 2;
-      gbcPanel1.gridy = 4;
-      gbcPanel1.gridwidth = 1;
-      gbcPanel1.gridheight = 1;
-      gbcPanel1.fill = GridBagConstraints.NONE;
-      gbcPanel1.weightx = 0;
-      gbcPanel1.weighty = 1;
-      gbcPanel1.anchor = GridBagConstraints.SOUTHEAST;
-      gbcPanel1.insets = new Insets(3, 3, 3, 3);
-      gbPanel1.setConstraints(btnAddCaps, gbcPanel1);
+      gbcPnlFilterCaps.gridx = 2;
+      gbcPnlFilterCaps.gridy = 3;
+      gbcPnlFilterCaps.gridwidth = 1;
+      gbcPnlFilterCaps.gridheight = 1;
+      gbcPnlFilterCaps.fill = GridBagConstraints.NONE;
+      gbcPnlFilterCaps.weightx = 0;
+      gbcPnlFilterCaps.weighty = 1;
+      gbcPnlFilterCaps.anchor = GridBagConstraints.SOUTHEAST;
+      gbcPnlFilterCaps.insets = new Insets(3, 3, 3, 3);
+      gbPnlFilterCaps.setConstraints(btnAddCaps, gbcPnlFilterCaps);
       pnlFilterCaps.add(btnAddCaps);
 
-      gbcPanel0.gridx = 0;
-      gbcPanel0.gridy = 2;
-      gbcPanel0.gridwidth = 3;
-      gbcPanel0.gridheight = 1;
-      gbcPanel0.fill = GridBagConstraints.BOTH;
-      gbcPanel0.weightx = 0;
-      gbcPanel0.weighty = 1;
-      gbcPanel0.anchor = GridBagConstraints.NORTH;
-      gbPanel0.setConstraints(pnlFilterCaps, gbcPanel0);
-      pnlReturnPanel.add(pnlFilterCaps);
+      gbcPnlPreferences.gridx = 0;
+      gbcPnlPreferences.gridy = 2;
+      gbcPnlPreferences.gridwidth = 3;
+      gbcPnlPreferences.gridheight = 1;
+      gbcPnlPreferences.fill = GridBagConstraints.NONE;
+      gbcPnlPreferences.weightx = 0;
+      gbcPnlPreferences.weighty = 0;
+      gbcPnlPreferences.anchor = GridBagConstraints.NORTH;
+      gbPnlPreferences.setConstraints(pnlFilterCaps, gbcPnlPreferences);
+      this.add(pnlFilterCaps);
 
-      setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-      setContentPane(pnlReturnPanel);
-      pack();
-      setVisible(true);
+      // This is an empty label not visible in the view and his
+      // only task is to put all other components on top of panel
+      // through the wighty property.
+      // Maybe is possible to find a thin component istead JLabel.
+      lblLayoutHelper = new JLabel();
+      gbcPnlPreferences.gridx = 0;
+      gbcPnlPreferences.gridy = 3;
+      gbcPnlPreferences.gridwidth = 1;
+      gbcPnlPreferences.gridheight = 1;
+      gbcPnlPreferences.fill = GridBagConstraints.BOTH;
+      gbcPnlPreferences.weightx = 0;
+      gbcPnlPreferences.weighty = 1;
+      gbcPnlPreferences.anchor = GridBagConstraints.WEST;
+      gbcPnlPreferences.insets = new Insets(0, 0, 0, 0);
+      gbPnlPreferences.setConstraints(lblLayoutHelper, gbcPnlPreferences);
+      this.add(lblLayoutHelper);
    }
 }
