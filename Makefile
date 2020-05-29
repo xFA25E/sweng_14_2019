@@ -63,6 +63,17 @@ SOURCE_TARGET := $(SOURCE_DIR)/target
 SOURCE_JAR := $(SOURCE_TARGET)/source.jar
 SOURCE_SOURCES := $(shell find $(SOURCE_SRC) -type f -name *.java)
 
+TESTS_DIR := $(JAVA_DIR)/Tests
+TESTS_SRC := $(TESTS_DIR)/src
+TESTS_LIB := $(TESTS_DIR)/lib
+TESTS_BIN := $(TESTS_DIR)/bin
+TESTS_TARGET := $(TESTS_DIR)/target
+TESTS_JAR := $(TESTS_TARGET)/tests.jar
+TESTS_SOURCES := $(shell find $(TESTS_SRC) -type f -name *.java)
+
+JUNIT_JAR := $(TESTS_LIB)/junit-4.13.jar
+HAMCREST_JAR := $(TESTS_LIB)/hamcrest-core-1.3.jar
+
 # OTHER #######################################################################
 
 join-cp = $(subst $(null) $(null),$(SEP),$(strip $1))
@@ -71,7 +82,10 @@ join-cp = $(subst $(null) $(null),$(SEP),$(strip $1))
 #                                   RECEPIES                                  #
 ###############################################################################
 
-.PHONY: all uml common server user source run-server run-user run-source pluntuml sqlite clean
+.PHONY: all \
+uml common server user source tests \
+run-server run-user run-source run-tests \
+junit pluntuml sqlite clean
 
 all: uml common server user source
 
@@ -81,7 +95,7 @@ uml: $(UML_TARGETS)
 
 $(UML_TARGET)/%.$(UML_TARGET_EXT): $(UML_SRC)/%.$(UML_SRC_EXT) $(PLANTUML_JAR)
 	mkdir -p $(@D)
-	java -jar $(PLANTUML_JAR) $(PLANTUML_ARGS) <$< >$@
+	java -cp "$(call join-cp,$(wildcard /opt/plantuml/*.jar))" -jar $(PLANTUML_JAR) $(PLANTUML_ARGS) <$< >$@
 
 plantuml: $(UML_LIB)
 	wget -O $(PLANTUML_JAR) "https://sourceforge.net/projects/plantuml/files/$(PLANTUML)/download"
@@ -97,10 +111,15 @@ run-user: $(USER_JAR) $(COMMON_JAR)
 run-source: $(SOURCE_JAR) $(COMMON_JAR)
 	java -cp "$(COMMON_JAR)" -jar "$(SOURCE_JAR)"
 
+# $(USER_JAR)
+run-tests: $(TESTS_JAR) $(SQLITE_JAR) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
+	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionTests
+
 common: $(COMMON_JAR)
 server: $(SERVER_JAR)
 user: $(USER_JAR)
 source: $(SOURCE_JAR)
+tests: $(TESTS_JAR)
 
 $(COMMON_JAR): $(COMMON_SOURCES) $(COMMON_BIN) $(COMMON_TARGET)
 	javac -target 8 -d $(COMMON_BIN) $(COMMON_SOURCES)
@@ -118,15 +137,26 @@ $(SOURCE_JAR): $(SOURCE_SOURCES) $(SOURCE_BIN) $(SOURCE_TARGET) $(COMMON_JAR)
 	javac -target 8 -d $(SOURCE_BIN) -cp $(COMMON_JAR) $(SOURCE_SOURCES)
 	jar cfe $(SOURCE_JAR) it.polimi.project14.CivilProtectionSource -C $(SOURCE_BIN) .
 
+# $(USER_JAR)
+$(TESTS_JAR): $(TESTS_SOURCES) $(TESTS_BIN) $(TESTS_TARGET) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
+	javac -target 8 -d $(TESTS_BIN) -cp "$(COMMON_JAR):$(SERVER_JAR):$(SOURCE_JAR):$(JUNIT_JAR):$(HAMCREST_JAR)" $(TESTS_SOURCES)
+	jar cfe $(TESTS_JAR) it.polimi.project14.CivilProtectionTests -C $(TESTS_BIN) .
+
 sqlite: $(SERVER_LIB)
 	wget -O $(SQLITE_JAR) "https://bitbucket.org/xerial/sqlite-jdbc/downloads/$(SQLITE)"
+
+junit: $(TESTS_LIB)
+	wget -O $(JUNIT_JAR) "https://search.maven.org/remotecontent?filepath=junit/junit/4.13/junit-4.13.jar"
+
+hamcrest: $(TESTS_LIB)
+	wget -O $(HAMCREST_JAR) "https://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"
 
 # CLEAN #######################################################################
 
 clean:
-	-rm -r $(UML_TARGET) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET)
+	-rm -r $(UML_TARGET) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) $(TESTS_BIN) $(TESTS_TARGET)
 
 # DIRECTORIES #################################################################
 
-$(UML_LIB) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(SERVER_LIB) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET):
+$(TESTS_LIB) $(TESTS_BIN) $(TESTS_TARGET) $(UML_LIB) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(SERVER_LIB) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET):
 	mkdir -p $@

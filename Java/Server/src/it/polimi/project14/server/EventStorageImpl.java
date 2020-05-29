@@ -22,14 +22,10 @@ import it.polimi.project14.common.EventStorage;
 import it.polimi.project14.common.SearchFilter;
 
 public class EventStorageImpl extends UnicastRemoteObject implements EventStorage {
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
+    private static final String defaultUrl = "jdbc:sqlite:civil_protection.db";
 
-    private static String url = "jdbc:sqlite:civil_protection.db";
-
-    private static String createQuery = ""
+    private static final String createQuery = ""
             + "CREATE TABLE IF NOT EXISTS event ("
             + "  source_id INTEGER NOT NULL,"
             + "  event_id INTEGER NOT NULL,"
@@ -49,7 +45,7 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
             + "  PRIMARY KEY (`source_id`, `event_id`)"
             + ")";
 
-    private static String insertQuery = ""
+    private static final String insertQuery = ""
         + "INSERT INTO event (source_id, event_id, cap, message,"
         + "                   expected_at, severity, status, kind) "
         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?) "
@@ -59,7 +55,7 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
         + "  status = ? "
         + "WHERE status NOT IN ('occured', 'canceled')";
 
-    private static String selectQuery = ""
+    private static final String selectQuery = ""
         + "SELECT source_id,"
         + "       event_id,"
         + "       printf(\"%05d\", cap) AS cap,"
@@ -73,7 +69,15 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
         + "   AND (? IS NULL OR ? < expected_at)"
         + "   AND (? IS NULL OR expected_at < ?)";
 
+    private final String url;
+
     public EventStorageImpl() throws SQLException, RemoteException  {
+        this(defaultUrl);
+    }
+
+    public EventStorageImpl(String dbUrl) throws SQLException, RemoteException  {
+        url = dbUrl;
+
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement()) {
             stmt.execute(createQuery);
@@ -158,7 +162,7 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
     // It seems that sqlite does not support arrays. We have to escape and add
     // strings manually. This basically adds a string to query like:
     // "AND cap IN ('cap1', 'cap2'..)"
-    private static String generateSelectQuery(SearchFilter searchFilter) {
+    public final static String generateSelectQuery(SearchFilter searchFilter) {
         StringBuilder builder = new StringBuilder(selectQuery);
         if (searchFilter != null) {
             Set<String> capList = searchFilter.getCapList();
@@ -173,11 +177,11 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
         return builder.toString();
     }
 
-    private static boolean isMaxSeverity(SearchFilter searchFilter) {
+    public final static boolean isMaxSeverity(SearchFilter searchFilter) {
         return searchFilter != null && searchFilter.isMaxSeverity();
     }
 
-    private static Long getExpectedSince(SearchFilter searchFilter) {
+    public final static Long getExpectedSince(SearchFilter searchFilter) {
         Long expectedSince = null;
         if (searchFilter != null) {
             expectedSince = dateTimeToEpoch(searchFilter.getExpectedSince());
@@ -185,7 +189,7 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
         return expectedSince;
     }
 
-    private static Long getExpectedUntil(SearchFilter searchFilter) {
+    public final static Long getExpectedUntil(SearchFilter searchFilter) {
         Long expectedUntil = null;
         if (searchFilter != null) {
             expectedUntil = dateTimeToEpoch(searchFilter.getExpectedUntil());
@@ -193,7 +197,7 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
         return expectedUntil;
     }
 
-    private static String getKind(SearchFilter searchFilter) {
+    public final static String getKind(SearchFilter searchFilter) {
         String kind = null;
         if (searchFilter != null) {
             kind = searchFilter.getKind();
@@ -201,11 +205,11 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
         return kind;
     }
 
-    private static int stringToInt(String cap) {
+    public final static int stringToInt(String cap) {
         return Integer.parseInt(cap);
     }
 
-    private static Long dateTimeToEpoch(LocalDateTime dateTime) {
+    public final static Long dateTimeToEpoch(LocalDateTime dateTime) {
         if (dateTime != null) {
             return dateTime.toEpochSecond(ZoneOffset.UTC);
         } else {
@@ -213,11 +217,11 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
         }
     }
 
-    private static LocalDateTime epochToDateTime(long epoch) {
+    public final static LocalDateTime epochToDateTime(long epoch) {
         return LocalDateTime.ofEpochSecond(epoch, 0, ZoneOffset.UTC);
     }
 
-    public static EventStatus stringToStatus(String status) {
+    public final static EventStatus stringToStatus(String status) {
         switch (status) {
         case "expected":
             return EventStatus.EXPECTED;
@@ -232,7 +236,7 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
         }
     }
 
-    public String statusToString(EventStatus status) {
+    public final static String statusToString(EventStatus status) {
         switch (status) {
         case EXPECTED:
             return "expected";

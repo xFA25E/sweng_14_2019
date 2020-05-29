@@ -1,0 +1,29 @@
+#+TITLE: Protezione Civile
+#+AUTHOR: Litkovskyy Valeriy, Alessio Spagnolo, Christian Premoli, Gabriele Bianchi
+
+* Requirements
+* UML diagrams
+** activity: utente/app mobile/sistema centrale
+   [[file:../UML/target/activity/utente-app_mobile-sistema_centrale.png]]
+** activity: sorgente/sistema centrale
+   [[file:../UML/target/activity/sorgente-sistema_centrale.png]]
+** state: applicazione
+   [[file:../UML/target/state/applicazione.png]]
+** state: sorgente
+   [[file:../UML/target/state/sorgente.png]]
+** communication
+   [[file:../UML/target/communication.png]]
+** class
+   [[file:../UML/target/class.png]]
+** object
+   [[file:../UML/target/object.png]]
+** package
+   [[file:../UML/target/package.png]]
+** sequence: notifiche
+   [[file:../UML/target/sequence/notifiche.png]]
+** sequence: ricerca
+   [[file:../UML/target/sequence/ricerca.png]]
+** use case
+   [[file:../UML/target/use_case.png]]
+** deployment
+   [[file:../UML/target/deployment.png]]
