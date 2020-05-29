@@ -7,10 +7,16 @@ import org.junit.runner.notification.Failure;
 
 import it.polimi.project14.common.EventTests;
 import it.polimi.project14.common.SearchFilterTests;
+import it.polimi.project14.server.EventStorageImplTests;
 
 public class CivilProtectionTests {
     public static void main(String[] args) {
-        Result result = JUnitCore.runClasses(EventTests.class, SearchFilterTests.class);
+        Result result = JUnitCore.runClasses(
+            EventTests.class,
+            SearchFilterTests.class,
+            EventStorageImplTests.class
+        );
+
         for (Failure failure : result.getFailures()) {
             System.out.println(failure.toString());
         }
