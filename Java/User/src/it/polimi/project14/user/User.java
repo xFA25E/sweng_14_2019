@@ -12,10 +12,10 @@ import it.polimi.project14.common.SearchFilter;
 
 
 public class User {
-
 	private Set<String> favoriteCaps;
 
 	final private String urlServer = "rmi://localhost:6666/";
+	
 	static {
 		System.setProperty("java.security.policy", "policy.all");
 	}
