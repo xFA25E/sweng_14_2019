@@ -197,7 +197,7 @@ public class FrameCivilProtectionUser extends JFrame {
       // End Tab Preferences
 
       gbcPnlMain.gridx = 0;
-      gbcPnlMain.gridy = 0;
+      gbcPnlMain.gridy = 1;
       gbcPnlMain.gridwidth = 1;
       gbcPnlMain.gridheight = 1;
       gbcPnlMain.fill = GridBagConstraints.BOTH;

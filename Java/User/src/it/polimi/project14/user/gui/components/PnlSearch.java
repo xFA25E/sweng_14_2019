@@ -55,7 +55,7 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
 
       pnlSearchFilter.btFind.addActionListener(this);
       pnlSearchFilter.dtpDateSince.addDateTimeChangeListener(this);
-      pnlSearchFilter.dtpDateSince.addDateTimeChangeListener(this);
+      pnlSearchFilter.dtpDateUntil.addDateTimeChangeListener(this);
 
       pnlFoundEvents = new PnlEventsTable(new TreeSet<Event>());
       pnlFoundEvents.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.gray));
@@ -111,7 +111,7 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
          if (since.getDateTimePermissive().isAfter(until.getDateTimePermissive())) {
             until.setDateTimePermissive(since.getDateTimePermissive().plusDays(1));
          }
-      } else if (e.getSource() == pnlSearchFilter.dtpDateSince) {
+      } else if (e.getSource() == pnlSearchFilter.dtpDateUntil) {
          DateTimePicker since = pnlSearchFilter.dtpDateSince;
          DateTimePicker until = pnlSearchFilter.dtpDateUntil;
          if (until.getDateTimePermissive().isBefore(since.getDateTimePermissive())) {

@@ -46,7 +46,8 @@ public class User {
 		// RMI
 		try {
 			EventStorage remoteEventStorage = (EventStorage) Naming.lookup(urlServer + "EVENT_STORAGE");
-			return (SortedSet<Event>) remoteEventStorage.getEvents(searchFilter);
+			SortedSet<Event> foundEvents = new TreeSet<Event>(remoteEventStorage.getEvents(searchFilter));
+			return foundEvents;
 		} catch (SQLException e) {
 			throw new Exception(e.getMessage());
 		} catch (RemoteException e) {

@@ -77,6 +77,7 @@ public class PnlPreferences extends JPanel implements ActionListener {
       this.add(txfMyCaps);
 
       btnDeleteCaps = new JButton("Elimina Cap preferiti");
+      btnDeleteCaps.addActionListener(this);
       gbcPnlPreferences.gridx = 2;
       gbcPnlPreferences.gridy = 1;
       gbcPnlPreferences.gridwidth = 1;
@@ -123,6 +124,7 @@ public class PnlPreferences extends JPanel implements ActionListener {
 
       String[] provinces = Caps.getProvinces().toArray(new String[0]);
       cmbProvince = new JComboBox<String>(provinces);
+      cmbProvince.addActionListener(this);
       gbcPnlFilterCaps.gridx = 0;
       gbcPnlFilterCaps.gridy = 1;
       gbcPnlFilterCaps.gridwidth = 1;
@@ -136,7 +138,7 @@ public class PnlPreferences extends JPanel implements ActionListener {
       pnlFilterCaps.add(cmbProvince);
 
       cmbMunicipality = new JComboBox<String>();
-      cmbMunicipality.setEnabled(false);
+      cmbMunicipality.addActionListener(this);
       gbcPnlFilterCaps.gridx = 1;
       gbcPnlFilterCaps.gridy = 1;
       gbcPnlFilterCaps.gridwidth = 1;
@@ -195,6 +197,7 @@ public class PnlPreferences extends JPanel implements ActionListener {
       pnlFilterCaps.add(pnlFoundCaps);
 
       btnAddCaps = new JButton("Aggiungi alla tua lista CAP");
+      btnAddCaps.addActionListener(this);
       gbcPnlFilterCaps.gridx = 2;
       gbcPnlFilterCaps.gridy = 3;
       gbcPnlFilterCaps.gridwidth = 1;
@@ -237,7 +240,12 @@ public class PnlPreferences extends JPanel implements ActionListener {
    }
 
    private void refreshUserCaps() {
-      txfMyCaps.setText(String.join(";", this.user.getFavoriteCaps()));
+      Set<String> favouriteCaps = this.user.getFavoriteCaps();
+      if (favouriteCaps != null) {
+         txfMyCaps.setText(String.join(";", this.user.getFavoriteCaps()));
+      } else {
+         txfMyCaps.setText("");
+      }
    }
 
    @Override
@@ -247,6 +255,7 @@ public class PnlPreferences extends JPanel implements ActionListener {
          this.user.setFavotiteCaps(null);
          // View
          refreshUserCaps();
+
       } else if (e.getSource() == cmbProvince) {
          // Logic
          String selectedProvince = (String) cmbProvince.getSelectedItem();
@@ -256,6 +265,7 @@ public class PnlPreferences extends JPanel implements ActionListener {
          for (String municipality : municipalityByProvince) {
             cmbMunicipality.addItem(municipality);
          }
+
       } else if (e.getSource() == cmbMunicipality) {
          // Logic
          String province = (String) cmbProvince.getSelectedItem();
@@ -264,6 +274,7 @@ public class PnlPreferences extends JPanel implements ActionListener {
          // View
          txfFoundCaps.setText(String.join(";", capsToAdd));
          btnAddCaps.setEnabled(true);
+
       } else if (e.getSource() == btnAddCaps) {
          // Logic
          this.user.setFavotiteCaps(capsToAdd);
