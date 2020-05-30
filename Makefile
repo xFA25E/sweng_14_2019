@@ -109,7 +109,7 @@ plantuml: $(UML_LIB)
 run-server: $(SERVER_JAR) $(SQLITE_JAR) $(COMMON_JAR)
 	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionServer
 
-run-user: $(USER_JAR) $(COMMON_JAR) 1$(DATETIMEPICKER_JAR)
+run-user: $(USER_JAR) $(COMMON_JAR) $(DATETIMEPICKER_JAR)
 	java -cp "$(COMMON_JAR)$(SEP)$(DATETIMEPICKER_JAR)" -jar "$(USER_JAR)"
 
 run-source: $(SOURCE_JAR) $(COMMON_JAR)
