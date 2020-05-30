@@ -27,8 +27,10 @@ endif
 JAVA_DIR := Java
 ifeq ($(OS),Windows_NT)
 	SEP := ;
+	JAVAC_ARGS := --release 8
 else
 	SEP := :
+	JAVAC_ARGS := -target 8
 endif
 
 COMMON_DIR := $(JAVA_DIR)/Common
@@ -124,24 +126,24 @@ source: $(SOURCE_JAR)
 tests: $(TESTS_JAR)
 
 $(COMMON_JAR): $(COMMON_SOURCES) $(COMMON_BIN) $(COMMON_TARGET)
-	javac -target 8 -d $(COMMON_BIN) $(COMMON_SOURCES)
+	javac $(JAVAC_ARGS) -d $(COMMON_BIN) $(COMMON_SOURCES)
 	jar cf $(COMMON_JAR) -C $(COMMON_BIN) .
 
 $(SERVER_JAR): $(SERVER_SOURCES) $(SERVER_BIN) $(SERVER_TARGET) $(COMMON_JAR)
-	javac -target 8 -d $(SERVER_BIN) -cp $(COMMON_JAR) $(SERVER_SOURCES)
+	javac $(JAVAC_ARGS) -d $(SERVER_BIN) -cp $(COMMON_JAR) $(SERVER_SOURCES)
 	jar cfe $(SERVER_JAR) it.polimi.project14.CivilProtectionServer -C $(SERVER_BIN) .
 
 $(USER_JAR): $(USER_SOURCES) $(USER_BIN) $(USER_TARGET) $(COMMON_JAR) $(DATETIMEPICKER_JAR)
-	javac -target 8 -d $(USER_BIN) -cp "$(COMMON_JAR)$(SEP)$(DATETIMEPICKER_JAR)" $(USER_SOURCES)
+	javac $(JAVAC_ARGS) -d $(USER_BIN) -cp "$(COMMON_JAR)$(SEP)$(DATETIMEPICKER_JAR)" $(USER_SOURCES)
 	jar cfe $(USER_JAR) it.polimi.project14.CivilProtectionUser -C $(USER_BIN) .
 
 $(SOURCE_JAR): $(SOURCE_SOURCES) $(SOURCE_BIN) $(SOURCE_TARGET) $(COMMON_JAR)
-	javac -target 8 -d $(SOURCE_BIN) -cp $(COMMON_JAR) $(SOURCE_SOURCES)
+	javac $(JAVAC_ARGS) -d $(SOURCE_BIN) -cp $(COMMON_JAR) $(SOURCE_SOURCES)
 	jar cfe $(SOURCE_JAR) it.polimi.project14.CivilProtectionSource -C $(SOURCE_BIN) .
 
 # $(USER_JAR)
 $(TESTS_JAR): $(TESTS_SOURCES) $(TESTS_BIN) $(TESTS_TARGET) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
-	javac -target 8 -d $(TESTS_BIN) -cp "$(COMMON_JAR)$(SEP)$(SERVER_JAR)$(SEP)$(SOURCE_JAR)$(SEP)$(JUNIT_JAR)$(SEP)$(HAMCREST_JAR)" $(TESTS_SOURCES)
+	javac $(JAVAC_ARGS) -d $(TESTS_BIN) -cp "$(COMMON_JAR)$(SEP)$(SERVER_JAR)$(SEP)$(SOURCE_JAR)$(SEP)$(JUNIT_JAR)$(SEP)$(HAMCREST_JAR)" $(TESTS_SOURCES)
 	jar cfe $(TESTS_JAR) it.polimi.project14.CivilProtectionTests -C $(TESTS_BIN) .
 
 sqlite: $(SERVER_LIB)
