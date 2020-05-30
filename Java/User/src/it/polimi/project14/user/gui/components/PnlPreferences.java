@@ -1,18 +1,25 @@
 package it.polimi.project14.user.gui.components;
 
-import javax.swing.JPanel;
-import javax.swing.BorderFactory;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Set;
+import java.awt.Color;
+
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
-public class PnlPreferences extends JPanel {
-   
+import it.polimi.project14.user.Caps;
+import it.polimi.project14.user.User;
+
+public class PnlPreferences extends JPanel implements ActionListener {
+
    JTextField txfMyCaps;
    JButton btnDeleteCaps;
    JLabel lblLayoutHelper;
@@ -28,8 +35,13 @@ public class PnlPreferences extends JPanel {
    JLabel lblFoundCaps;
    JTextField txfFoundCaps;
 
-   public PnlPreferences() {
+   User user;
+   Set<String> capsToAdd;
+
+   public PnlPreferences(User user) {
       super();
+
+      this.user = user;
 
       GridBagLayout gbPnlPreferences = new GridBagLayout();
       GridBagConstraints gbcPnlPreferences = new GridBagConstraints();
@@ -49,6 +61,7 @@ public class PnlPreferences extends JPanel {
       this.add(lblLayoutHelper);
 
       txfMyCaps = new JTextField();
+      txfMyCaps.setText(String.join(";", this.user.getFavoriteCaps()));
       txfMyCaps.setBackground(new Color(240, 240, 240));
       txfMyCaps.setEditable(false);
       gbcPnlPreferences.gridx = 1;
@@ -108,8 +121,8 @@ public class PnlPreferences extends JPanel {
       gbPnlFilterCaps.setConstraints(lblMunicipality, gbcPnlFilterCaps);
       pnlFilterCaps.add(lblMunicipality);
 
-      String[] dataCombo0 = { "Chocolate", "Ice Cream", "Apple Pie" };
-      cmbProvince = new JComboBox<String>(dataCombo0);
+      String[] provinces = Caps.getProvinces().toArray(new String[0]);
+      cmbProvince = new JComboBox<String>(provinces);
       gbcPnlFilterCaps.gridx = 0;
       gbcPnlFilterCaps.gridy = 1;
       gbcPnlFilterCaps.gridwidth = 1;
@@ -122,8 +135,8 @@ public class PnlPreferences extends JPanel {
       gbPnlFilterCaps.setConstraints(cmbProvince, gbcPnlFilterCaps);
       pnlFilterCaps.add(cmbProvince);
 
-      String[] dataCombo1 = { "Chocolate", "Ice Cream", "Apple Pie" };
-      cmbMunicipality = new JComboBox<String>(dataCombo1);
+      cmbMunicipality = new JComboBox<String>();
+      cmbMunicipality.setEnabled(false);
       gbcPnlFilterCaps.gridx = 1;
       gbcPnlFilterCaps.gridy = 1;
       gbcPnlFilterCaps.gridwidth = 1;
@@ -221,5 +234,45 @@ public class PnlPreferences extends JPanel {
       gbcPnlPreferences.insets = new Insets(0, 0, 0, 0);
       gbPnlPreferences.setConstraints(lblLayoutHelper, gbcPnlPreferences);
       this.add(lblLayoutHelper);
+   }
+
+   private void refreshUserCaps() {
+      txfMyCaps.setText(String.join(";", this.user.getFavoriteCaps()));
+   }
+
+   @Override
+   public void actionPerformed(ActionEvent e) {
+      if (e.getSource() == btnDeleteCaps) {
+         // Logic
+         this.user.setFavotiteCaps(null);
+         // View
+         refreshUserCaps();
+      } else if (e.getSource() == cmbProvince) {
+         // Logic
+         String selectedProvince = (String) cmbProvince.getSelectedItem();
+         Set<String> municipalityByProvince = Caps.getMunicipality(selectedProvince);
+         // View
+         cmbMunicipality.removeAllItems();
+         for (String municipality : municipalityByProvince) {
+            cmbMunicipality.addItem(municipality);
+         }
+      } else if (e.getSource() == cmbMunicipality) {
+         // Logic
+         String province = (String) cmbProvince.getSelectedItem();
+         String municipality = (String) cmbMunicipality.getSelectedItem();
+         capsToAdd = Caps.narrow(province, municipality);
+         // View
+         txfFoundCaps.setText(String.join(";", capsToAdd));
+         btnAddCaps.setEnabled(true);
+      } else if (e.getSource() == btnAddCaps) {
+         // Logic
+         this.user.setFavotiteCaps(capsToAdd);
+         // View
+         txfFoundCaps.setText("");
+         cmbMunicipality.removeAllItems();
+         cmbProvince.setSelectedIndex(-1);
+         btnAddCaps.setEnabled(false);
+         refreshUserCaps();
+      }
    }
 }

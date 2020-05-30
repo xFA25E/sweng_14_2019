@@ -120,10 +120,12 @@ public class FrameCivilProtectionUser extends JFrame {
          clockTimer.setInitialDelay(0);
          clockTimer.start();
       // #endregion
+
+      // #region Tab
       tbpContents = new JTabbedPane();
       tbpContents.setTabPlacement(JTabbedPane.TOP);
 
-      // Tab Home
+      // #region Tab Home
       tabHome = new JPanel();
       GridBagLayout gbTabHome = new GridBagLayout();
       GridBagConstraints gbcTabHome = new GridBagConstraints();
@@ -151,7 +153,6 @@ public class FrameCivilProtectionUser extends JFrame {
       gbcTabHome.insets = new Insets(5, 5, 0, 5);
       gbTabHome.setConstraints(pnlUrgentEvents, gbcTabHome);
       tabHome.add(pnlUrgentEvents);
-
 
       // Add my events
       SearchFilter myCapsEventsOn24h = new SearchFilter();
@@ -183,7 +184,7 @@ public class FrameCivilProtectionUser extends JFrame {
       JScrollPane scrollableHome = new JScrollPane(tabHome);
 
       tbpContents.addTab("Home", scrollableHome);
-      // End Tab Home
+      // #endregion
 
       // Tab Search
       PnlSearch pnlSearch = new PnlSearch();
@@ -191,7 +192,7 @@ public class FrameCivilProtectionUser extends JFrame {
       // End Tab Search
 
       // Tab Preferences
-      PnlPreferences tabPreferences = new PnlPreferences();
+      PnlPreferences tabPreferences = new PnlPreferences(user);
       tbpContents.addTab("Impostazioni", tabPreferences);
       // End Tab Preferences
 
@@ -206,6 +207,7 @@ public class FrameCivilProtectionUser extends JFrame {
       gbcPnlMain.insets = new Insets(5, 3, 0, 3);
       gbPnlMain.setConstraints(tbpContents, gbcPnlMain);
       pnlMain.add(tbpContents);
+      // #endregion
 
       setDefaultCloseOperation(EXIT_ON_CLOSE);
 

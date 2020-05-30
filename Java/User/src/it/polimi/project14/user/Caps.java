@@ -48,4 +48,12 @@ public class Caps {
 
         return capList;
     }
+
+    static public Set<String> getProvinces() {
+        return caps.keySet();
+    }
+
+    static public Set<String> getMunicipality(String province) {
+        return caps.get(province).keySet();
+    }
 }
