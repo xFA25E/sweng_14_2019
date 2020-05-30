@@ -20,8 +20,8 @@ import java.awt.Insets;
 
 import it.polimi.project14.common.*;
 
-public class PnlUrgentAllarms extends JScrollPane {
-   static PnlUrgentAllarms thePnlUrgentAllarms;
+public class PnlUrgentEvents extends JScrollPane {
+   static PnlUrgentEvents thePnlUrgentAllarms;
 
    JPanel pnPanel43;
    JTable tbTable27;
@@ -35,7 +35,7 @@ public class PnlUrgentAllarms extends JScrollPane {
    JPanel pnPanel6;
    JTable tbTable5;
 
-   public PnlUrgentAllarms(SortedSet<Event> eventsData) {
+   public PnlUrgentEvents(SortedSet<Event> eventsData) {
       super();
 
       SortedMap<Integer, SortedSet<Event>> mapTimeEvents = new TreeMap<>();
@@ -94,7 +94,7 @@ public class PnlUrgentAllarms extends JScrollPane {
          testSetEvents.add(testEvent);
       }
 
-      PnlUrgentAllarms tab = new PnlUrgentAllarms(testSetEvents);
+      PnlUrgentEvents tab = new PnlUrgentEvents(testSetEvents);
       jf.setTitle("Table");
       jf.setSize(500, 500);
       jf.setVisible(true);

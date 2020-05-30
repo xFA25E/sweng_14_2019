@@ -22,6 +22,7 @@ import com.github.lgooddatepicker.components.DateTimePicker;
 import com.github.lgooddatepicker.optionalusertools.DateTimeChangeListener;
 import com.github.lgooddatepicker.zinternaltools.DateTimeChangeEvent;
 
+import it.polimi.project14.user.Caps;
 import it.polimi.project14.common.Event;
 import it.polimi.project14.common.SearchFilter;
 
@@ -84,13 +85,14 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
          String province = (String) pnlSearchFilter.cmbProvince.getSelectedItem();
          String municipality = (String) pnlSearchFilter.cmbMunicipality.getSelectedItem();
          HashSet<String> capsToFilter = new HashSet<String>();
-         if (province != null && municipality != null) {
-            // capsToFilter = Caps.filter(province, municipality);
-         } else if (province != null) {
-            // capsToFilter = Caps.filter(province);
-         } else if (municipality != null) {
-            // capsToFilter = Caps.filter(dataMuniciplaity)
-         }
+         capsToFilter = (HashSet<String>) Caps.narrow(province, municipality);
+         // if (province != null && municipality != null) {
+         //    // capsToFilter = Caps.filter(province, municipality);
+         // } else if (province != null) {
+         //    // capsToFilter = Caps.filter(province);
+         // } else if (municipality != null) {
+         //    // capsToFilter = Caps.filter(dataMuniciplaity)
+         // }
 
          String kindToFilter = (String) pnlSearchFilter.cmbKind.getSelectedItem();
 

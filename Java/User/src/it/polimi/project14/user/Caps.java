@@ -39,7 +39,7 @@ public class Caps {
         }
     }
 
-    static Set<String> narrow(String province, String municipality) {
+    static public Set<String> narrow(String province, String municipality) {
         Set<String> capList = new HashSet<String>();
         capList = caps.entrySet().stream().filter(e -> province == null || province.equals(e.getKey()))
                 .flatMap(e -> e.getValue().entrySet().stream())
