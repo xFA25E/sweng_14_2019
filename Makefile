@@ -162,8 +162,11 @@ datetimepicker: $(USER_LIB)
 
 # CLEAN #######################################################################
 
-clean:
-	-rm -r $(UML_TARGET) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) $(TESTS_BIN) $(TESTS_TARGET)
+clean-uml:
+	-rm -r $(UML_TARGET)
+
+clean-java:
+	-rm -r $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) $(TESTS_BIN) $(TESTS_TARGET)
 
 # DIRECTORIES #################################################################
 
