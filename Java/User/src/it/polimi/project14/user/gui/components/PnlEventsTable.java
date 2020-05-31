@@ -16,9 +16,9 @@ import it.polimi.project14.common.Event;
 public class PnlEventsTable extends JPanel {
 
     public PnlEventsTable(SortedSet<Event> sortedEvents){
-        
+
         Object[] header = {"Tipo", "CAP", "Gravità", "Data e ora", "Descrizione"};
-        
+
         DefaultTableModel model = new DefaultTableModel(header, 0)
         {
             public boolean isCellEditable(int row, int column)
@@ -27,18 +27,20 @@ public class PnlEventsTable extends JPanel {
             }
         };
 
-        for (Event event: sortedEvents) {
-            String[] eventData = {
-                event.getKind(),
-                event.getCap(),
-                Integer.toString(event.getSeverity()),
-                //TODO: Format String
-                event.getExpectedAt().toString(),
-                event.getMessage()
-            };
-            model.addRow(eventData);
+        if (sortedEvents != null) {
+            for (Event event : sortedEvents) {
+                String[] eventData = {
+                    event.getKind(),
+                    event.getCap(),
+                    Integer.toString(event.getSeverity()),
+                    // TODO: Format String
+                    event.getExpectedAt().toString(),
+                    event.getMessage()
+                };
+                model.addRow(eventData);
+            }
         }
-        
+
         JTable table = new JTable(model);
 
         table.setPreferredScrollableViewportSize(table.getPreferredSize());

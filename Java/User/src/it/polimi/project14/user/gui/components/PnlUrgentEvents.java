@@ -39,13 +39,16 @@ public class PnlUrgentEvents extends JScrollPane {
       super();
 
       SortedMap<Integer, SortedSet<Event>> mapTimeEvents = new TreeMap<>();
-      for (Event event : eventsData) {
-         Integer currHour = event.getExpectedAt().getHour();
-         if (!mapTimeEvents.containsKey(currHour)) {
-            mapTimeEvents.put(currHour, new TreeSet<Event>());
-         }
-         mapTimeEvents.get(currHour).add(event);
+      if (eventsData != null) {
+          for (Event event : eventsData) {
+              Integer currHour = event.getExpectedAt().getHour();
+              if (!mapTimeEvents.containsKey(currHour)) {
+                  mapTimeEvents.put(currHour, new TreeSet<Event>());
+              }
+              mapTimeEvents.get(currHour).add(event);
+          }
       }
+
 
       JPanel insidePanel = new JPanel();
 
