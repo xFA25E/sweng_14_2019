@@ -16,8 +16,6 @@ public class Caps {
     static HashMap<String, HashMap<String, HashSet<String>>> caps;
 
     static {
-        // try (BufferedReader csvReader = new BufferedReader(new FileReader("data/provincia_comune_cap.csv"))) {
-
         try (BufferedReader csvReader = new BufferedReader(
                 new InputStreamReader(Caps.class.getClassLoader()
                         .getResourceAsStream("provincia_comune_cap.csv"))
