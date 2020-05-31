@@ -270,7 +270,7 @@ public class PnlPreferences extends JPanel implements ActionListener {
          // Logic
          String province = (String) cmbProvince.getSelectedItem();
          String municipality = (String) cmbMunicipality.getSelectedItem();
-         capsToAdd = Caps.narrow(province, municipality);
+         capsToAdd = Caps.filter(province, municipality);
          // View
          txfFoundCaps.setText(String.join(";", capsToAdd));
          btnAddCaps.setEnabled(true);

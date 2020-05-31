@@ -8,7 +8,7 @@ import it.polimi.project14.user.gui.FrameCivilProtectionUser;
 
 public class CivilProtectionUser {
     public static void main(String[] args) {
-        Set<String> comoCaps = Caps.narrow("Como", null);
+        Set<String> comoCaps = Caps.filter("Como", null);
         User user = new User(comoCaps);
         FrameCivilProtectionUser userGui = new FrameCivilProtectionUser(user);
     }

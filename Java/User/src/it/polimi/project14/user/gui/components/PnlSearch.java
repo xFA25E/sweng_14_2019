@@ -85,7 +85,7 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
          String province = (String) pnlSearchFilter.cmbProvince.getSelectedItem();
          String municipality = (String) pnlSearchFilter.cmbMunicipality.getSelectedItem();
          HashSet<String> capsToFilter = new HashSet<String>();
-         capsToFilter = (HashSet<String>) Caps.narrow(province, municipality);
+         capsToFilter = (HashSet<String>) Caps.filter(province, municipality);
          // if (province != null && municipality != null) {
          //    // capsToFilter = Caps.filter(province, municipality);
          // } else if (province != null) {
