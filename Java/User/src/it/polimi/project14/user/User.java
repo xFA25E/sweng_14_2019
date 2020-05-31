@@ -24,13 +24,20 @@ public class User {
 	public User(Set<String> favouriteCaps) {
 		this.favoriteCaps = favouriteCaps;
 	}
+	
+	public Set<String> getFavoriteCaps() {
+		return this.favoriteCaps;
+	}
 
-	public void setFavotiteCaps(Set<String> favoriteCaps) {
+	public void setFavoriteCaps(Set<String> favoriteCaps) {
 		this.favoriteCaps = favoriteCaps;
 	}
 
-	public Set<String> getFavoriteCaps() {
-		return this.favoriteCaps;
+	public void addFavoriteCap(String cap) {
+		if (this.favoriteCaps == null) {
+			this.favoriteCaps = new TreeSet<String>();
+		}
+		this.favoriteCaps.add(cap); 
 	}
 
 	public SortedSet<Event> getUrgentEvents() throws Exception {
