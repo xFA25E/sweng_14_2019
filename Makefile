@@ -118,8 +118,8 @@ run-user: $(USER_JAR) $(COMMON_JAR) $(DATETIMEPICKER_JAR)
 run-source: $(SOURCE_JAR) $(COMMON_JAR)
 	java -cp "$(COMMON_JAR)" -jar "$(SOURCE_JAR)"
 
-# $(USER_JAR)
-run-tests: $(TESTS_JAR) $(SQLITE_JAR) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
+
+run-tests: $(TESTS_JAR) $(SQLITE_JAR) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
 	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionTests
 
 common: $(COMMON_JAR)
@@ -144,8 +144,7 @@ $(SOURCE_JAR): $(SOURCE_SOURCES) $(SOURCE_BIN) $(SOURCE_TARGET) $(COMMON_JAR)
 	javac $(JAVAC_ARGS) -d $(SOURCE_BIN) -cp $(COMMON_JAR) $(SOURCE_SOURCES)
 	jar cfe $(SOURCE_JAR) it.polimi.project14.CivilProtectionSource -C $(SOURCE_BIN) .
 
-# $(USER_JAR)
-$(TESTS_JAR): $(TESTS_SOURCES) $(TESTS_BIN) $(TESTS_TARGET) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
+$(TESTS_JAR): $(TESTS_SOURCES) $(TESTS_BIN) $(TESTS_TARGET) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
 	javac $(JAVAC_ARGS) -d $(TESTS_BIN) -cp "$(COMMON_JAR)$(SEP)$(SERVER_JAR)$(SEP)$(SOURCE_JAR)$(SEP)$(JUNIT_JAR)$(SEP)$(HAMCREST_JAR)" $(TESTS_SOURCES)
 	jar cfe $(TESTS_JAR) it.polimi.project14.CivilProtectionTests -C $(TESTS_BIN) .
 
