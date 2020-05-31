@@ -65,7 +65,7 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
         + "       status,"
         + "       kind"
         + "  FROM event"
-        + " WHERE (? IS NULL OR kind = ?)"
+        + " WHERE (? IS NULL OR kind LIKE ?)"
         + "   AND (? IS NULL OR ? < expected_at)"
         + "   AND (? IS NULL OR expected_at < ?)";
 
@@ -120,7 +120,7 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setObject(1, kind, Types.VARCHAR);
-            pstmt.setObject(2, kind, Types.VARCHAR);
+            pstmt.setObject(2, "%" + kind + "%", Types.VARCHAR);
             pstmt.setObject(3, expectedSince, Types.INTEGER);
             pstmt.setObject(4, expectedSince, Types.INTEGER);
             pstmt.setObject(5, expectedUntil, Types.INTEGER);
