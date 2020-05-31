@@ -45,7 +45,7 @@ public class Caps {
 
     }
 
-    static public Set<String> narrow(String province, String municipality) {
+    static public Set<String> filter(String province, String municipality) {
         Set<String> capList = new HashSet<String>();
         capList = caps.entrySet().stream()
                       .filter(
