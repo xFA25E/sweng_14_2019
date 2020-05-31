@@ -9,6 +9,7 @@ import it.polimi.project14.common.EventTests;
 import it.polimi.project14.common.SearchFilterTests;
 import it.polimi.project14.server.EventStorageImplTests;
 import it.polimi.project14.user.CapsTests;
+import it.polimi.project14.user.UserTests;
 
 public class CivilProtectionTests {
     public static void main(String[] args) {
@@ -16,7 +17,8 @@ public class CivilProtectionTests {
             EventTests.class,
             SearchFilterTests.class,
             EventStorageImplTests.class,
-            CapsTests.class
+            CapsTests.class,
+            UserTests.class
         );
 
         for (Failure failure : result.getFailures()) {
