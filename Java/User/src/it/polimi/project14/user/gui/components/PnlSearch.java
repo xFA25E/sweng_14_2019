@@ -86,13 +86,6 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
          String municipality = (String) pnlSearchFilter.cmbMunicipality.getSelectedItem();
          HashSet<String> capsToFilter = new HashSet<String>();
          capsToFilter = (HashSet<String>) Caps.filter(province, municipality);
-         // if (province != null && municipality != null) {
-         //    // capsToFilter = Caps.filter(province, municipality);
-         // } else if (province != null) {
-         //    // capsToFilter = Caps.filter(province);
-         // } else if (municipality != null) {
-         //    // capsToFilter = Caps.filter(dataMuniciplaity)
-         // }
 
          String kindToFilter = (String) pnlSearchFilter.cmbKind.getSelectedItem();
 
@@ -289,8 +282,8 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
          gbcSearchFilter.fill = GridBagConstraints.NONE;
          gbcSearchFilter.weightx = 1;
          gbcSearchFilter.weighty = 0;
-         gbcSearchFilter.anchor = GridBagConstraints.EAST;
-         gbcSearchFilter.insets = new Insets(0, 0, 30, 30);
+         gbcSearchFilter.anchor = GridBagConstraints.WEST;
+         gbcSearchFilter.insets = new Insets(0, 55, 30, 0);
          gbSearchFilter.setConstraints(btFind, gbcSearchFilter);
          add(btFind);
          // #endregion
