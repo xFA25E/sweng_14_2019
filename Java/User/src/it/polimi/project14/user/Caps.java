@@ -48,15 +48,11 @@ public class Caps {
     static public Set<String> filter(String province, String municipality) {
         Set<String> capList = new HashSet<String>();
         capList = caps.entrySet().stream()
-                      .filter(
-                          e -> province == null || province.equals(e.getKey())
-                      )
-                      .flatMap(e -> e.getValue().entrySet().stream())
-                      .filter(
-                          e -> municipality == null || municipality.equals(e.getKey())
-                      )
-                      .flatMap(e -> e.getValue().stream())
-                      .collect(Collectors.toCollection(HashSet::new));
+            .filter(e -> province == null || province.equals(e.getKey()))
+            .flatMap(e -> e.getValue().entrySet().stream())
+            .filter(e -> municipality == null || municipality.equals(e.getKey()))
+            .flatMap(e -> e.getValue().stream())
+            .collect(Collectors.toCollection(HashSet::new));
 
         return capList;
     }
