@@ -11,5 +11,6 @@ public class CivilProtectionUser {
         Set<String> comoCaps = Caps.filter("Como", null);
         User user = new User(comoCaps);
         FrameCivilProtectionUser userGui = new FrameCivilProtectionUser(user);
+        userGui.setSize(600, 700);
     }
 }

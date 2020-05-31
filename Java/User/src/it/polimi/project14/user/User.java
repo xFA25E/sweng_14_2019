@@ -33,11 +33,11 @@ public class User {
 		this.favoriteCaps = favoriteCaps;
 	}
 
-	public void addFavoriteCap(String cap) {
+	public void addFavoriteCaps(Set<String> caps) {
 		if (this.favoriteCaps == null) {
 			this.favoriteCaps = new TreeSet<String>();
 		}
-		this.favoriteCaps.add(cap); 
+		this.favoriteCaps.addAll(caps); 
 	}
 
 	public SortedSet<Event> getUrgentEvents() throws Exception {

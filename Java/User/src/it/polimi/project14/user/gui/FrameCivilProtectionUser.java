@@ -46,29 +46,6 @@ public class FrameCivilProtectionUser extends JFrame {
    JLabel lblTitle;
    Timer clockTimer;
 
-   public static void main(String args[]) {
-      // try {
-      // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      // } catch (ClassNotFoundException e) {
-      // } catch (InstantiationException e) {
-      // } catch (IllegalAccessException e) {
-      // } catch (UnsupportedLookAndFeelException e) {
-      // }
-      // theJfrCivilProtectionUser = new JfrCivilProtectionUser();
-      // SortedSet<Event> testSetEvents = new TreeSet<Event>();
-      // for (int i = 0; i < 10; i++) {
-      // Event testEvent = new Event();
-      // testEvent.setKind("Terremoto");
-      // testEvent.setCap("22100");
-      // testEvent.setSeverity(9);
-      // testEvent.setExpectedAt(LocalDateTime.of(2020, 5, 5, i, 0));
-      // testEvent.setMessage("BlaBlaBlaBlaBla");
-
-      // testSetEvents.add(testEvent);
-      // }
-      // theJfrCivilProtectionUser = new FrameCivilProtectionUser(testSetEvents);
-   }
-
    // Should have user connected
    public FrameCivilProtectionUser(User user) {
       super("Protezione Civile");

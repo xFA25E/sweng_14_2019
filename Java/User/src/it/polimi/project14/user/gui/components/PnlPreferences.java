@@ -6,6 +6,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.awt.Color;
 
 import javax.swing.JPanel;
@@ -122,8 +124,9 @@ public class PnlPreferences extends JPanel implements ActionListener {
       gbPnlFilterCaps.setConstraints(lblMunicipality, gbcPnlFilterCaps);
       pnlFilterCaps.add(lblMunicipality);
 
-      String[] provinces = Caps.getProvinces().toArray(new String[0]);
+      String[] provinces = (new TreeSet<String>(Caps.getProvinces())).toArray(new String[0]);
       cmbProvince = new JComboBox<String>(provinces);
+      cmbProvince.setSelectedItem(-1);
       cmbProvince.addActionListener(this);
       gbcPnlFilterCaps.gridx = 0;
       gbcPnlFilterCaps.gridy = 1;
@@ -257,32 +260,49 @@ public class PnlPreferences extends JPanel implements ActionListener {
          refreshUserCaps();
 
       } else if (e.getSource() == cmbProvince) {
+         cmbMunicipality.removeAllItems();
+         // If nothing is selected do nothing
+         if (cmbProvince.getSelectedIndex() == -1) {
+            return;
+         }
          // Logic
          String selectedProvince = (String) cmbProvince.getSelectedItem();
-         Set<String> municipalityByProvince = Caps.getMunicipality(selectedProvince);
+         cmbMunicipality.addItem("Tutti i comuni");
+         SortedSet<String> municipalityByProvince = new TreeSet<String>(Caps.getMunicipalities(selectedProvince));
          // View
-         cmbMunicipality.removeAllItems();
          for (String municipality : municipalityByProvince) {
             cmbMunicipality.addItem(municipality);
          }
 
       } else if (e.getSource() == cmbMunicipality) {
+         // If nothing is selected do nothing
+         if (cmbMunicipality.getSelectedIndex() == -1) {
+            return;
+         }
+
          // Logic
-         String province = (String) cmbProvince.getSelectedItem();
-         String municipality = (String) cmbMunicipality.getSelectedItem();
+         String province = null;
+         String municipality = null;
+         if (cmbProvince.getSelectedIndex() > 0) {
+            province = (String) cmbProvince.getSelectedItem();
+         }
+         if (cmbMunicipality.getSelectedIndex() > 0) {
+            municipality = (String) cmbMunicipality.getSelectedItem();
+         }
          capsToAdd = Caps.filter(province, municipality);
+
+         if (capsToAdd == null) {
+            return;
+         }
+
          // View
          txfFoundCaps.setText(String.join(";", capsToAdd));
          btnAddCaps.setEnabled(true);
 
       } else if (e.getSource() == btnAddCaps) {
          // Logic
-         this.user.setFavoriteCaps(capsToAdd);
+         this.user.addFavoriteCaps(capsToAdd);
          // View
-         txfFoundCaps.setText("");
-         cmbMunicipality.removeAllItems();
-         cmbProvince.setSelectedIndex(-1);
-         btnAddCaps.setEnabled(false);
          refreshUserCaps();
       }
    }

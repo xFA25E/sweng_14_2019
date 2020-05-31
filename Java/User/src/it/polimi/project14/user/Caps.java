@@ -61,7 +61,7 @@ public class Caps {
         return caps.keySet();
     }
 
-    static public Set<String> getMunicipality(String province) {
+    static public Set<String> getMunicipalities(String province) {
         return caps.entrySet().stream()
             .filter(e -> province == null || province.equals(e.getKey()))
             .flatMap(e -> e.getValue().keySet().stream())
