@@ -4,17 +4,22 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 public class Caps {
     static HashMap<String, HashMap<String, HashSet<String>>> caps;
 
     static {
-        try (BufferedReader csvReader = new BufferedReader(new FileReader("data/provincia_comune_cap.csv"))) {
-
+        try (BufferedReader csvReader = new BufferedReader(
+                new InputStreamReader(Caps.class.getClassLoader()
+                        .getResourceAsStream("provincia_comune_cap.csv"))
+            )) {
             String row;
             caps = new HashMap<>();
             while ((row = csvReader.readLine()) != null) {
@@ -37,15 +42,29 @@ public class Caps {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
-    static Set<String> narrow(String province, String municipality) {
+    static public Set<String> filter(String province, String municipality) {
         Set<String> capList = new HashSet<String>();
-        capList = caps.entrySet().stream().filter(e -> province == null || province.equals(e.getKey()))
-                .flatMap(e -> e.getValue().entrySet().stream())
-                .filter(e -> municipality == null || municipality.equals(e.getKey()))
-                .flatMap(e -> e.getValue().stream()).collect(Collectors.toCollection(HashSet::new));
+        capList = caps.entrySet().stream()
+            .filter(e -> province == null || province.equals(e.getKey()))
+            .flatMap(e -> e.getValue().entrySet().stream())
+            .filter(e -> municipality == null || municipality.equals(e.getKey()))
+            .flatMap(e -> e.getValue().stream())
+            .collect(Collectors.toCollection(HashSet::new));
 
         return capList;
+    }
+
+    static public Set<String> getProvinces() {
+        return caps.keySet();
+    }
+
+    static public Set<String> getMunicipalities(String province) {
+        return caps.entrySet().stream()
+            .filter(e -> province == null || province.equals(e.getKey()))
+            .flatMap(e -> e.getValue().keySet().stream())
+            .collect(Collectors.toCollection(HashSet::new));
     }
 }

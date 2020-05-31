@@ -27,8 +27,10 @@ endif
 JAVA_DIR := Java
 ifeq ($(OS),Windows_NT)
 	SEP := ;
+	JAVAC_ARGS := --release 8
 else
 	SEP := :
+	JAVAC_ARGS := -target 8
 endif
 
 COMMON_DIR := $(JAVA_DIR)/Common
@@ -50,11 +52,16 @@ SQLITE := sqlite-jdbc-3.30.1.jar
 SQLITE_JAR := $(SERVER_LIB)/$(SQLITE)
 
 USER_DIR := $(JAVA_DIR)/User
+USER_LIB := $(USER_DIR)/lib
 USER_SRC := $(USER_DIR)/src
 USER_BIN := $(USER_DIR)/bin
+USER_DATA := $(USER_DIR)/data
 USER_TARGET := $(USER_DIR)/target
 USER_JAR := $(USER_TARGET)/user.jar
 USER_SOURCES := $(shell find $(USER_SRC) -type f -name *.java)
+
+CAPS_CSV := $(USER_DATA)/provincia_comune_cap.csv
+DATETIMEPICKER_JAR := $(USER_LIB)/LGoodDatePicker-10.4.1.jar
 
 SOURCE_DIR := $(JAVA_DIR)/Source
 SOURCE_SRC := $(SOURCE_DIR)/src
@@ -85,7 +92,7 @@ join-cp = $(subst $(null) $(null),$(SEP),$(strip $1))
 .PHONY: all \
 uml common server user source tests \
 run-server run-user run-source run-tests \
-junit pluntuml sqlite clean
+junit pluntuml sqlite clean datetimepicker
 
 all: uml common server user source
 
@@ -105,14 +112,14 @@ plantuml: $(UML_LIB)
 run-server: $(SERVER_JAR) $(SQLITE_JAR) $(COMMON_JAR)
 	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionServer
 
-run-user: $(USER_JAR) $(COMMON_JAR)
-	java -cp "$(COMMON_JAR)" -jar "$(USER_JAR)"
+run-user: $(USER_JAR) $(COMMON_JAR) $(DATETIMEPICKER_JAR)
+	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionUser
 
 run-source: $(SOURCE_JAR) $(COMMON_JAR)
 	java -cp "$(COMMON_JAR)" -jar "$(SOURCE_JAR)"
 
-# $(USER_JAR)
-run-tests: $(TESTS_JAR) $(SQLITE_JAR) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
+
+run-tests: $(TESTS_JAR) $(SQLITE_JAR) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
 	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionTests
 
 common: $(COMMON_JAR)
@@ -122,24 +129,23 @@ source: $(SOURCE_JAR)
 tests: $(TESTS_JAR)
 
 $(COMMON_JAR): $(COMMON_SOURCES) $(COMMON_BIN) $(COMMON_TARGET)
-	javac -target 8 -d $(COMMON_BIN) $(COMMON_SOURCES)
+	javac $(JAVAC_ARGS) -d $(COMMON_BIN) $(COMMON_SOURCES)
 	jar cf $(COMMON_JAR) -C $(COMMON_BIN) .
 
 $(SERVER_JAR): $(SERVER_SOURCES) $(SERVER_BIN) $(SERVER_TARGET) $(COMMON_JAR)
-	javac -target 8 -d $(SERVER_BIN) -cp $(COMMON_JAR) $(SERVER_SOURCES)
+	javac $(JAVAC_ARGS) -d $(SERVER_BIN) -cp $(COMMON_JAR) $(SERVER_SOURCES)
 	jar cfe $(SERVER_JAR) it.polimi.project14.CivilProtectionServer -C $(SERVER_BIN) .
 
-$(USER_JAR): $(USER_SOURCES) $(USER_BIN) $(USER_TARGET) $(COMMON_JAR)
-	javac -target 8 -d $(USER_BIN) -cp $(COMMON_JAR) $(USER_SOURCES)
-	jar cfe $(USER_JAR) it.polimi.project14.CivilProtectionUser -C $(USER_BIN) .
+$(USER_JAR): $(USER_SOURCES) $(USER_BIN) $(USER_TARGET) $(COMMON_JAR) $(DATETIMEPICKER_JAR)
+	javac $(JAVAC_ARGS) -d $(USER_BIN) -cp "$(COMMON_JAR)$(SEP)$(DATETIMEPICKER_JAR)" $(USER_SOURCES)
+	jar cfe $(USER_JAR) it.polimi.project14.CivilProtectionUser -C $(USER_BIN) . -C $(USER_DATA) $(notdir $(CAPS_CSV))
 
 $(SOURCE_JAR): $(SOURCE_SOURCES) $(SOURCE_BIN) $(SOURCE_TARGET) $(COMMON_JAR)
-	javac -target 8 -d $(SOURCE_BIN) -cp $(COMMON_JAR) $(SOURCE_SOURCES)
+	javac $(JAVAC_ARGS) -d $(SOURCE_BIN) -cp $(COMMON_JAR) $(SOURCE_SOURCES)
 	jar cfe $(SOURCE_JAR) it.polimi.project14.CivilProtectionSource -C $(SOURCE_BIN) .
 
-# $(USER_JAR)
-$(TESTS_JAR): $(TESTS_SOURCES) $(TESTS_BIN) $(TESTS_TARGET) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
-	javac -target 8 -d $(TESTS_BIN) -cp "$(COMMON_JAR):$(SERVER_JAR):$(SOURCE_JAR):$(JUNIT_JAR):$(HAMCREST_JAR)" $(TESTS_SOURCES)
+$(TESTS_JAR): $(TESTS_SOURCES) $(TESTS_BIN) $(TESTS_TARGET) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
+	javac $(JAVAC_ARGS) -d $(TESTS_BIN) -cp "$(COMMON_JAR)$(SEP)$(SERVER_JAR)$(SEP)$(SOURCE_JAR)$(SEP)$(USER_JAR)$(SEP)$(JUNIT_JAR)$(SEP)$(HAMCREST_JAR)" $(TESTS_SOURCES)
 	jar cfe $(TESTS_JAR) it.polimi.project14.CivilProtectionTests -C $(TESTS_BIN) .
 
 sqlite: $(SERVER_LIB)
@@ -151,12 +157,18 @@ junit: $(TESTS_LIB)
 hamcrest: $(TESTS_LIB)
 	wget -O $(HAMCREST_JAR) "https://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"
 
+datetimepicker: $(USER_LIB)
+	wget -O $(DATETIMEPICKER_JAR) "https://github.com/LGoodDatePicker/LGoodDatePicker/releases/download/v10.4.1-Standard/LGoodDatePicker-10.4.1.jar"
+
 # CLEAN #######################################################################
 
-clean:
-	-rm -r $(UML_TARGET) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) $(TESTS_BIN) $(TESTS_TARGET)
+clean-uml:
+	-rm -r $(UML_TARGET)
+
+clean-java:
+	-rm -r $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) $(TESTS_BIN) $(TESTS_TARGET)
 
 # DIRECTORIES #################################################################
 
-$(TESTS_LIB) $(TESTS_BIN) $(TESTS_TARGET) $(UML_LIB) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(SERVER_LIB) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET):
+$(TESTS_LIB) $(TESTS_BIN) $(TESTS_TARGET) $(UML_LIB) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(SERVER_LIB) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) $(USER_LIB):
 	mkdir -p $@
