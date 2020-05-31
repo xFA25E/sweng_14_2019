@@ -63,8 +63,8 @@ public class Caps {
 
     static public Set<String> getMunicipality(String province) {
         return caps.entrySet().stream()
-                   .filter(e -> province == null || province.equals(e.getKey()))
-                   .flatMap(e -> e.getValue().keySet().stream())
-                   .collect(Collectors.toCollection(HashSet::new));
+            .filter(e -> province == null || province.equals(e.getKey()))
+            .flatMap(e -> e.getValue().keySet().stream())
+            .collect(Collectors.toCollection(HashSet::new));
     }
 }
