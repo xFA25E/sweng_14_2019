@@ -23,7 +23,7 @@ public class UserTests {
         newFavCaps.add("22222");
         newFavCaps.add("33333");
         newFavCaps.add("44444");
-        user.setFavotiteCaps(newFavCaps);
+        user.setFavoriteCaps(newFavCaps);
         Assert.assertEquals(newFavCaps, user.getFavoriteCaps());
     }
 }
