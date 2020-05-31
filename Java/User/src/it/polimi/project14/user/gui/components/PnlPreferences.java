@@ -259,7 +259,7 @@ public class PnlPreferences extends JPanel implements ActionListener {
       } else if (e.getSource() == cmbProvince) {
          // Logic
          String selectedProvince = (String) cmbProvince.getSelectedItem();
-         Set<String> municipalityByProvince = Caps.getMunicipality(selectedProvince);
+         Set<String> municipalityByProvince = Caps.getMunicipalities(selectedProvince);
          // View
          cmbMunicipality.removeAllItems();
          for (String municipality : municipalityByProvince) {
