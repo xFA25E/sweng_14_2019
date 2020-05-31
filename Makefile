@@ -55,9 +55,12 @@ USER_DIR := $(JAVA_DIR)/User
 USER_LIB := $(USER_DIR)/lib
 USER_SRC := $(USER_DIR)/src
 USER_BIN := $(USER_DIR)/bin
+USER_DATA := $(USER_DIR)/data
 USER_TARGET := $(USER_DIR)/target
 USER_JAR := $(USER_TARGET)/user.jar
 USER_SOURCES := $(shell find $(USER_SRC) -type f -name *.java)
+
+CAPS_CSV := $(USER_DATA)/provincia_comune_cap.csv
 DATETIMEPICKER_JAR := $(USER_LIB)/LGoodDatePicker-10.4.1.jar
 
 SOURCE_DIR := $(JAVA_DIR)/Source
@@ -135,7 +138,7 @@ $(SERVER_JAR): $(SERVER_SOURCES) $(SERVER_BIN) $(SERVER_TARGET) $(COMMON_JAR)
 
 $(USER_JAR): $(USER_SOURCES) $(USER_BIN) $(USER_TARGET) $(COMMON_JAR) $(DATETIMEPICKER_JAR)
 	javac $(JAVAC_ARGS) -d $(USER_BIN) -cp "$(COMMON_JAR)$(SEP)$(DATETIMEPICKER_JAR)" $(USER_SOURCES)
-	jar cfe $(USER_JAR) it.polimi.project14.CivilProtectionUser -C $(USER_BIN) .
+	jar cfe $(USER_JAR) it.polimi.project14.CivilProtectionUser -C $(USER_BIN) . -C $(USER_DATA) $(notdir $(CAPS_CSV))
 
 $(SOURCE_JAR): $(SOURCE_SOURCES) $(SOURCE_BIN) $(SOURCE_TARGET) $(COMMON_JAR)
 	javac $(JAVAC_ARGS) -d $(SOURCE_BIN) -cp $(COMMON_JAR) $(SOURCE_SOURCES)

@@ -4,17 +4,24 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 public class Caps {
     static HashMap<String, HashMap<String, HashSet<String>>> caps;
 
     static {
-        try (BufferedReader csvReader = new BufferedReader(new FileReader("data/provincia_comune_cap.csv"))) {
+        // try (BufferedReader csvReader = new BufferedReader(new FileReader("data/provincia_comune_cap.csv"))) {
 
+        try (BufferedReader csvReader = new BufferedReader(
+                new InputStreamReader(Caps.class.getClassLoader()
+                        .getResourceAsStream("provincia_comune_cap.csv"))
+            )) {
             String row;
             caps = new HashMap<>();
             while ((row = csvReader.readLine()) != null) {
@@ -37,6 +44,7 @@ public class Caps {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     static public Set<String> narrow(String province, String municipality) {
