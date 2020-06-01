@@ -56,7 +56,7 @@ public class Source {
 							  .collect(Collectors.toSet()));
 				forecast.removeForecasts(forecasts.stream()
 										 .filter(e -> shouldRemove(e))
-										 .collect(Collectors.toSet()));		
+										 .collect(Collectors.toSet()));
 			} catch (Exception e) {
 				//TODO: handle exception
 			}
@@ -71,11 +71,13 @@ public class Source {
 	}
 
 	public static boolean shouldSend(Event event) {
-		switch (event.getStatus()) {
-			case EXPECTED:
-				return false;
-			default:
-				return true;
+        EventStatus status = event.getStatus();
+		if (status == EventStatus.CANCELED
+            || status == EventStatus.OCCURED
+            || status == EventStatus.ONGOING) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 

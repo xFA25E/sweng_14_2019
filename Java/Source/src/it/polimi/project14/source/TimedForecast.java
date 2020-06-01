@@ -30,7 +30,7 @@ public class TimedForecast implements Forecast {
 	 * public TimedForecast(ArrayList<Event> forecast24H, Timer timer){
 	 * this.forecast24H = forecast24H; this.timer = timer; }
 	 */
-	
+
 	@Override
 	public Set<Event> getForecasts() {
 		return forecast24H;
@@ -70,7 +70,7 @@ public class TimedForecast implements Forecast {
 	}
 
 	private void computeDifferences() {
-		
+
 	}
 
 }
