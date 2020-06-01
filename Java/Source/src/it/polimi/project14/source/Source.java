@@ -16,7 +16,7 @@ public class Source {
 	private static final long URGENT_SLEEP = 5 * 1000;
 	private static final long NORMAL_SLEEP = 4 * 60 * 60 * 1000;
 
-	private int id = (int) Math.random() * Integer.MAX_VALUE;
+	private int id = (int) (Math.random() * Integer.MAX_VALUE);
 	private Forecast forecast;
 	private Timer timer;
 	private TimerTask timerTask4H = new taskGetForecast();
