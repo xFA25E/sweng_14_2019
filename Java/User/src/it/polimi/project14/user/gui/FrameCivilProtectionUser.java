@@ -13,9 +13,12 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.SystemTray;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.TrayIcon;
+import java.awt.TrayIcon.MessageType;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -54,6 +57,8 @@ public class FrameCivilProtectionUser extends JFrame {
       GridBagLayout gbPnlMain = new GridBagLayout();
       GridBagConstraints gbcPnlMain = new GridBagConstraints();
       pnlMain.setLayout(gbPnlMain);
+
+     
 
       // #region pnlTitle
       pnlTitle = new JPanel();
