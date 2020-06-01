@@ -32,7 +32,7 @@ public class RandomEvent extends Event {
 
     public static final int MAX_SEVERITY = 10;
     private static final int MAX_TIME_SHIFT = 24 * 60 * 60; // 24 HOURS
-    private static final int ONGOING_SHIFT = 1 * 60 * 60; // 24 HOURS
+    private static final int ONGOING_SHIFT = 1 * 60 * 60; // 1 HOUR
 
     public RandomEvent() {
         LocalDateTime now = LocalDateTime.now();
