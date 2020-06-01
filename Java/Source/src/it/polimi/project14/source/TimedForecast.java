@@ -43,24 +43,8 @@ public class TimedForecast implements Forecast {
 
 	private Set<Event> generateForecast() {
 		Set<Event> forecastGenerated = new HashSet<>();
-		Event generated = new Event();
-		generated.setEventId((int) (Math.random() * Integer.MAX_VALUE));
-		ArrayList<String> capList = new ArrayList<String> (Arrays.asList("22031","22032","22070","22040","22024","22040","22040","22070","22010","22060",
-		"22033","22030","22021","22010","22070","22070","22020","22028","22020","22070","22040","22010","22034","22070","22060",
-		"22071","22030","22061","22063","22035","22070","22010","22070","22060","22010","22060","22030","22070","22070","22030",
-		"22070","22010","22023","22020","22072","22012","22070","22010","22010","22041","22100","22010","22010","22060","22010",
-		"22020","22013","22014","22010","22036","22030","22020","22020","22070","22060","22073","22010","22010","22070","22010",
-		"22015","22011","22070","22044"));
-		generated.setCap(capList.get((int) (Math.random() * capList.size())));
-		ArrayList<String> messageList = new ArrayList<String> (Arrays.asList("Message"));
-		generated.setMessage(messageList.get((int) (Math.random() * messageList.size())));
-		// generated.setExpectedAt();
-		generated.setSeverity((int) (Math.random() * MAX_SEVERITY));
-		// generated.setStatus();
-		ArrayList<String> kindList = new ArrayList<String> (Arrays.asList("Atmosferico"));
-		generated.setKind(kindList.get((int) (Math.random() * kindList.size())));
-		forecastGenerated.add(generated);
-
+		Event generated = new RandomEvent();
+        forecastGenerated.add(generated);
 		return forecastGenerated;
 	}
 
