@@ -1,6 +1,7 @@
 package it.polimi.project14;
 
 import java.util.Set;
+import java.util.logging.Logger;
 
 import it.polimi.project14.user.Caps;
 import it.polimi.project14.user.User;
@@ -16,17 +17,6 @@ public class CivilProtectionUser {
         FrameCivilProtectionUser userGui = new FrameCivilProtectionUser(user);
         userGui.setSize(600, 700);
 
-        SystemTray tray  = SystemTray.getSystemTray();
-        Image civilProtectionIcon = Toolkit.getDefaultToolkit().createImage("protezione-civile-icona.png");
         
-        TrayIcon trayIcon = new TrayIcon(civilProtectionIcon, "Protezione Civile");
-  
-        trayIcon.setImageAutoSize(true);
-        try {
-           tray.add(trayIcon);
-        } catch (Exception e) {
-        }
-  
-        trayIcon.displayMessage("Nuova previsione fra i tuoi caps", "Terremoto 20:00", MessageType.WARNING);
     }
 }

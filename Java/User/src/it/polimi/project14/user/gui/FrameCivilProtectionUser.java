@@ -1,7 +1,5 @@
 package it.polimi.project14.user.gui;
 
-// import javax.swing.UIManager;
-// import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
@@ -19,6 +17,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
+import java.awt.Image;
+import java.awt.Toolkit;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -27,15 +28,15 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.SortedSet;
 
-
 import it.polimi.project14.common.Event;
+import it.polimi.project14.common.EventStatus;
 import it.polimi.project14.common.SearchFilter;
 import it.polimi.project14.user.User;
 import it.polimi.project14.user.gui.components.*;
 
-public class FrameCivilProtectionUser extends JFrame {
-   static FrameCivilProtectionUser theJfrCivilProtectionUser;
-
+public class FrameCivilProtectionUser
+       extends JFrame implements EventsNotifiable {
+          
    JPanel pnlMain;
    JTabbedPane tbpContents;
 
@@ -49,7 +50,10 @@ public class FrameCivilProtectionUser extends JFrame {
    JLabel lblTitle;
    Timer clockTimer;
 
-   // Should have user connected
+   // TODO: put icon in jar resources
+   final Image civilProtectionIcon = Toolkit.getDefaultToolkit().createImage("protezione-civile-icona.png");
+   TrayIcon trayIcon = new TrayIcon(civilProtectionIcon, "Protezione Civile");
+
    public FrameCivilProtectionUser(User user) {
       super("Protezione Civile");
 
@@ -58,7 +62,19 @@ public class FrameCivilProtectionUser extends JFrame {
       GridBagConstraints gbcPnlMain = new GridBagConstraints();
       pnlMain.setLayout(gbPnlMain);
 
-     
+      // #region trayForNotification
+      if (SystemTray.isSupported()) {
+         SystemTray tray = SystemTray.getSystemTray();
+   
+         trayIcon.setImageAutoSize(true);
+         try {
+            tray.add(trayIcon);
+         } catch (Exception e) {
+         }
+      } else {
+         System.out.println("Notification unsupported");
+      }
+      // #endregion
 
       // #region pnlTitle
       pnlTitle = new JPanel();
@@ -92,15 +108,15 @@ public class FrameCivilProtectionUser extends JFrame {
       // ActionListener for update lblTime
       ActionListener timeUpdate = new ActionListener() {
          @Override
-            public void actionPerformed(ActionEvent e) {
-               DateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");
-               String timeNow = timeFormatter.format(new Date());
-               lblTitle.setText(timeNow);
-            }
-         };
-         clockTimer = new Timer(1000, timeUpdate);
-         clockTimer.setInitialDelay(0);
-         clockTimer.start();
+         public void actionPerformed(ActionEvent e) {
+            DateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");
+            String timeNow = timeFormatter.format(new Date());
+            lblTitle.setText(timeNow);
+         }
+      };
+      clockTimer = new Timer(1000, timeUpdate);
+      clockTimer.setInitialDelay(0);
+      clockTimer.start();
       // #endregion
 
       // #region Tab
@@ -196,5 +212,41 @@ public class FrameCivilProtectionUser extends JFrame {
       setContentPane(pnlMain);
       pack();
       setVisible(true);
+   }
+
+   public void showNotification(Event eventToNotify) throws Exception {
+      if (!SystemTray.isSupported()) {
+         throw new Exception("Unsupported Tray notification");
+      }
+
+      String kind = eventToNotify.getKind();
+      LocalDateTime expectedAt = eventToNotify.getExpectedAt();
+      int severity = eventToNotify.getSeverity();
+      String cap = eventToNotify.getCap();
+      EventStatus status = eventToNotify.getStatus();
+
+      String message;
+      switch (status) {
+         case EXPECTED:
+            message = String.format("%s: alle %td del %td %tB, gravità: %d, CAP: %s", kind, expectedAt, expectedAt,
+                  expectedAt, severity, cap);
+            trayIcon.displayMessage("Evento previsto nei i tuoi CAP", message, MessageType.WARNING);
+            break;
+
+         case ONGOING:
+            message = String.format("%s in corso, gravità: %d, CAP: %s", kind, severity, cap);
+            trayIcon.displayMessage("Evento in corso nei tuoi CAP", message, MessageType.WARNING);
+            break;
+
+         case CANCELED:
+            message = String.format("L'evento di tipo %s previsto per le %td del %td %tB, CAP: %s è stato cancellato",
+                  kind, expectedAt, expectedAt, expectedAt, cap);
+            trayIcon.displayMessage("Evento cancellato nei i tuoi CAP", message, MessageType.WARNING);
+            break;
+
+         default:
+            break;
+      }
+
    }
 }

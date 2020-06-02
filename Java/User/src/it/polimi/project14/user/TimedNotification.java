@@ -15,15 +15,18 @@ public class TimedNotification extends Notification {
         TimerTask task = new Notify();
         timer.schedule(task, 0, 10000);
     }
-	
+
     public class Notify extends TimerTask {
         public void run() {
-            try {Set<Event> eventsToNotify = getForecasts();
-			if (!eventsToNotify.isEmpty()) {
-                sendEventsToNotify(eventsToNotify);
-                } 
+            try {
+                Set<Event> eventsToNotify = getForecasts();
+                if (!eventsToNotify.isEmpty()) {
+                    for (Event eventToNotify: eventsToNotify) {
+                        sendEventToNotify(eventToNotify);
+                    }
+                }
             } catch (Exception e) {
-                //TODO: handle exception
+                // TODO: handle exception
             }
         }
     }
