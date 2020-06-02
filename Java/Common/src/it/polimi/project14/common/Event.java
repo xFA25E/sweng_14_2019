@@ -95,4 +95,18 @@ public class Event implements Comparable<Event>, Serializable {
     public int compareTo(Event other) {
         return this.expectedAt.compareTo(other.getExpectedAt());
     }
+
+	@Override
+	public String toString() {
+		return "Event [\n"
+            + "    sourceId=" + sourceId + ",\n"
+            + "    eventId=" + eventId + ",\n"
+            + "    cap=" + cap + ",\n"
+            + "    message=" + message + ",\n"
+            + "    expectedAt=" + expectedAt + ",\n"
+            + "    severity=" + severity + ",\n"
+            + "    status=" + status + ",\n"
+            + "    kind=" + kind + ",\n"
+            + "]";
+	}
 }

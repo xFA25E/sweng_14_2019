@@ -116,7 +116,7 @@ run-user: $(USER_JAR) $(COMMON_JAR) $(DATETIMEPICKER_JAR)
 	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionUser
 
 run-source: $(SOURCE_JAR) $(COMMON_JAR)
-	java -cp "$(COMMON_JAR)" -jar "$(SOURCE_JAR)"
+	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionSource
 
 
 run-tests: $(TESTS_JAR) $(SQLITE_JAR) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
