@@ -31,6 +31,7 @@ import java.util.SortedSet;
 import it.polimi.project14.common.Event;
 import it.polimi.project14.common.EventStatus;
 import it.polimi.project14.common.SearchFilter;
+import it.polimi.project14.user.Caps;
 import it.polimi.project14.user.User;
 import it.polimi.project14.user.gui.components.*;
 
@@ -136,6 +137,7 @@ public class FrameCivilProtectionUser
          urgentEvents = user.getUrgentEvents();
       } catch (Exception e) {
          // TODO: show exception
+         System.out.println("It wasn't possible to show uregnt events");
       }
 
       JScrollPane pnlUrgentEvents = new PnlUrgentEvents(urgentEvents);
@@ -154,15 +156,17 @@ public class FrameCivilProtectionUser
 
       // Add my events
       SearchFilter myCapsEventsOn24h = new SearchFilter();
-      myCapsEventsOn24h.setCapList(user.getFavoriteCaps());
-      myCapsEventsOn24h.setExpectedSince(LocalDateTime.of(LocalDate.now(), LocalTime.MIN));
-      myCapsEventsOn24h.setExpectedUntil(LocalDateTime.of(LocalDate.now(), LocalTime.MAX));
+      myCapsEventsOn24h.setCapList(Caps.filter(null, null));
+      myCapsEventsOn24h.setExpectedSince(LocalDateTime.MIN);
+      // myCapsEventsOn24h.setExpectedSince(LocalDateTime.of(LocalDate.now(), LocalTime.MIN));
+      myCapsEventsOn24h.setExpectedUntil(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.MAX));
 
       SortedSet<Event> myEvents = null;
       try {
          myEvents = user.searchEvents(myCapsEventsOn24h);
       } catch (Exception e) {
          // TODO: show exception
+         System.out.println("It wasn't possible to show personal events");
       }
 
       JPanel pnlMyEvents = new PnlEventsTable(myEvents);

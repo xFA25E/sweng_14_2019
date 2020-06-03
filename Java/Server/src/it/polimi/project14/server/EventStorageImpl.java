@@ -49,10 +49,10 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
         + "INSERT INTO event (source_id, event_id, cap, message,"
         + "                   expected_at, severity, status, kind) "
         + "VALUES (?, ?, ?, ?, ?, ?, ?, ?) "
-        + "ON CONFLICT(source_id, event_id) DO UPDATE"
-        + "  severity = ?,"
-        + "  message = ?,"
-        + "  status = ? "
+        + "ON CONFLICT(source_id, event_id) DO UPDATE SET"
+        + " severity = ?,"
+        + " message = ?,"
+        + " status = ? "
         + "WHERE status NOT IN ('occured', 'canceled')";
 
     private static final String selectQuery = ""

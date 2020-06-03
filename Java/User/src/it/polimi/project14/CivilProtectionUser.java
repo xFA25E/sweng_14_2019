@@ -16,7 +16,5 @@ public class CivilProtectionUser {
         User user = new User(comoCaps);
         FrameCivilProtectionUser userGui = new FrameCivilProtectionUser(user);
         userGui.setSize(600, 700);
-
-        
     }
 }

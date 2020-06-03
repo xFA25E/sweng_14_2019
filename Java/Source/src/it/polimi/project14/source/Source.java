@@ -23,11 +23,16 @@ public class Source {
 	private TimerTask timerTask5S = new taskSendImmutable();
 
 	final private String urlServer = "rmi://localhost:6666/";
+
 	static {
 		System.setProperty("java.security.policy", "policy.all");
 	}
 
-	public Source(Forecast forecast){
+	// test
+	public Source() {
+	}
+
+	public Source(Forecast forecast) {
 		this(NORMAL_SLEEP, URGENT_SLEEP, forecast);
 	}
 
@@ -67,7 +72,6 @@ public class Source {
 		//RMI
 		EventStorage remoteEventStorage = (EventStorage) Naming.lookup(urlServer + "EVENT_STORAGE");
 		remoteEventStorage.storeEvents(eventList);
-		// return EventList;
 	}
 
 	public static boolean shouldSend(Event event) {
