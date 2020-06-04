@@ -5,12 +5,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import it.polimi.project14.common.Event;
+import it.polimi.project14.user.gui.EventsNotificationShower;
 
 public class TimedNotification extends Notification {
     private Timer timer;
 
-    TimedNotification(User user) {
-        super(user);
+    public TimedNotification(User user, EventsNotificationShower notificationShower) {
+        super(user, notificationShower);
         timer = new Timer();
         TimerTask task = new Notify();
         timer.schedule(task, 0, 10000);

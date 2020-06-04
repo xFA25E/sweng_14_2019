@@ -36,7 +36,7 @@ import it.polimi.project14.user.User;
 import it.polimi.project14.user.gui.components.*;
 
 public class FrameCivilProtectionUser
-       extends JFrame implements EventsNotifiable {
+       extends JFrame implements EventsNotificationShower {
           
    JPanel pnlMain;
    JTabbedPane tbpContents;
