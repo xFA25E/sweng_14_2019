@@ -43,7 +43,7 @@ public class TimedForecast implements Forecast {
 
 	private Set<Event> generateForecast() {
 		Set<Event> forecastGenerated = new HashSet<>();
-		Event generated = new RandomEvent();
+        Event generated = RandomEvent.generate();
         forecastGenerated.add(generated);
 		return forecastGenerated;
 	}
