@@ -255,7 +255,7 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
       SearchFilter myCapsEventsOn24h = new SearchFilter();
       myCapsEventsOn24h.setCapList(Caps.filter(null, null));
       // Since today (at start of day) until ever
-      myCapsEventsOn24h.setExpectedSince(LocalDate.now().atStartOfDay());
+      myCapsEventsOn24h.setExpectedSince(LocalDateTime.now().withMinute(0));
       SortedSet<Event> myEvents = null;
       try {
          myEvents = user.searchEvents(myCapsEventsOn24h);
@@ -266,7 +266,7 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
 
       // Show all
       this.pnlUrgentEvents.setUrgentEvents(urgentEvents);
-      this.pnlMyEvents.setEvents(myEvents);
+      this.pnlMyEvents.setEvents(myEvents, true);
    }
 
    public void showNotification(Event eventToNotify) throws Exception {

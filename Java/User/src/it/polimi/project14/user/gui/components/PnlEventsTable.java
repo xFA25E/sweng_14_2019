@@ -1,7 +1,8 @@
 package it.polimi.project14.user.gui.components;
 
 import java.time.LocalDateTime;
-
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -14,7 +15,8 @@ import it.polimi.project14.common.Event;
 
 public class PnlEventsTable extends JScrollPane {
 
-    final Object[] header = { "Tipo", "CAP", "Gravità", "Data e ora", "Descrizione"};
+    final Object[] header = { "Tipo", "CAP", "Gravità", "Data e Ora", "Stato", "Descrizione"};
+    final Object[] headerNoDateTime = { "Tipo", "CAP", "Gravità", "Descrizione","Stato"};
 
     DefaultTableModel model = new DefaultTableModel(header, 0) {
         public boolean isCellEditable(int row, int column) {
@@ -33,29 +35,49 @@ public class PnlEventsTable extends JScrollPane {
 
     public PnlEventsTable(SortedSet<Event> sortedEvents) {
         this.table = new JTable(model);
-        setEvents(sortedEvents);
+        setEvents(sortedEvents, true);
         this.setViewportView(table);
     }
 
-    public void setEvents(SortedSet<Event> sortedEvents) {
+    public PnlEventsTable(SortedSet<Event> sortedEvents, Boolean showDateTime) {
+        this.table = new JTable(model);
+        setEvents(sortedEvents, showDateTime);
+        this.setViewportView(table);
+    }
+
+    public void setEvents(SortedSet<Event> sortedEvents, Boolean showDateTime) {
         // Clear the table
-        model.setRowCount(0);
+        this.model.setRowCount(0);
+
+        if (showDateTime == false) {
+            this.model = new DefaultTableModel(headerNoDateTime, 0);
+            table.setModel(this.model);
+        }
 
         if (sortedEvents != null) {
             for (Event event : sortedEvents) {
-                String[] eventData = {
-                                     event.getKind(),
-                                     event.getCap(),
-                                     Integer.toString(event.getSeverity()),
-                                     // TODO: Format String
-                                     event.getExpectedAt().toString(),
-                                     event.getMessage() 
-                                     };
+                ArrayList<String> eventData = new ArrayList<String>();
+                eventData.add(event.getKind());
+                eventData.add(event.getCap());
+                eventData.add(Integer.toString(event.getSeverity()));
+                if (showDateTime == true) {
+                    eventData.add(event.getExpectedAt()
+                    .format(DateTimeFormatter.ofPattern("d-MMMM-YY H:mm")));
+                }
+                eventData.add(event.getStatus().toString());
+                eventData.add(event.getMessage());
+                
                 // Add Data to the table
-                model.addRow(eventData);
+                this.model.addRow(eventData.toArray());
             }
         }
-        model.fireTableDataChanged();
+
+        if (!showDateTime) {
+            this.model = new DefaultTableModel(headerNoDateTime, 0);
+            for (int i = 0; i < this.model.getRowCount(); i++)
+            this.model.getDataVector().remove(4);
+        }
+        this.model.fireTableDataChanged();
         this.table.setPreferredScrollableViewportSize(this.table.getPreferredSize());
     }
 }

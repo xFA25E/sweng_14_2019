@@ -7,6 +7,8 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import it.polimi.project14.common.Event;
 import it.polimi.project14.common.EventStorage;
@@ -43,7 +45,8 @@ public class User {
 	public SortedSet<Event> getUrgentEvents() throws Exception {
 		SearchFilter searchFilter = new SearchFilter();
 		searchFilter.setCapList(favoriteCaps);
-		searchFilter.setExpectedSince(LocalDate.now().atStartOfDay());
+		// set expectedSicne at start of current hour
+		searchFilter.setExpectedSince(LocalDateTime.of(LocalDate.now(), LocalTime.now().withMinute(0)));
 		searchFilter.setMaxSeverity(true);
 
 		return searchEvents(searchFilter);

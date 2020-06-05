@@ -1,13 +1,11 @@
 package it.polimi.project14.user.gui.components;
 
-import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.BorderFactory;
 
 import java.time.LocalDateTime;
-
 import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -46,10 +44,10 @@ public class PnlUrgentEvents extends JScrollPane {
    }
 
    public void setUrgentEvents(SortedSet<Event> sortedUrgentEvents) {
-      SortedMap<Integer, SortedSet<Event>> mapTimeEvents = new TreeMap<>();
+      SortedMap<LocalDateTime, SortedSet<Event>> mapTimeEvents = new TreeMap<>();
       if (sortedUrgentEvents != null) {
           for (Event event : sortedUrgentEvents) {
-              Integer currHour = event.getExpectedAt().getHour();
+              LocalDateTime currHour = event.getExpectedAt().withMinute(0);
               if (!mapTimeEvents.containsKey(currHour)) {
                   mapTimeEvents.put(currHour, new TreeSet<Event>());
               }
@@ -64,10 +62,11 @@ public class PnlUrgentEvents extends JScrollPane {
       insidePanel.setLayout(gbPnlUrgentAllrms);
 
       int i = 0;
-      for (HashMap.Entry<Integer, SortedSet<Event>> eventsEntry : mapTimeEvents.entrySet()) {
+      for (HashMap.Entry<LocalDateTime, SortedSet<Event>> eventsEntry : mapTimeEvents.entrySet()) {
 
-         PnlEventsTable eventsTable = new PnlEventsTable(eventsEntry.getValue());
-         String title = String.format("%02dh - %02dh", eventsEntry.getKey(), eventsEntry.getKey() + 1);
+         PnlEventsTable eventsTable = new PnlEventsTable(eventsEntry.getValue(), false);
+         // Date time formatted: 0h - 1h dd Month yyyy
+         String title = String.format("<html>%1$tHh - %2$tHh<br>%1$td %1$tB %1$tY", eventsEntry.getKey(), eventsEntry.getKey().plusHours(1));
          eventsTable.setBorder(BorderFactory.createTitledBorder(title));
 
          gbcPnlUrgentAllrms.gridx = 0;

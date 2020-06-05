@@ -24,14 +24,16 @@ endif
 
 # Java ########################################################################
 
+JAVA_ARGS := -Dfile.encoding=UTF-8
 JAVA_DIR := Java
 ifeq ($(OS),Windows_NT)
 	SEP := ;
-	JAVAC_ARGS := --release 8
+	JAVAC_ARGS := --release 8 -encoding UTF-8
 else
 	SEP := :
-	JAVAC_ARGS := -target 8
+	JAVAC_ARGS := -target 8 -encoding UTF-8
 endif
+
 
 COMMON_DIR := $(JAVA_DIR)/Common
 COMMON_SRC := $(COMMON_DIR)/src
@@ -110,17 +112,17 @@ plantuml: $(UML_LIB)
 # Java ########################################################################
 
 run-server: $(SERVER_JAR) $(SQLITE_JAR) $(COMMON_JAR)
-	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionServer
+	java $(JAVA_ARGS) -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionServer
 
 run-user: $(USER_JAR) $(COMMON_JAR) $(DATETIMEPICKER_JAR) $(SQLITE_JAR)
-	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionUser
+	java $(JAVA_ARGS) -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionUser
 
 run-source: $(SOURCE_JAR) $(COMMON_JAR) $(SQLITE_JAR)
-	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionSource
+	java $(JAVA_ARGS) -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionSource
 
 
 run-tests: $(TESTS_JAR) $(SQLITE_JAR) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
-	java -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionTests
+	java $(JAVA_ARGS) -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionTests
 
 common: $(COMMON_JAR)
 server: $(SERVER_JAR)
