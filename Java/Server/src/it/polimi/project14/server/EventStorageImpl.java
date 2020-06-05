@@ -144,16 +144,9 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
         }
 
         if (isMaxSeverity(searchFilter)) {
-            OptionalInt maybeMax = eventList.stream()
-                .mapToInt(e -> e.getSeverity())
-                .max();
-
-            if (maybeMax.isPresent()) {
-                int max = maybeMax.getAsInt();
-                eventList = eventList.stream()
-                    .filter(e -> e.getSeverity() == max)
-                    .collect(Collectors.toCollection(HashSet::new));
-            }
+            eventList = eventList.stream()
+                .filter(e -> 8 <= e.getSeverity())
+                .collect(Collectors.toCollection(HashSet::new));
         }
 
         return eventList;
