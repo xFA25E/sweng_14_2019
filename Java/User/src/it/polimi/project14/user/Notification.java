@@ -12,21 +12,25 @@ public abstract class Notification {
   private EventsNotificationShower notificationShower;
   private User user;
 
-  Notification(User user, EventsNotificationShower notificationShower) {
+  public Notification(User user, EventsNotificationShower notificationShower) {
     this.user = user;
     this.notificationShower = notificationShower;
     notifiedEvents = new HashSet<Event>();
+    try {
+      notifiedEvents = getForecasts();
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 
   protected void setNotificationShower(EventsNotificationShower notificationShower) {
     this.notificationShower = notificationShower;
   }
 
-
   protected EventsNotificationShower getNotificationShower() {
     return notificationShower;
   }
-  
+
   protected Set<Event> getForecasts() throws Exception {
     SearchFilter searchFilter = new SearchFilter();
     searchFilter.setCapList(user.getFavoriteCaps());
@@ -34,10 +38,10 @@ public abstract class Notification {
     // substraction of yet notified events
     // TODO: check what substraction do
     eventsToNotify.removeAll(notifiedEvents);
-    
+
     return eventsToNotify;
   }
-  
+
   protected void sendEventToNotify(Event eventToNotify) {
     try {
       notificationShower.showNotification(eventToNotify);
