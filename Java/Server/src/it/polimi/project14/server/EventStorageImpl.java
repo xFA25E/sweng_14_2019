@@ -53,7 +53,8 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
         + " severity = ?,"
         + " message = ?,"
         + " status = ? "
-        + "WHERE status NOT IN ('occured', 'canceled')";
+        + "WHERE status NOT IN ('occured', 'canceled')"
+        + "  AND cap = ? AND expected_at = ? AND kind = ?";
 
     private static final String selectQuery = ""
         + "SELECT source_id,"
@@ -101,10 +102,13 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
                     pstmt.setInt(9, event.getSeverity());
                     pstmt.setString(10, event.getMessage());
                     pstmt.setString(11, statusToString(event.getStatus()));
+                    pstmt.setInt(12, stringToInt(event.getCap()));
+                    pstmt.setLong(13, dateTimeToEpoch(event.getExpectedAt()));
+                    pstmt.setString(14, event.getKind());
 
                     pstmt.addBatch();
                 }
-                pstmt.executeUpdate();
+                pstmt.executeBatch();
             }
         }
     }
