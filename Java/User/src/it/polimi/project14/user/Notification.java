@@ -40,7 +40,7 @@ public abstract class Notification {
   
   protected void sendEventToNotify(Event eventToNotify) {
     try {
-      eventsNotifiable.showNotification(eventToNotify);
+      notificationShower.showNotification(eventToNotify);
       notifiedEvents.add(eventToNotify);
     } catch (Exception e) {
 

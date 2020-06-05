@@ -44,7 +44,7 @@ public class User {
 		SearchFilter searchFilter = new SearchFilter();
 		searchFilter.setCapList(favoriteCaps);
 		searchFilter.setExpectedSince(LocalDate.now().atStartOfDay());
-		searchFilter.setMaxSeverity(true);
+		// searchFilter.setMaxSeverity(true);
 
 		return searchEvents(searchFilter);
 	}

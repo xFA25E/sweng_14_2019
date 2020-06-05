@@ -3,6 +3,7 @@ package it.polimi.project14.user.gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JTabbedPane;
 import javax.swing.Timer;
 import javax.swing.JScrollPane;
@@ -24,8 +25,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Date;
+import java.util.Objects;
 import java.util.SortedSet;
 
 import it.polimi.project14.common.Event;
@@ -35,13 +36,15 @@ import it.polimi.project14.user.Caps;
 import it.polimi.project14.user.User;
 import it.polimi.project14.user.gui.components.*;
 
-public class FrameCivilProtectionUser
-       extends JFrame implements EventsNotificationShower {
-          
+public class FrameCivilProtectionUser extends JFrame implements ActionListener, EventsNotificationShower {
+
    JPanel pnlMain;
    JTabbedPane tbpContents;
 
    JPanel tabHome;
+   JButton btnUpdate;
+   PnlUrgentEvents pnlUrgentEvents;
+   PnlEventsTable pnlMyEvents;
 
    JPanel pnlSearch;
 
@@ -49,14 +52,21 @@ public class FrameCivilProtectionUser
 
    JPanel pnlTitle;
    JLabel lblTitle;
+
+   // Logic
+   User user;
    Timer clockTimer;
 
    // TODO: put icon in jar resources
-   final Image civilProtectionIcon = Toolkit.getDefaultToolkit().createImage("protezione-civile-icona.png");
+   final Image civilProtectionIcon = Toolkit.getDefaultToolkit()
+         .createImage("java/user/data/protezione-civile-icona.png");
    TrayIcon trayIcon = new TrayIcon(civilProtectionIcon, "Protezione Civile");
 
    public FrameCivilProtectionUser(User user) {
       super("Protezione Civile");
+
+      Objects.requireNonNull(user);
+      this.user = user;
 
       pnlMain = new JPanel();
       GridBagLayout gbPnlMain = new GridBagLayout();
@@ -66,7 +76,7 @@ public class FrameCivilProtectionUser
       // #region trayForNotification
       if (SystemTray.isSupported()) {
          SystemTray tray = SystemTray.getSystemTray();
-   
+
          trayIcon.setImageAutoSize(true);
          try {
             tray.add(trayIcon);
@@ -131,57 +141,66 @@ public class FrameCivilProtectionUser
       tabHome.setLayout(gbTabHome);
       // Inside Tab Home
 
-      // Add uregnt events panel
-      SortedSet<Event> urgentEvents = null;
-      try {
-         urgentEvents = user.getUrgentEvents();
-      } catch (Exception e) {
-         // TODO: show exception
-         System.out.println("It wasn't possible to show uregnt events");
-      }
-
-      JScrollPane pnlUrgentEvents = new PnlUrgentEvents(urgentEvents);
-      pnlUrgentEvents.setBorder(BorderFactory.createTitledBorder("Allarmi in evidenza"));
+      // #region reload button
+      btnUpdate = new JButton("Aggiorna dati");
+      btnUpdate.addActionListener(this);
       gbcTabHome.gridx = 0;
       gbcTabHome.gridy = 0;
       gbcTabHome.gridwidth = 1;
       gbcTabHome.gridheight = 1;
-      gbcTabHome.fill = GridBagConstraints.BOTH;
-      gbcTabHome.weightx = 1;
-      gbcTabHome.weighty = 1;
-      gbcTabHome.anchor = GridBagConstraints.NORTH;
+      gbcTabHome.fill = GridBagConstraints.NONE;
+      gbcTabHome.weightx = 0;
+      gbcTabHome.weighty = 0;
+      gbcTabHome.anchor = GridBagConstraints.EAST;
       gbcTabHome.insets = new Insets(5, 5, 0, 5);
-      gbTabHome.setConstraints(pnlUrgentEvents, gbcTabHome);
-      tabHome.add(pnlUrgentEvents);
+      gbTabHome.setConstraints(btnUpdate, gbcTabHome);
+      tabHome.add(btnUpdate);
 
-      // Add my events
-      SearchFilter myCapsEventsOn24h = new SearchFilter();
-      myCapsEventsOn24h.setCapList(Caps.filter(null, null));
-      myCapsEventsOn24h.setExpectedSince(LocalDateTime.MIN);
-      // myCapsEventsOn24h.setExpectedSince(LocalDateTime.of(LocalDate.now(), LocalTime.MIN));
-      myCapsEventsOn24h.setExpectedUntil(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.MAX));
-
-      SortedSet<Event> myEvents = null;
-      try {
-         myEvents = user.searchEvents(myCapsEventsOn24h);
-      } catch (Exception e) {
-         // TODO: show exception
-         System.out.println("It wasn't possible to show personal events");
-      }
-
-      JPanel pnlMyEvents = new PnlEventsTable(myEvents);
-      pnlMyEvents.setBorder(BorderFactory.createTitledBorder("Prossime 24h nei tuoi CAP preferiti"));
+      pnlUrgentEvents = new PnlUrgentEvents();
+      pnlUrgentEvents.setBorder(BorderFactory.createTitledBorder("Allarmi in evidenza"));
       gbcTabHome.gridx = 0;
       gbcTabHome.gridy = 1;
       gbcTabHome.gridwidth = 1;
       gbcTabHome.gridheight = 1;
       gbcTabHome.fill = GridBagConstraints.BOTH;
-      gbcTabHome.weightx = 0;
+      gbcTabHome.weightx = 1;
       gbcTabHome.weighty = 0;
       gbcTabHome.anchor = GridBagConstraints.NORTH;
       gbcTabHome.insets = new Insets(5, 5, 0, 5);
+      gbTabHome.setConstraints(pnlUrgentEvents, gbcTabHome);
+      tabHome.add(pnlUrgentEvents);
+
+      pnlMyEvents = new PnlEventsTable();
+      pnlMyEvents.setBorder(BorderFactory.createTitledBorder("Prossime 24h nei tuoi CAP preferiti"));
+      gbcTabHome.gridx = 0;
+      gbcTabHome.gridy = 2;
+      gbcTabHome.gridwidth = 1;
+      gbcTabHome.gridheight = 1;
+      gbcTabHome.fill = GridBagConstraints.BOTH;
+      gbcTabHome.weightx = 1;
+      gbcTabHome.weighty = 0;
+      gbcTabHome.anchor = GridBagConstraints.NORTH;
+      gbcTabHome.insets = new Insets(20, 5, 0, 5);
       gbTabHome.setConstraints(pnlMyEvents, gbcTabHome);
       tabHome.add(pnlMyEvents);
+
+      // This is an empty label not visible in the view and his
+      // only task is to put all other components on top of panel
+      // through the wighty property.
+      // Maybe is possible to find a thin component istead JLabel.
+      JLabel lblLayoutHelper = new JLabel();
+      gbcTabHome.gridx = 0;
+      gbcTabHome.gridy = 3;
+      gbcTabHome.gridwidth = 1;
+      gbcTabHome.gridheight = 1;
+      gbcTabHome.fill = GridBagConstraints.NONE;
+      gbcTabHome.weightx = 1;
+      gbcTabHome.weighty = 1;
+      gbcTabHome.anchor = GridBagConstraints.NORTH;
+      gbcTabHome.insets = new Insets(0, 0, 0, 0);
+      gbTabHome.setConstraints(lblLayoutHelper, gbcTabHome);
+      tabHome.add(lblLayoutHelper);
+
       // make the panel scrollable
       JScrollPane scrollableHome = new JScrollPane(tabHome);
 
@@ -211,11 +230,43 @@ public class FrameCivilProtectionUser
       pnlMain.add(tbpContents);
       // #endregion
 
+      updateEventsData();
+
       setDefaultCloseOperation(EXIT_ON_CLOSE);
 
       setContentPane(pnlMain);
       pack();
       setVisible(true);
+   }
+
+   // Load and show data needed for Home tab:
+   // uregentEvents and myEvents
+   private void updateEventsData() {
+      // Load urgent events
+      SortedSet<Event> urgentEvents = null;
+      try {
+         urgentEvents = user.getUrgentEvents();
+      } catch (Exception e) {
+         // TODO: show exception to user
+         System.out.println("It wasn't possible to load uregnt events");
+      }
+
+      // Load my events
+      SearchFilter myCapsEventsOn24h = new SearchFilter();
+      myCapsEventsOn24h.setCapList(Caps.filter(null, null));
+      // Since today (at start of day) until ever
+      myCapsEventsOn24h.setExpectedSince(LocalDate.now().atStartOfDay());
+      SortedSet<Event> myEvents = null;
+      try {
+         myEvents = user.searchEvents(myCapsEventsOn24h);
+      } catch (Exception e) {
+         // TODO: show exception to user
+         System.out.println("It wasn't possible to load personal events");
+      }
+
+      // Show all
+      this.pnlUrgentEvents.setUrgentEvents(urgentEvents);
+      this.pnlMyEvents.setEvents(myEvents);
    }
 
    public void showNotification(Event eventToNotify) throws Exception {
@@ -251,6 +302,12 @@ public class FrameCivilProtectionUser
          default:
             break;
       }
+   }
 
+   @Override
+   public void actionPerformed(ActionEvent e) {
+      if (e.getSource() == btnUpdate) {
+         updateEventsData();
+      }
    }
 }

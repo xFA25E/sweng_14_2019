@@ -24,7 +24,7 @@ public class PnlPreferences extends JPanel implements ActionListener {
 
    JTextField txfMyCaps;
    JButton btnDeleteCaps;
-   JLabel lblLayoutHelper;
+   JLabel lblMyCaps;
 
    JPanel pnlFilterCaps;
    JComboBox<String> cmbProvince;
@@ -49,7 +49,7 @@ public class PnlPreferences extends JPanel implements ActionListener {
       GridBagConstraints gbcPnlPreferences = new GridBagConstraints();
       this.setLayout(gbPnlPreferences);
 
-      lblLayoutHelper = new JLabel("I tuoi CAP :");
+      lblMyCaps = new JLabel("I tuoi CAP :");
       gbcPnlPreferences.gridx = 0;
       gbcPnlPreferences.gridy = 0;
       gbcPnlPreferences.gridwidth = 1;
@@ -59,8 +59,8 @@ public class PnlPreferences extends JPanel implements ActionListener {
       gbcPnlPreferences.weighty = 0;
       gbcPnlPreferences.anchor = GridBagConstraints.WEST;
       gbcPnlPreferences.insets = new Insets(10, 10, 10, 10);
-      gbPnlPreferences.setConstraints(lblLayoutHelper, gbcPnlPreferences);
-      this.add(lblLayoutHelper);
+      gbPnlPreferences.setConstraints(lblMyCaps, gbcPnlPreferences);
+      this.add(lblMyCaps);
 
       txfMyCaps = new JTextField();
       txfMyCaps.setText(String.join(";", this.user.getFavoriteCaps()));
@@ -228,7 +228,7 @@ public class PnlPreferences extends JPanel implements ActionListener {
       // only task is to put all other components on top of panel
       // through the wighty property.
       // Maybe is possible to find a thin component istead JLabel.
-      lblLayoutHelper = new JLabel();
+      JLabel lblLayoutHelper = new JLabel();
       gbcPnlPreferences.gridx = 0;
       gbcPnlPreferences.gridy = 3;
       gbcPnlPreferences.gridwidth = 1;
