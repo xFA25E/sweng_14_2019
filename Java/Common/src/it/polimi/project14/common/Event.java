@@ -95,16 +95,12 @@ public class Event implements Comparable<Event>, Serializable {
 
 	@Override
 	public String toString() {
-		return "Event [%n"
-            + "    sourceId=" + sourceId + ",%n"
-            + "    eventId=" + eventId + ",%n"
-            + "    cap=" + cap + ",%n"
-            + "    message=" + message + ",%n"
-            + "    expectedAt=" + expectedAt + ",%n"
-            + "    severity=" + severity + ",%n"
-            + "    status=" + status + ",%n"
-            + "    kind=" + kind + ",%n"
-            + "]";
+		return String.format("Event [%n    sourceId=%s,%n    eventId=%s,%n    "
+                             + "cap=%s,%n    message=%s,%n    expectedAt=%s,%n"
+                             + "    severity=%s,%n    status=%s,%n    "
+                             + "kind=%s,%n]",
+                             sourceId, eventId, cap, message, expectedAt,
+                             severity, status, kind);
 	}
 
     @Override

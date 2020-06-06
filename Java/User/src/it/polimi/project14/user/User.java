@@ -33,11 +33,6 @@ public class User {
         return favoriteCaps;
 	}
 
-    public void setFavoriteCaps(final Set<String> favoriteCaps) {
-        this.favoriteCaps.clear();
-		this.favoriteCaps.addAll(Objects.requireNonNull(favoriteCaps));
-	}
-
     public void clearFavoriteCaps() {
 		favoriteCaps.clear();
 	}
