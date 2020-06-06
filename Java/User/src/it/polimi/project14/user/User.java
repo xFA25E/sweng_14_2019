@@ -53,6 +53,11 @@ public class User {
 	}
 
 	public SortedSet<Event> searchEvents(SearchFilter searchFilter) throws Exception {
+		Set<String> filterCaps = searchFilter.getCapList();
+		if ( filterCaps == null || filterCaps.isEmpty()) {
+			return new TreeSet<Event>();
+		}
+		
 		// RMI
 		try {
 			EventStorage remoteEventStorage = (EventStorage) Naming.lookup(urlServer + "EVENT_STORAGE");
