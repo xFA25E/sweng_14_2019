@@ -15,6 +15,7 @@ UML_TARGETS := $(UML_SOURCES:$(UML_SRC)/%.$(UML_SRC_EXT)=$(UML_TARGET)/%.$(UML_T
 
 PLANTUML := plantuml.jar
 PLANTUML_JAR := $(UML_LIB)/$(PLANTUML)
+PLANTUML_URL := https://sourceforge.net/projects/plantuml/files/$(PLANTUML)/download
 PLANTUML_ARGS := -p
 ifeq ($(UML_TARGET_EXT), tex)
 	PLANTUML_ARGS += -tlatex
@@ -25,15 +26,27 @@ endif
 # Java ########################################################################
 
 JAVA_ARGS := -Dfile.encoding=UTF-8
-JAVA_DIR := Java
+JAVAC_ARGS := -encoding UTF-8
 ifeq ($(OS),Windows_NT)
 	SEP := ;
-	JAVAC_ARGS := --release 8 -encoding UTF-8
+	JAVAC_ARGS += --release 8
 else
 	SEP := :
-	JAVAC_ARGS := -target 8 -encoding UTF-8
+	JAVAC_ARGS += -target 8
 endif
 
+JAVA := java $(JAVA_ARGS)
+JAVAC := javac $(JAVAC_ARGS)
+
+JAVA_DIR := Java
+JAVA_TARGET := $(JAVA_DIR)/target
+UBERJAR_SUFFIX := -uberjar.jar
+SERVER_UBERJAR_BIN := $(JAVA_TARGET)/server
+SERVER_UBERJAR := $(SERVER_UBERJAR_BIN)$(UBERJAR_SUFFIX)
+USER_UBERJAR_BIN := $(JAVA_TARGET)/user
+USER_UBERJAR := $(USER_UBERJAR_BIN)$(UBERJAR_SUFFIX)
+SOURCE_UBERJAR_BIN := $(JAVA_TARGET)/source
+SOURCE_UBERJAR := $(SOURCE_UBERJAR_BIN)$(UBERJAR_SUFFIX)
 
 COMMON_DIR := $(JAVA_DIR)/Common
 COMMON_SRC := $(COMMON_DIR)/src
@@ -49,9 +62,11 @@ SERVER_BIN := $(SERVER_DIR)/bin
 SERVER_TARGET := $(SERVER_DIR)/target
 SERVER_JAR := $(SERVER_TARGET)/server.jar
 SERVER_SOURCES := $(shell find $(SERVER_SRC) -type f -name *.java)
+SERVER_MAIN := it.polimi.project14.CivilProtectionServer
 
 SQLITE := sqlite-jdbc-3.30.1.jar
 SQLITE_JAR := $(SERVER_LIB)/$(SQLITE)
+SQLITE_URL := https://bitbucket.org/xerial/sqlite-jdbc/downloads/$(SQLITE)
 
 USER_DIR := $(JAVA_DIR)/User
 USER_LIB := $(USER_DIR)/lib
@@ -61,10 +76,10 @@ USER_DATA := $(USER_DIR)/data
 USER_TARGET := $(USER_DIR)/target
 USER_JAR := $(USER_TARGET)/user.jar
 USER_SOURCES := $(shell find $(USER_SRC) -type f -name *.java)
+USER_MAIN := it.polimi.project14.CivilProtectionUser
 
-CAPS_CSV := $(USER_DATA)/provincia_comune_cap.csv
-TRAY_ICON := $(USER_DATA)/protezione-civile.png
 DATETIMEPICKER_JAR := $(USER_LIB)/LGoodDatePicker-10.4.1.jar
+DATETIMEPICKER_URL := https://github.com/LGoodDatePicker/LGoodDatePicker/releases/download/v10.4.1-Standard/LGoodDatePicker-10.4.1.jar
 
 SOURCE_DIR := $(JAVA_DIR)/Source
 SOURCE_SRC := $(SOURCE_DIR)/src
@@ -72,6 +87,7 @@ SOURCE_BIN := $(SOURCE_DIR)/bin
 SOURCE_TARGET := $(SOURCE_DIR)/target
 SOURCE_JAR := $(SOURCE_TARGET)/source.jar
 SOURCE_SOURCES := $(shell find $(SOURCE_SRC) -type f -name *.java)
+SOURCE_MAIN := it.polimi.project14.CivilProtectionSource
 
 TESTS_DIR := $(JAVA_DIR)/Tests
 TESTS_SRC := $(TESTS_DIR)/src
@@ -80,9 +96,12 @@ TESTS_BIN := $(TESTS_DIR)/bin
 TESTS_TARGET := $(TESTS_DIR)/target
 TESTS_JAR := $(TESTS_TARGET)/tests.jar
 TESTS_SOURCES := $(shell find $(TESTS_SRC) -type f -name *.java)
+TESTS_MAIN := it.polimi.project14.CivilProtectionTests
 
 JUNIT_JAR := $(TESTS_LIB)/junit-4.13.jar
+JUNIT_URL := https://search.maven.org/remotecontent?filepath=junit/junit/4.13/junit-4.13.jar
 HAMCREST_JAR := $(TESTS_LIB)/hamcrest-core-1.3.jar
+HAMCREST_URL := https://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar
 
 # OTHER #######################################################################
 
@@ -92,12 +111,35 @@ join-cp = $(subst $(null) $(null),$(SEP),$(strip $1))
 #                                   RECEPIES                                  #
 ###############################################################################
 
-.PHONY: all \
-uml common server user source tests \
-run-server run-user run-source run-tests \
-junit pluntuml sqlite clean datetimepicker
+.PHONY: \
+all clean-java clean-uml common datetimepicker hamcrest junit libs pluntuml \
+run-server run-source run-tests run-uber-server run-uber-source run-uber-user \
+run-user server source sqlite tests uberjar uml user
 
 all: uml common server user source
+
+# DEPS ########################################################################
+
+libs: plantuml datetimepicker hamcrest junit sqlite
+
+plantuml: JAR := $(PLANTUML_JAR)
+plantuml: URL := $(PLANTUML_URL)
+plantuml: $(UML_LIB)
+sqlite: JAR := $(SQLITE_JAR)
+sqlite: URL := $(SQLITE_URL)
+sqlite: $(SERVER_LIB)
+junit: JAR := $(JUNIT_JAR)
+junit: URL := $(JUNIT_URL)
+junit: $(TESTS_LIB)
+hamcrest: JAR := $(HAMCREST_JAR)
+hamcrest: URL := $(HAMCREST_URL)
+hamcrest: $(TESTS_LIB)
+datetimepicker: JAR := $(DATETIMEPICKER_JAR)
+datetimepicker: URL := $(DATETIMEPICKER_URL)
+datetimepicker: $(USER_LIB)
+
+plantuml sqlite junit hamcrest datetimepicker:
+	wget -O $(JAR) "$(URL)"
 
 # UML #########################################################################
 
@@ -105,25 +147,40 @@ uml: $(UML_TARGETS)
 
 $(UML_TARGET)/%.$(UML_TARGET_EXT): $(UML_SRC)/%.$(UML_SRC_EXT) $(PLANTUML_JAR)
 	mkdir -p $(@D)
-	java -jar $(PLANTUML_JAR) $(PLANTUML_ARGS) <$< >$@
-
-plantuml: $(UML_LIB)
-	wget -O $(PLANTUML_JAR) "https://sourceforge.net/projects/plantuml/files/$(PLANTUML)/download"
+	$(JAVA) -jar $(PLANTUML_JAR) $(PLANTUML_ARGS) <$< >$@
 
 # Java ########################################################################
 
+run-uber-server: $(SERVER_UBERJAR)
+run-uber-user: $(USER_UBERJAR)
+run-uber-source: $(SOURCE_UBERJAR)
+
+run-uber-server run-uber-user run-uber-source:
+	$(JAVA) -jar "$<"
+
+uberjar: $(SERVER_UBERJAR) $(USER_UBERJAR) $(SOURCE_UBERJAR)
+
+$(SERVER_UBERJAR) run-server: MAIN = $(SERVER_MAIN)
+$(USER_UBERJAR) run-user: MAIN = $(USER_MAIN)
+$(SOURCE_UBERJAR) run-source: MAIN = $(SOURCE_MAIN)
+run-tests: MAIN = $(TESTS_MAIN)
+
+$(SERVER_UBERJAR): $(SERVER_JAR) $(COMMON_JAR) $(SQLITE_JAR) | $(SERVER_UBERJAR_BIN)
+$(USER_UBERJAR): $(USER_JAR) $(COMMON_JAR) $(DATETIMEPICKER_JAR) $(SQLITE_JAR) | $(USER_UBERJAR_BIN)
+$(SOURCE_UBERJAR): $(SOURCE_JAR) $(COMMON_JAR) $(SQLITE_JAR) | $(SOURCE_UBERJAR_BIN)
+
+$(SERVER_UBERJAR) $(USER_UBERJAR) $(SOURCE_UBERJAR):
+	cp $^ $|
+	cd $| && (for jar in $(^F) ; do jar xf "$${jar}" ; rm "$${jar}" ; done)
+	jar cfe $@ $(MAIN) -C $| .
+
 run-server: $(SERVER_JAR) $(SQLITE_JAR) $(COMMON_JAR)
-	java $(JAVA_ARGS) -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionServer
-
 run-user: $(USER_JAR) $(COMMON_JAR) $(DATETIMEPICKER_JAR) $(SQLITE_JAR)
-	java $(JAVA_ARGS) -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionUser
-
 run-source: $(SOURCE_JAR) $(COMMON_JAR) $(SQLITE_JAR)
-	java $(JAVA_ARGS) -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionSource
-
-
 run-tests: $(TESTS_JAR) $(SQLITE_JAR) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
-	java $(JAVA_ARGS) -cp "$(call join-cp,$^)" it.polimi.project14.CivilProtectionTests
+
+run-server run-user run-source run-tests:
+	$(JAVA) -cp "$(call join-cp,$^)" $(MAIN)
 
 common: $(COMMON_JAR)
 server: $(SERVER_JAR)
@@ -131,37 +188,23 @@ user: $(USER_JAR)
 source: $(SOURCE_JAR)
 tests: $(TESTS_JAR)
 
-$(COMMON_JAR): $(COMMON_SOURCES) $(COMMON_BIN) $(COMMON_TARGET)
-	javac $(JAVAC_ARGS) -d $(COMMON_BIN) $(COMMON_SOURCES)
-	jar cf $(COMMON_JAR) -C $(COMMON_BIN) .
+$(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(TESTS_JAR): DATA_ARG =
+$(USER_JAR): DATA_ARG = -C $(USER_DATA) .
 
-$(SERVER_JAR): $(SERVER_SOURCES) $(SERVER_BIN) $(SERVER_TARGET) $(COMMON_JAR)
-	javac $(JAVAC_ARGS) -d $(SERVER_BIN) -cp $(COMMON_JAR) $(SERVER_SOURCES)
-	jar cfe $(SERVER_JAR) it.polimi.project14.CivilProtectionServer -C $(SERVER_BIN) .
+$(COMMON_JAR): SOURCES = $(COMMON_SOURCES)
+$(COMMON_JAR): $(COMMON_BIN) $(COMMON_TARGET)
+$(SERVER_JAR): SOURCES = $(SERVER_SOURCES)
+$(SERVER_JAR): $(SERVER_BIN) $(SERVER_TARGET) | $(COMMON_JAR)
+$(USER_JAR): SOURCES = $(USER_SOURCES)
+$(USER_JAR): $(USER_BIN) $(USER_TARGET) | $(COMMON_JAR) $(DATETIMEPICKER_JAR)
+$(SOURCE_JAR): SOURCES = $(SOURCE_SOURCES)
+$(SOURCE_JAR): $(SOURCE_BIN) $(SOURCE_TARGET) | $(COMMON_JAR)
+$(TESTS_JAR): SOURCES = $(TESTS_SOURCES)
+$(TESTS_JAR): $(TESTS_BIN) $(TESTS_TARGET) | $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
 
-$(USER_JAR): $(USER_SOURCES) $(USER_BIN) $(USER_TARGET) $(COMMON_JAR) $(DATETIMEPICKER_JAR)
-	javac $(JAVAC_ARGS) -d $(USER_BIN) -cp "$(COMMON_JAR)$(SEP)$(DATETIMEPICKER_JAR)" $(USER_SOURCES)
-	jar cfe $(USER_JAR) it.polimi.project14.CivilProtectionUser -C $(USER_BIN) . -C $(USER_DATA) $(notdir $(CAPS_CSV)) -C $(USER_DATA) $(notdir $(TRAY_ICON))
-
-$(SOURCE_JAR): $(SOURCE_SOURCES) $(SOURCE_BIN) $(SOURCE_TARGET) $(COMMON_JAR)
-	javac $(JAVAC_ARGS) -d $(SOURCE_BIN) -cp $(COMMON_JAR) $(SOURCE_SOURCES)
-	jar cfe $(SOURCE_JAR) it.polimi.project14.CivilProtectionSource -C $(SOURCE_BIN) .
-
-$(TESTS_JAR): $(TESTS_SOURCES) $(TESTS_BIN) $(TESTS_TARGET) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) $(JUNIT_JAR) $(HAMCREST_JAR)
-	javac $(JAVAC_ARGS) -d $(TESTS_BIN) -cp "$(COMMON_JAR)$(SEP)$(SERVER_JAR)$(SEP)$(SOURCE_JAR)$(SEP)$(USER_JAR)$(SEP)$(JUNIT_JAR)$(SEP)$(HAMCREST_JAR)" $(TESTS_SOURCES)
-	jar cfe $(TESTS_JAR) it.polimi.project14.CivilProtectionTests -C $(TESTS_BIN) .
-
-sqlite: $(SERVER_LIB)
-	wget -O $(SQLITE_JAR) "https://bitbucket.org/xerial/sqlite-jdbc/downloads/$(SQLITE)"
-
-junit: $(TESTS_LIB)
-	wget -O $(JUNIT_JAR) "https://search.maven.org/remotecontent?filepath=junit/junit/4.13/junit-4.13.jar"
-
-hamcrest: $(TESTS_LIB)
-	wget -O $(HAMCREST_JAR) "https://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"
-
-datetimepicker: $(USER_LIB)
-	wget -O $(DATETIMEPICKER_JAR) "https://github.com/LGoodDatePicker/LGoodDatePicker/releases/download/v10.4.1-Standard/LGoodDatePicker-10.4.1.jar"
+$(COMMON_JAR) $(SERVER_JAR) $(USER_JAR) $(SOURCE_JAR) $(TESTS_JAR):
+	$(JAVAC) -d $< -cp "$(call join-cp,$|)" $(SOURCES)
+	jar cf $@ -C $< . $(DATA_ARG)
 
 # CLEAN #######################################################################
 
@@ -169,9 +212,9 @@ clean-uml:
 	-rm -r $(UML_TARGET)
 
 clean-java:
-	-rm -r $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) $(TESTS_BIN) $(TESTS_TARGET)
+	-rm -r $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) $(TESTS_BIN) $(TESTS_TARGET) $(JAVA_TARGET)
 
 # DIRECTORIES #################################################################
 
-$(TESTS_LIB) $(TESTS_BIN) $(TESTS_TARGET) $(UML_LIB) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(SERVER_LIB) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) $(USER_LIB):
+$(TESTS_LIB) $(TESTS_BIN) $(TESTS_TARGET) $(UML_LIB) $(COMMON_BIN) $(COMMON_TARGET) $(SERVER_BIN) $(SERVER_TARGET) $(SERVER_LIB) $(USER_BIN) $(USER_TARGET) $(SOURCE_BIN) $(SOURCE_TARGET) $(USER_LIB) $(SERVER_UBERJAR_BIN) $(USER_UBERJAR_BIN) $(SOURCE_UBERJAR_BIN):
 	mkdir -p $@
