@@ -1,6 +1,7 @@
 package it.polimi.project14.user.gui.components;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,9 +11,16 @@ import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 
 import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.JComboBox;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -23,18 +31,23 @@ import com.github.lgooddatepicker.optionalusertools.DateTimeChangeListener;
 import com.github.lgooddatepicker.zinternaltools.DateTimeChangeEvent;
 
 import it.polimi.project14.user.Caps;
+import it.polimi.project14.user.User;
 import it.polimi.project14.common.Event;
 import it.polimi.project14.common.SearchFilter;
 
-public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeListener {
+public class PnlSearch extends JPanel implements ActionListener {
 
    PnlSearchFilter pnlSearchFilter;
    PnlEventsTable pnlFoundEvents;
 
    SearchFilter currFilter;
 
-   public PnlSearch() {
+   User user;
+
+   public PnlSearch(User user) {
       super();
+
+      this.user = user;
 
       GridBagLayout gbSearch = new GridBagLayout();
       GridBagConstraints gbcSearch = new GridBagConstraints();
@@ -54,8 +67,6 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
       add(pnlSearchFilter);
 
       pnlSearchFilter.btFind.addActionListener(this);
-      pnlSearchFilter.dtpDateSince.addDateTimeChangeListener(this);
-      pnlSearchFilter.dtpDateUntil.addDateTimeChangeListener(this);
 
       pnlFoundEvents = new PnlEventsTable(new TreeSet<Event>());
       pnlFoundEvents.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.gray));
@@ -76,55 +87,60 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
    public void actionPerformed(ActionEvent e) {
       if (e.getSource() == pnlSearchFilter.btFind) {
          // Action for btFind
-         currFilter = new SearchFilter();
+         SearchFilter currFilter = pnlSearchFilter.getFilter();
+         Objects.requireNonNull(currFilter);
 
-         // With datepicker
-         LocalDateTime sinceDateToFilter = pnlSearchFilter.dtpDateSince.getDateTimePermissive();
-         LocalDateTime untilDateToFilter = pnlSearchFilter.dtpDateUntil.getDateTimePermissive();
+         // Load searched events
+         SortedSet<Event> foundEvents = null;
+         try {
+            foundEvents = user.searchEvents(currFilter);
+         } catch (Exception ex) {
+            // TODO: show exception to user
+            System.out.println("It wasn't possible to load personal events");
+         }
 
-         String province = (String) pnlSearchFilter.cmbProvince.getSelectedItem();
-         String municipality = (String) pnlSearchFilter.cmbMunicipality.getSelectedItem();
-         HashSet<String> capsToFilter = new HashSet<String>();
-         capsToFilter = (HashSet<String>) Caps.filter(province, municipality);
+         // Show all
+         this.pnlFoundEvents.setEvents(foundEvents, true);
+         // currFilter = new SearchFilter();
 
-         String kindToFilter = (String) pnlSearchFilter.cmbKind.getSelectedItem();
+         // // With datepicker
+         // LocalDateTime sinceDateToFilter =
+         // pnlSearchFilter.dtpDateSince.getDateTimePermissive();
+         // LocalDateTime untilDateToFilter =
+         // pnlSearchFilter.dtpDateUntil.getDateTimePermissive();
 
-         currFilter.setExpectedSince(sinceDateToFilter);
-         currFilter.setExpectedUntil(untilDateToFilter);
-         currFilter.setCapList(capsToFilter);
-         currFilter.setKind(kindToFilter);
+         // String province = (String) pnlSearchFilter.cmbProvince.getSelectedItem();
+         // String municipality = (String)
+         // pnlSearchFilter.cmbMunicipality.getSelectedItem();
+         // HashSet<String> capsToFilter = new HashSet<String>();
+         // capsToFilter = (HashSet<String>) Caps.filter(province, municipality);
+
+         // String kindToFilter = (String) pnlSearchFilter.cmbKind.getSelectedItem();
+
+         // currFilter.setExpectedSince(sinceDateToFilter);
+         // currFilter.setExpectedUntil(untilDateToFilter);
+         // currFilter.setCapList(capsToFilter);
+         // currFilter.setKind(kindToFilter);
       }
    }
 
-   @Override
-   public void dateOrTimeChanged(DateTimeChangeEvent e) {
-      if (e.getSource() == pnlSearchFilter.dtpDateSince) {
-         DateTimePicker since = pnlSearchFilter.dtpDateSince;
-         DateTimePicker until = pnlSearchFilter.dtpDateUntil;
-         if (since.getDateTimePermissive().isAfter(until.getDateTimePermissive())) {
-            until.setDateTimePermissive(since.getDateTimePermissive().plusDays(1));
-         }
-      } else if (e.getSource() == pnlSearchFilter.dtpDateUntil) {
-         DateTimePicker since = pnlSearchFilter.dtpDateSince;
-         DateTimePicker until = pnlSearchFilter.dtpDateUntil;
-         if (until.getDateTimePermissive().isBefore(since.getDateTimePermissive())) {
-            since.setDateTimePermissive(until.getDateTimePermissive().minusDays(1));
-         }
-      }
-   }
+   public class PnlSearchFilter extends JPanel implements ActionListener, DateTimeChangeListener {
 
-   public class PnlSearchFilter extends JPanel {
       JLabel lbDataSince;
       DateTimePicker dtpDateSince;
       JLabel lbDataUntil;
       DateTimePicker dtpDateUntil;
+
       JLabel lbProvince;
       JComboBox<String> cmbProvince;
       JLabel lbMunicipality;
       JComboBox<String> cmbMunicipality;
+
       JLabel lbKind;
-      JComboBox<String> cmbKind;
+      JTextField txfKind;
       JButton btFind;
+
+      private SearchFilter filter = new SearchFilter();
 
       public PnlSearchFilter() {
          super();
@@ -149,6 +165,7 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
 
          dtpDateSince = new DateTimePicker();
          dtpDateSince.setDateTimePermissive(LocalDateTime.now().minusDays(1));
+         dtpDateSince.addDateTimeChangeListener(this);
          gbcSearchFilter.gridx = 0;
          gbcSearchFilter.gridy = 1;
          gbcSearchFilter.gridwidth = 1;
@@ -176,6 +193,7 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
 
          dtpDateUntil = new DateTimePicker();
          dtpDateUntil.setDateTimePermissive(LocalDateTime.now());
+         dtpDateUntil.addDateTimeChangeListener(this);
          gbcSearchFilter.gridx = 0;
          gbcSearchFilter.gridy = 3;
          gbcSearchFilter.gridwidth = 1;
@@ -203,13 +221,15 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
          gbSearchFilter.setConstraints(lbProvince, gbcSearchFilter);
          add(lbProvince);
 
-         String[] dataProvince = { "Chocolate", "Ice Cream", "Apple Pie" };
-         cmbProvince = new JComboBox<String>(dataProvince);
+         String[] provinces = (new TreeSet<String>(Caps.getProvinces())).toArray(new String[0]);
+         cmbProvince = new JComboBox<String>(provinces);
+         cmbProvince.setSelectedItem(-1);
+         cmbProvince.addActionListener(this);
          gbcSearchFilter.gridx = 1;
          gbcSearchFilter.gridy = 1;
          gbcSearchFilter.gridwidth = 1;
          gbcSearchFilter.gridheight = 1;
-         gbcSearchFilter.fill = GridBagConstraints.NONE;
+         gbcSearchFilter.fill = GridBagConstraints.BOTH;
          gbcSearchFilter.weightx = 0;
          gbcSearchFilter.weighty = 0;
          gbcSearchFilter.anchor = GridBagConstraints.WEST;
@@ -230,13 +250,13 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
          gbSearchFilter.setConstraints(lbMunicipality, gbcSearchFilter);
          add(lbMunicipality);
 
-         String[] dataMuniciplaity = { "Chocolate", "Ice Cream", "Apple Pie" };
-         cmbMunicipality = new JComboBox<String>(dataMuniciplaity);
+         cmbMunicipality = new JComboBox<String>();
+         cmbMunicipality.addActionListener(this);
          gbcSearchFilter.gridx = 1;
          gbcSearchFilter.gridy = 3;
          gbcSearchFilter.gridwidth = 1;
          gbcSearchFilter.gridheight = 1;
-         gbcSearchFilter.fill = GridBagConstraints.NONE;
+         gbcSearchFilter.fill = GridBagConstraints.BOTH;
          gbcSearchFilter.weightx = 0;
          gbcSearchFilter.weighty = 0;
          gbcSearchFilter.anchor = GridBagConstraints.WEST;
@@ -259,19 +279,38 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
          gbSearchFilter.setConstraints(lbKind, gbcSearchFilter);
          add(lbKind);
 
-         String[] dataKind = { "Chocolate", "Ice Cream", "Apple Pie" };
-         cmbKind = new JComboBox<String>(dataKind);
+         txfKind = new JTextField();
+         txfKind.setPreferredSize(new Dimension(100, txfKind.getPreferredSize().height));
+         txfKind.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent event) {
+               warn();
+            }
+
+            public void removeUpdate(DocumentEvent event) {
+               warn();
+            }
+
+            public void insertUpdate(DocumentEvent event) {
+               warn();
+            }
+
+            public void warn() {
+               String kind = txfKind.getText();
+               filter.setKind(kind);
+            }
+         });
+
          gbcSearchFilter.gridx = 2;
          gbcSearchFilter.gridy = 1;
          gbcSearchFilter.gridwidth = 1;
          gbcSearchFilter.gridheight = 1;
          gbcSearchFilter.fill = GridBagConstraints.NONE;
-         gbcSearchFilter.weightx = 1;
+         gbcSearchFilter.weightx = 0;
          gbcSearchFilter.weighty = 0;
          gbcSearchFilter.anchor = GridBagConstraints.WEST;
          gbcSearchFilter.insets = new Insets(0, 30, 10, 30);
-         gbSearchFilter.setConstraints(cmbKind, gbcSearchFilter);
-         add(cmbKind);
+         gbSearchFilter.setConstraints(txfKind, gbcSearchFilter);
+         add(txfKind);
 
          btFind = new JButton("Cerca");
          // btFind.addActionListener(this);
@@ -289,6 +328,74 @@ public class PnlSearch extends JPanel implements ActionListener, DateTimeChangeL
          // #endregion
       }
 
-   }
+      public SearchFilter getFilter() {
+         return this.filter;
+      }
 
+      public void actionPerformed(ActionEvent e) {
+         if (e.getSource() == cmbProvince) {
+            cmbMunicipality.removeAllItems();
+
+            // If nothing is selected do nothing
+            if (cmbProvince.getSelectedIndex() == -1) {
+               return;
+            }
+
+            // Logic
+            String selectedProvince = (String) cmbProvince.getSelectedItem();
+            cmbMunicipality.addItem("Tutti i comuni");
+            SortedSet<String> municipalityByProvince = new TreeSet<String>(Caps.getMunicipalities(selectedProvince));
+
+            // View
+            for (String municipality : municipalityByProvince) {
+               cmbMunicipality.addItem(municipality);
+            }
+
+         } else if (e.getSource() == cmbMunicipality) {
+            // If nothing is selected do nothing
+            if (cmbMunicipality.getSelectedIndex() == -1) {
+               return;
+            }
+
+            // Logic
+            String province = null;
+            String municipality = null;
+            if (cmbProvince.getSelectedIndex() > 0) {
+               province = (String) cmbProvince.getSelectedItem();
+            }
+            if (cmbMunicipality.getSelectedIndex() > 0) {
+               municipality = (String) cmbMunicipality.getSelectedItem();
+            }
+
+            filter.setCapList(Caps.filter(province, municipality));
+         }
+      }
+
+      @Override
+      public void dateOrTimeChanged(DateTimeChangeEvent e) {
+         if (e.getSource() == dtpDateSince) {
+            DateTimePicker since = dtpDateSince;
+            DateTimePicker until = dtpDateUntil;
+
+            if (since.getDateTimePermissive().isAfter(until.getDateTimePermissive())) {
+               until.setDateTimePermissive(since.getDateTimePermissive().plusDays(1));
+            }
+
+            filter.setExpectedSince(since.getDateTimePermissive());
+            filter.setExpectedUntil(until.getDateTimePermissive());
+
+         } else if (e.getSource() == dtpDateUntil) {
+            DateTimePicker since = dtpDateSince;
+            DateTimePicker until = dtpDateUntil;
+
+            if (until.getDateTimePermissive().isBefore(since.getDateTimePermissive())) {
+               since.setDateTimePermissive(until.getDateTimePermissive().minusDays(1));
+            }
+
+            filter.setExpectedSince(since.getDateTimePermissive());
+            filter.setExpectedUntil(until.getDateTimePermissive());
+
+         }
+      }
+   }
 }

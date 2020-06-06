@@ -46,7 +46,7 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
    PnlUrgentEvents pnlUrgentEvents;
    PnlEventsTable pnlMyEvents;
 
-   JPanel pnlSearch;
+   PnlSearch pnlSearch;
 
    JPanel pnlPreferences;
 
@@ -208,7 +208,7 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
       // #endregion
 
       // Tab Search
-      PnlSearch pnlSearch = new PnlSearch();
+      PnlSearch pnlSearch = new PnlSearch(user);
       tbpContents.addTab("Effettua ricerca", pnlSearch);
       // End Tab Search
 

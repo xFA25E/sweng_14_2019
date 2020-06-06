@@ -14,6 +14,6 @@ public class CivilProtectionUser {
         FrameCivilProtectionUser userGui = new FrameCivilProtectionUser(user);
 
         TimedNotification timedNotification = new TimedNotification(user, userGui);
-        userGui.setSize(600, 700);
+        userGui.setSize(750, 700);
     }
 }
