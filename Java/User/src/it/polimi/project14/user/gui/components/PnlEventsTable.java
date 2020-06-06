@@ -13,7 +13,7 @@ import it.polimi.project14.common.Event;
 public class PnlEventsTable extends JScrollPane {
 
     final Object[] header = { "Tipo", "CAP", "Gravità", "Data e Ora", "Stato", "Descrizione"};
-    final Object[] headerNoDateTime = { "Tipo", "CAP", "Gravità", "Descrizione","Stato"};
+    final Object[] headerNoDateTime = { "Tipo", "CAP", "Gravità", "Stato", "Descrizione"};
 
     DefaultTableModel model = new DefaultTableModel(header, 0) {
         public boolean isCellEditable(int row, int column) {
@@ -43,7 +43,12 @@ public class PnlEventsTable extends JScrollPane {
         this.model.setRowCount(0);
 
         if (!showDateTime) {
-            this.model = new DefaultTableModel(headerNoDateTime, 0);
+            this.model = new DefaultTableModel(headerNoDateTime, 0) {
+                public boolean isCellEditable(int row, int column) {
+                    // This causes all cells to be not editable
+                    return false;
+                }
+            };
             table.setModel(this.model);
         }
 
@@ -65,12 +70,6 @@ public class PnlEventsTable extends JScrollPane {
             }
         }
 
-        if (!showDateTime) {
-            this.model = new DefaultTableModel(headerNoDateTime, 0);
-            for (int i = 0; i < this.model.getRowCount(); i++) {
-                this.model.getDataVector().remove(4);
-            }
-        }
         this.model.fireTableDataChanged();
         this.table.setPreferredScrollableViewportSize(this.table.getPreferredSize());
     }
