@@ -36,7 +36,6 @@ public abstract class Notification {
     searchFilter.setCapList(user.getFavoriteCaps());
     Set<Event> eventsToNotify = user.searchEvents(searchFilter);
     // substraction of yet notified events
-    // TODO: check what substraction do
     eventsToNotify.removeAll(notifiedEvents);
 
     return eventsToNotify;

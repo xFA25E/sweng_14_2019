@@ -55,11 +55,12 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
    // Logic
    User user;
    Timer clockTimer;
+   Boolean isTraySupported = false;
 
    // TODO: put icon in jar resources
    final Image civilProtectionIcon = Toolkit.getDefaultToolkit()
          .createImage("java/user/data/protezione-civile-icona.png");
-   TrayIcon trayIcon = new TrayIcon(civilProtectionIcon, "Protezione Civile");
+   TrayIcon trayIcon;
 
    public FrameCivilProtectionUser(User user) {
       super("Protezione Civile");
@@ -67,24 +68,25 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
       Objects.requireNonNull(user);
       this.user = user;
 
+      // Check tray icon
+      if (!SystemTray.isSupported()) {
+         System.out.println("Notifiche di sistema non supportate. I nuovi eventi verranno inviate su questo terminale");
+      } else {
+         SystemTray tray = SystemTray.getSystemTray();
+         trayIcon = new TrayIcon(civilProtectionIcon, "Protezione Civile");
+         trayIcon.setImageAutoSize(true);
+         try {
+            tray.add(trayIcon);
+            isTraySupported = true;
+         } catch (Exception e) {
+            System.out.println(e.getMessage());
+         }
+      }
+
       pnlMain = new JPanel();
       GridBagLayout gbPnlMain = new GridBagLayout();
       GridBagConstraints gbcPnlMain = new GridBagConstraints();
       pnlMain.setLayout(gbPnlMain);
-
-      // #region trayForNotification
-      if (SystemTray.isSupported()) {
-         SystemTray tray = SystemTray.getSystemTray();
-
-         trayIcon.setImageAutoSize(true);
-         try {
-            tray.add(trayIcon);
-         } catch (Exception e) {
-         }
-      } else {
-         System.out.println("Notification unsupported");
-      }
-      // #endregion
 
       // #region pnlTitle
       pnlTitle = new JPanel();
@@ -252,7 +254,7 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
 
       // Load my events
       SearchFilter myCapsEventsOn24h = new SearchFilter();
-      myCapsEventsOn24h.setCapList(Caps.filter(null, null));
+      myCapsEventsOn24h.setCapList(user.getFavoriteCaps());
       // Since today (at start of day) until ever
       myCapsEventsOn24h.setExpectedSince(LocalDateTime.now().withMinute(0));
       SortedSet<Event> myEvents = null;
@@ -269,37 +271,42 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
    }
 
    public void showNotification(Event eventToNotify) throws Exception {
-      if (!SystemTray.isSupported()) {
-         throw new Exception("Unsupported Tray notification");
-      }
-
       String kind = eventToNotify.getKind();
       LocalDateTime expectedAt = eventToNotify.getExpectedAt();
       int severity = eventToNotify.getSeverity();
       String cap = eventToNotify.getCap();
       EventStatus status = eventToNotify.getStatus();
 
-      String message;
+      String title, message;
       switch (status) {
          case EXPECTED:
+            title = "Evento previsto nei i tuoi CAP";
             message = String.format("%s: alle %td del %td %tB, gravità: %d, CAP: %s", kind, expectedAt, expectedAt,
                   expectedAt, severity, cap);
-            trayIcon.displayMessage("Evento previsto nei i tuoi CAP", message, MessageType.WARNING);
+
             break;
 
          case ONGOING:
+            title = "Evento in corso nei tuoi CAP";
             message = String.format("%s in corso, gravità: %d, CAP: %s", kind, severity, cap);
-            trayIcon.displayMessage("Evento in corso nei tuoi CAP", message, MessageType.WARNING);
+
             break;
 
          case CANCELED:
+            title = "Evento cancellato nei i tuoi CAP";
             message = String.format("L'evento di tipo %s previsto per le %td del %td %tB, CAP: %s è stato cancellato",
                   kind, expectedAt, expectedAt, expectedAt, cap);
-            trayIcon.displayMessage("Evento cancellato nei i tuoi CAP", message, MessageType.WARNING);
+
             break;
 
          default:
-            break;
+            return;
+      }
+
+      if (isTraySupported) {
+         this.trayIcon.displayMessage(title, message, MessageType.WARNING);
+      } else {
+         System.out.println(title + "%n" + message);
       }
    }
 
