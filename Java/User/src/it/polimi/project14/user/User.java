@@ -8,9 +8,7 @@ import java.util.HashSet;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import it.polimi.project14.common.Event;
 import it.polimi.project14.common.EventStorage;
