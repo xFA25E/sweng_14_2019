@@ -1,3 +1,4 @@
 .vscode/settings.json
 *.class
-**/target
+**/target/*.jar
+Java/target
