@@ -1,7 +1,5 @@
 -- -*- sql-product: sqlite; -*-
 
--- This is a TABLE with raw event data. Use a VIEW to retrieve nicely formatted
--- data.
 CREATE TABLE IF NOT EXISTS event (
   source_id INTEGER NOT NULL,
   event_id INTEGER NOT NULL,
