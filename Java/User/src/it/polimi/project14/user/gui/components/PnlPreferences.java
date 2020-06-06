@@ -255,7 +255,7 @@ public class PnlPreferences extends JPanel implements ActionListener {
    public void actionPerformed(ActionEvent e) {
       if (e.getSource() == btnDeleteCaps) {
          // Logic
-         this.user.setFavoriteCaps(null);
+         this.user.clearFavoriteCaps();
          // View
          refreshUserCaps();
 
@@ -290,10 +290,6 @@ public class PnlPreferences extends JPanel implements ActionListener {
             municipality = (String) cmbMunicipality.getSelectedItem();
          }
          capsToAdd = Caps.filter(province, municipality);
-
-         if (capsToAdd == null) {
-            return;
-         }
 
          // View
          txfFoundCaps.setText(String.join(";", capsToAdd));

@@ -22,22 +22,18 @@ public class PnlEventsTable extends JScrollPane {
         }
     };;
 
-    JTable table;
+    JTable table = new JTable(model);
 
     public PnlEventsTable() {
-        this.table = new JTable(model);
         this.table.setPreferredScrollableViewportSize(table.getPreferredSize());
         this.setViewportView(table);
     }
 
     public PnlEventsTable(SortedSet<Event> sortedEvents) {
-        this.table = new JTable(model);
-        setEvents(sortedEvents, true);
-        this.setViewportView(table);
+        this(sortedEvents, true);
     }
 
     public PnlEventsTable(SortedSet<Event> sortedEvents, Boolean showDateTime) {
-        this.table = new JTable(model);
         setEvents(sortedEvents, showDateTime);
         this.setViewportView(table);
     }
@@ -46,7 +42,7 @@ public class PnlEventsTable extends JScrollPane {
         // Clear the table
         this.model.setRowCount(0);
 
-        if (showDateTime == false) {
+        if (!showDateTime) {
             this.model = new DefaultTableModel(headerNoDateTime, 0) {
                 public boolean isCellEditable(int row, int column) {
                     // This causes all cells to be not editable
@@ -68,7 +64,7 @@ public class PnlEventsTable extends JScrollPane {
                 }
                 eventData.add(event.getStatus().toString());
                 eventData.add(event.getMessage());
-                
+
                 // Add Data to the table
                 this.model.addRow(eventData.toArray());
             }
