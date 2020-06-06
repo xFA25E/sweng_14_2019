@@ -1,17 +1,19 @@
 package it.polimi.project14.source;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import it.polimi.project14.common.Event;
+import it.polimi.project14.common.EventStatus;
 
 public class TimedForecast implements Forecast {
 
 	// milliseconds
 	private static final long SLEEP = 20 * 1000;
-	private static final int MAX_SEVERITY = 10;
+	private static final long EVENT_DURATION = 30; //Minutes
 
 	private Set<Event> forecast24H;
 	private Timer timer;
@@ -39,21 +41,28 @@ public class TimedForecast implements Forecast {
 		forecast24H.removeAll(events);
 	}
 
-	private Set<Event> generateForecast() {
+	private void generateForecast() {
 		Set<Event> forecastGenerated = new HashSet<>();
-        Event generated = RandomEvent.generate();
-        forecastGenerated.add(generated);
-		return forecastGenerated;
+		for (int i = 0; i < 10; i++) {
+			Event generated = RandomEvent.generate();
+			forecastGenerated.add(generated);
+		}
+		forecast24H.addAll(forecastGenerated);
+		LocalDateTime now = LocalDateTime.now();
+		for (Event event:forecast24H) {
+			if (event.getExpectedAt().isBefore(now) && event.getStatus() == EventStatus.EXPECTED) {
+				event.setStatus(EventStatus.CANCELED);
+			}
+			if (event.getExpectedAt().isBefore(now.plusMinutes(EVENT_DURATION)) && event.getStatus() == EventStatus.ONGOING) {
+				event.setStatus(EventStatus.OCCURED);
+			}
+		}
 	}
 
 	public class taskGenerateForecast extends TimerTask {
 		public void run() {
-			forecast24H = generateForecast();
+			generateForecast();
 		}
-	}
-
-	private void computeDifferences() {
-
 	}
 
 }

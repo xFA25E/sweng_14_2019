@@ -28,10 +28,6 @@ public class Source {
 		System.setProperty("java.security.policy", "policy.all");
 	}
 
-	// test
-	public Source() {
-	}
-
 	public Source(Forecast forecast) {
 		this(NORMAL_SLEEP, URGENT_SLEEP, forecast);
 	}
