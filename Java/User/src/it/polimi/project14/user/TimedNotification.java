@@ -8,25 +8,18 @@ import it.polimi.project14.common.Event;
 import it.polimi.project14.user.gui.EventsNotificationShower;
 
 public class TimedNotification extends Notification {
-    private Timer timer;
+    private final Timer timer = new Timer();
 
-    public TimedNotification(User user, EventsNotificationShower notificationShower) {
+    public TimedNotification(final User user, final EventsNotificationShower notificationShower) {
         super(user, notificationShower);
-        timer = new Timer();
-        TimerTask task = new Notify();
-        timer.schedule(task, 0, 10000);
+        timer.schedule(new Notify(), 0, 10000);
     }
 
     public class Notify extends TimerTask {
         public void run() {
             try {
-                Set<Event> eventsToNotify = getForecasts();
-                if (!eventsToNotify.isEmpty()) {
-                    for (Event eventToNotify: eventsToNotify) {
-                        sendEventToNotify(eventToNotify);
-                    }
-                }
-            } catch (Exception e) {
+                getForecasts().stream().forEach(e -> sendEventToNotify(e));
+            } catch (final Exception e) {
                 // TODO: handle exception
             }
         }

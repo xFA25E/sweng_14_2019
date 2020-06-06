@@ -1,6 +1,7 @@
 package it.polimi.project14.user;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import it.polimi.project14.common.Event;
@@ -8,16 +9,16 @@ import it.polimi.project14.common.SearchFilter;
 import it.polimi.project14.user.gui.EventsNotificationShower;
 
 public abstract class Notification {
-  private Set<Event> notifiedEvents;
+  private Set<Event> notifiedEvents = new HashSet<Event>();
   private EventsNotificationShower notificationShower;
   private User user;
 
   public Notification(User user, EventsNotificationShower notificationShower) {
-    this.user = user;
-    this.notificationShower = notificationShower;
-    notifiedEvents = new HashSet<Event>();
+    this.user = Objects.requireNonNull(user);
+    this.notificationShower = Objects.requireNonNull(notificationShower);
+
     try {
-      notifiedEvents = getForecasts();
+      notifiedEvents.addAll(getForecasts());
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
