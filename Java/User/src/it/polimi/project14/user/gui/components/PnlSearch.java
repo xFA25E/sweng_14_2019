@@ -10,14 +10,11 @@ import java.awt.event.ActionListener;
 
 import java.time.LocalDateTime;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;

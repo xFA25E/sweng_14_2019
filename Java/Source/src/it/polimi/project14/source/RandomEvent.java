@@ -6,7 +6,6 @@ import it.polimi.project14.common.Event;
 import it.polimi.project14.common.EventStatus;
 
 public class RandomEvent {
-    private static final long serialVersionUID = -1046844052828004353L;
 
     private static final String[] COMO_CAPS = {
         "22033", "22077", "22034", "22078", "22079", "22035", "22036", "22037",

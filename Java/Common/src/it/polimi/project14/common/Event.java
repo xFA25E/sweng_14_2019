@@ -140,7 +140,6 @@ public class Event implements Comparable<Event>, Serializable {
         return message.compareTo(other.message);
     }
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

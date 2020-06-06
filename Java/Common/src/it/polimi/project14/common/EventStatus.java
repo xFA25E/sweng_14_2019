@@ -1,8 +1,6 @@
 package it.polimi.project14.common;
 
-import java.lang.Comparable;
-
-public enum EventStatus implements Comparable<EventStatus> {
+public enum EventStatus {
     ONGOING,
     EXPECTED,
     OCCURED,
