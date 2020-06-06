@@ -26,7 +26,7 @@ public class User {
 	public User(Set<String> favouriteCaps) {
 		this.favoriteCaps = favouriteCaps;
 	}
-	
+
 	public Set<String> getFavoriteCaps() {
 		return this.favoriteCaps;
 	}
@@ -39,7 +39,7 @@ public class User {
 		if (this.favoriteCaps == null) {
 			this.favoriteCaps = new TreeSet<String>();
 		}
-		this.favoriteCaps.addAll(caps); 
+		this.favoriteCaps.addAll(caps);
 	}
 
 	public SortedSet<Event> getUrgentEvents() throws Exception {
@@ -54,10 +54,10 @@ public class User {
 
 	public SortedSet<Event> searchEvents(SearchFilter searchFilter) throws Exception {
 		Set<String> filterCaps = searchFilter.getCapList();
-		if ( filterCaps == null || filterCaps.isEmpty()) {
+		if (filterCaps == null || filterCaps.isEmpty()) {
 			return new TreeSet<Event>();
 		}
-		
+
 		// RMI
 		try {
 			EventStorage remoteEventStorage = (EventStorage) Naming.lookup(urlServer + "EVENT_STORAGE");
