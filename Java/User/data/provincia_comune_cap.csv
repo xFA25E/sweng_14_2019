@@ -8,7 +8,7 @@ Agrigento,Caltabellotta,92010
 Agrigento,Camastra,92020
 Agrigento,Cammarata,92022
 Agrigento,Campobello di Licata,92023
-Agrigento,CanicattÃ¬,92024
+Agrigento,Canicattì,92024
 Agrigento,Casteltermini,92025
 Agrigento,Castrofilippo,92020
 Agrigento,Cattolica Eraclea,92011
@@ -294,8 +294,8 @@ Arezzo,Bucine,52021
 Arezzo,Capolona,52010
 Arezzo,Caprese Michelangelo,52033
 Arezzo,Castel Focognano,52016
-Arezzo,Castelfranco PiandiscÃ²,52026
-Arezzo,Castel San NiccolÃ²,52018
+Arezzo,Castelfranco Piandiscò,52026
+Arezzo,Castel San Niccolò,52018
 Arezzo,Castiglion Fibocchi,52029
 Arezzo,Castiglion Fiorentino,52043
 Arezzo,Cavriglia,52022
@@ -439,7 +439,7 @@ Asti,Passerano Marmorito,14020
 Asti,Penango,14030
 Asti,Piea,14020
 Asti,Pino d'Asti,14020
-Asti,PiovÃ  Massaia,14026
+Asti,Piovà Massaia,14026
 Asti,Portacomaro,14037
 Asti,Quaranti,14040
 Asti,Refrancore,14030
@@ -657,7 +657,7 @@ Belluno,Agordo,32021
 Belluno,Alano di Piave,32031
 Belluno,Alleghe,32022
 Belluno,Alpago,32016
-Belluno,ArsiÃ¨,32030
+Belluno,Arsiè,32030
 Belluno,Auronzo di Cadore,32041
 Belluno,Belluno,32100
 Belluno,Borca di Cadore,32040
@@ -693,7 +693,7 @@ Belluno,Quero Vas,32038
 Belluno,Rivamonte Agordino,32020
 Belluno,Rocca Pietore,32023
 Belluno,San Gregorio nelle Alpi,32030
-Belluno,San NicolÃ² di Comelico,32040
+Belluno,San Nicolò di Comelico,32040
 Belluno,San Pietro di Cadore,32040
 Belluno,Santa Giustina,32035
 Belluno,San Tomaso Agordino,32020
@@ -713,7 +713,7 @@ Belluno,Valle di Cadore,32040
 Belluno,Vigo di Cadore,32040
 Belluno,Vodo Cadore,32040
 Belluno,Voltago Agordino,32020
-Belluno,ZoppÃ¨ di Cadore,32010
+Belluno,Zoppè di Cadore,32010
 Benevento,Airola,82011
 Benevento,Amorosi,82031
 Benevento,Apice,82021
@@ -797,7 +797,7 @@ Bergamo,Adrara San Rocco,24060
 Bergamo,Albano Sant'Alessandro,24061
 Bergamo,Albino,24021
 Bergamo,Algua,24010
-Bergamo,AlmÃ¨,24011
+Bergamo,Almè,24011
 Bergamo,Almenno San Bartolomeo,24030
 Bergamo,Almenno San Salvatore,24031
 Bergamo,Alzano Lombardo,24022
@@ -1035,7 +1035,7 @@ Bergamo,Viadanica,24060
 Bergamo,Vigano San Martino,24060
 Bergamo,Vigolo,24060
 Bergamo,Villa d'Adda,24030
-Bergamo,Villa d'AlmÃ¨,24018
+Bergamo,Villa d'Almè,24018
 Bergamo,Villa di Serio,24020
 Bergamo,Villa d'Ogna,24020
 Bergamo,Villongo,24060
@@ -1058,7 +1058,7 @@ Biella,Candelo,13878
 Biella,Caprile,13864
 Biella,Casapinta,13866
 Biella,Castelletto Cervo,13851
-Biella,CavagliÃ ,13881
+Biella,Cavaglià,13881
 Biella,Cerrione,13882
 Biella,Coggiola,13863
 Biella,Cossato,13836
@@ -1222,7 +1222,7 @@ Bolzano/Bozen,Curon Venosta,39027
 Bolzano/Bozen,Dobbiaco,39034
 Bolzano/Bozen,Egna,39044
 Bolzano/Bozen,Falzes,39030
-Bolzano/Bozen,FiÃ¨ allo Sciliar,39050
+Bolzano/Bozen,Fiè allo Sciliar,39050
 Bolzano/Bozen,Fortezza,39045
 Bolzano/Bozen,Funes,39040
 Bolzano/Bozen,Gais,39030
@@ -1237,7 +1237,7 @@ Bolzano/Bozen,Lasa,39023
 Bolzano/Bozen,Lauregno,39040
 Bolzano/Bozen,La Valle,39030
 Bolzano/Bozen,Luson,39040
-Bolzano/Bozen,MagrÃ¨ sulla strada del vino,39040
+Bolzano/Bozen,Magrè sulla strada del vino,39040
 Bolzano/Bozen,Malles Venosta,39024
 Bolzano/Bozen,Marebbe,39030
 Bolzano/Bozen,Marlengo,39020
@@ -1483,15 +1483,15 @@ Brescia,Puegnago sul Garda,25080
 Brescia,Quinzano d'Oglio,25027
 Brescia,Remedello,25010
 Brescia,Rezzato,25086
-Brescia,RoÃ¨ Volciano,25077
 Brescia,Roccafranca,25030
 Brescia,Rodengo Saiano,25050
+Brescia,Roè Volciano,25077
 Brescia,Roncadelle,25030
 Brescia,Rovato,25038
 Brescia,Rudiano,25030
 Brescia,Sabbio Chiese,25070
-Brescia,SalÃ²,25087
 Brescia,Sale Marasino,25057
+Brescia,Salò,25087
 Brescia,San Felice del Benaco,25010
 Brescia,San Gervasio Bresciano,25020
 Brescia,San Paolo,25020
@@ -1506,7 +1506,7 @@ Brescia,Soiano del Lago,25080
 Brescia,Sonico,25048
 Brescia,Sulzano,25058
 Brescia,Tavernole sul Mella,25060
-Brescia,TemÃ¹,25050
+Brescia,Temù,25050
 Brescia,Tignale,25080
 Brescia,Torbole Casaglia,25030
 Brescia,Toscolano-Maderno,25088
@@ -1832,7 +1832,7 @@ Catania,Misterbianco,95045
 Catania,Motta Sant'Anastasia,95040
 Catania,Nicolosi,95030
 Catania,Palagonia,95046
-Catania,PaternÃ²,95047
+Catania,Paternò,95047
 Catania,Pedara,95030
 Catania,Piedimonte Etneo,95017
 Catania,Raddusa,95040
@@ -1907,7 +1907,7 @@ Catanzaro,Olivadi,88067
 Catanzaro,Palermiti,88050
 Catanzaro,Pentone,88050
 Catanzaro,Petrizzi,88060
-Catanzaro,PetronÃ ,88050
+Catanzaro,Petronà,88050
 Catanzaro,Pianopoli,88040
 Catanzaro,Platania,88040
 Catanzaro,San Floro,88021
@@ -1930,7 +1930,7 @@ Catanzaro,Soverato,88068
 Catanzaro,Soveria Mannelli,88049
 Catanzaro,Soveria Simeri,88050
 Catanzaro,Squillace,88069
-Catanzaro,StalettÃ¬,88069
+Catanzaro,Stalettì,88069
 Catanzaro,Taverna,88055
 Catanzaro,Tiriolo,88056
 Catanzaro,Torre di Ruggiero,88060
@@ -2068,7 +2068,7 @@ Como,Cabiate,22060
 Como,Cadorago,22071
 Como,Caglio,22030
 Como,Campione d'Italia,22060
-Como,CantÃ¹,22063
+Como,Cantù,22063
 Como,Canzo,22035
 Como,Capiago Intimiano,22070
 Como,Carate Urio,22010
@@ -2103,7 +2103,7 @@ Como,Erba,22036
 Como,Eupilio,22030
 Como,Faggeto Lario,22020
 Como,Faloppio,22020
-Como,FenegrÃ²,22070
+Como,Fenegrò,22070
 Como,Figino Serenza,22060
 Como,Fino Mornasco,22073
 Como,Garzeno,22010
@@ -2258,7 +2258,7 @@ Cosenza,Longobardi,87030
 Cosenza,Longobucco,87066
 Cosenza,Lungro,87010
 Cosenza,Luzzi,87040
-Cosenza,MaierÃ ,87020
+Cosenza,Maierà,87020
 Cosenza,Malito,87030
 Cosenza,Malvito,87010
 Cosenza,Mandatoriccio,87060
@@ -2457,8 +2457,8 @@ Crotone,Carfizzi,88817
 Crotone,Casabona,88822
 Crotone,Castelsilano,88834
 Crotone,Cerenzia,88833
-Crotone,CirÃ²,88813
-Crotone,CirÃ² Marina,88811
+Crotone,Cirò,88813
+Crotone,Cirò Marina,88811
 Crotone,Cotronei,88836
 Crotone,Crotone,88900
 Crotone,Crucoli,88812
@@ -2491,7 +2491,7 @@ Cuneo,Baldissero d'Alba,12040
 Cuneo,Barbaresco,12050
 Cuneo,Barge,12032
 Cuneo,Barolo,12060
-Cuneo,Bastia MondovÃ¬,12060
+Cuneo,Bastia Mondovì,12060
 Cuneo,Battifollo,12070
 Cuneo,Beinette,12081
 Cuneo,Bellino,12020
@@ -2518,8 +2518,8 @@ Cuneo,Canosio,12020
 Cuneo,Caprauna,12070
 Cuneo,Caraglio,12023
 Cuneo,Caramagna Piemonte,12030
-Cuneo,CardÃ¨,12030
-Cuneo,CarrÃ¹,12061
+Cuneo,Cardè,12030
+Cuneo,Carrù,12061
 Cuneo,Cartignano,12020
 Cuneo,Casalgrasso,12030
 Cuneo,Castagnito,12050
@@ -2544,7 +2544,7 @@ Cuneo,Cervere,12040
 Cuneo,Ceva,12073
 Cuneo,Cherasco,12062
 Cuneo,Chiusa di Pesio,12013
-Cuneo,CigliÃ¨,12060
+Cuneo,Cigliè,12060
 Cuneo,Cissone,12050
 Cuneo,Clavesana,12060
 Cuneo,Corneliano d'Alba,12040
@@ -2605,11 +2605,11 @@ Cuneo,Monastero di Vasco,12080
 Cuneo,Monasterolo Casotto,12080
 Cuneo,Monasterolo di Savigliano,12030
 Cuneo,Monchiero,12060
-Cuneo,MondovÃ¬,12084
+Cuneo,Mondovì,12084
 Cuneo,Monesiglio,12077
 Cuneo,Monforte d'Alba,12065
-Cuneo,MontÃ ,12046
-Cuneo,Montaldo di MondovÃ¬,12080
+Cuneo,Montà,12046
+Cuneo,Montaldo di Mondovì,12080
 Cuneo,Montaldo Roero,12040
 Cuneo,Montanera,12040
 Cuneo,Montelupo Albese,12050
@@ -2663,9 +2663,9 @@ Cuneo,Roascio,12073
 Cuneo,Robilante,12017
 Cuneo,Roburent,12080
 Cuneo,Roccabruna,12020
-Cuneo,Rocca CigliÃ¨,12060
+Cuneo,Rocca Cigliè,12060
 Cuneo,Rocca de' Baldi,12047
-Cuneo,Roccaforte MondovÃ¬,12088
+Cuneo,Roccaforte Mondovì,12088
 Cuneo,Roccasparvera,12010
 Cuneo,Roccavione,12018
 Cuneo,Rocchetta Belbo,12050
@@ -2683,9 +2683,9 @@ Cuneo,Sambuco,12010
 Cuneo,Sampeyre,12020
 Cuneo,San Benedetto Belbo,12050
 Cuneo,San Damiano Macra,12029
-Cuneo,SanfrÃ¨,12040
+Cuneo,Sanfrè,12040
 Cuneo,Sanfront,12030
-Cuneo,San Michele MondovÃ¬,12080
+Cuneo,San Michele Mondovì,12080
 Cuneo,Sant'Albano Stura,12040
 Cuneo,Santa Vittoria d'Alba,12069
 Cuneo,Santo Stefano Belbo,12058
@@ -2702,12 +2702,12 @@ Cuneo,Sommariva Perno,12040
 Cuneo,Stroppo,12020
 Cuneo,Tarantasca,12020
 Cuneo,Torre Bormida,12050
-Cuneo,Torre MondovÃ¬,12080
+Cuneo,Torre Mondovì,12080
 Cuneo,Torre San Giorgio,12030
 Cuneo,Torresina,12070
 Cuneo,Treiso,12050
 Cuneo,Trezzo Tinella,12050
-Cuneo,TrinitÃ ,12049
+Cuneo,Trinità,12049
 Cuneo,Valdieri,12010
 Cuneo,Valgrana,12020
 Cuneo,Valloriate,12010
@@ -2719,7 +2719,7 @@ Cuneo,Vezza d'Alba,12040
 Cuneo,Vicoforte,12080
 Cuneo,Vignolo,12010
 Cuneo,Villafalletto,12020
-Cuneo,Villanova MondovÃ¬,12089
+Cuneo,Villanova Mondovì,12089
 Cuneo,Villanova Solaro,12030
 Cuneo,Villar San Costanzo,12020
 Cuneo,Vinadio,12010
@@ -2936,38 +2936,38 @@ Foggia,Vieste,71019
 Foggia,Volturara Appula,71030
 Foggia,Volturino,71030
 Foggia,Zapponeta,71030
-ForlÃ¬-Cesena,Bagno di Romagna,47021
-ForlÃ¬-Cesena,Bertinoro,47032
-ForlÃ¬-Cesena,Borghi,47030
-ForlÃ¬-Cesena,Castrocaro Terme e Terra del Sole,47011
-ForlÃ¬-Cesena,Cesena,47521
-ForlÃ¬-Cesena,Cesena,47522
-ForlÃ¬-Cesena,Cesenatico,47042
-ForlÃ¬-Cesena,Civitella di Romagna,47012
-ForlÃ¬-Cesena,Dovadola,47013
-ForlÃ¬-Cesena,ForlÃ¬,47121
-ForlÃ¬-Cesena,ForlÃ¬,47122
-ForlÃ¬-Cesena,Forlimpopoli,47034
-ForlÃ¬-Cesena,Galeata,47010
-ForlÃ¬-Cesena,Gambettola,47035
-ForlÃ¬-Cesena,Gatteo,47043
-ForlÃ¬-Cesena,Longiano,47020
-ForlÃ¬-Cesena,Meldola,47014
-ForlÃ¬-Cesena,Mercato Saraceno,47025
-ForlÃ¬-Cesena,Modigliana,47015
-ForlÃ¬-Cesena,Montiano,47020
-ForlÃ¬-Cesena,Portico e San Benedetto,47010
-ForlÃ¬-Cesena,Predappio,47016
-ForlÃ¬-Cesena,Premilcuore,47010
-ForlÃ¬-Cesena,Rocca San Casciano,47017
-ForlÃ¬-Cesena,Roncofreddo,47020
-ForlÃ¬-Cesena,San Mauro Pascoli,47030
-ForlÃ¬-Cesena,Santa Sofia,47018
-ForlÃ¬-Cesena,Sarsina,47027
-ForlÃ¬-Cesena,Savignano sul Rubicone,47039
-ForlÃ¬-Cesena,Sogliano al Rubicone,47030
-ForlÃ¬-Cesena,Tredozio,47019
-ForlÃ¬-Cesena,Verghereto,47028
+Forlì-Cesena,Bagno di Romagna,47021
+Forlì-Cesena,Bertinoro,47032
+Forlì-Cesena,Borghi,47030
+Forlì-Cesena,Castrocaro Terme e Terra del Sole,47011
+Forlì-Cesena,Cesena,47521
+Forlì-Cesena,Cesena,47522
+Forlì-Cesena,Cesenatico,47042
+Forlì-Cesena,Civitella di Romagna,47012
+Forlì-Cesena,Dovadola,47013
+Forlì-Cesena,Forlì,47121
+Forlì-Cesena,Forlì,47122
+Forlì-Cesena,Forlimpopoli,47034
+Forlì-Cesena,Galeata,47010
+Forlì-Cesena,Gambettola,47035
+Forlì-Cesena,Gatteo,47043
+Forlì-Cesena,Longiano,47020
+Forlì-Cesena,Meldola,47014
+Forlì-Cesena,Mercato Saraceno,47025
+Forlì-Cesena,Modigliana,47015
+Forlì-Cesena,Montiano,47020
+Forlì-Cesena,Portico e San Benedetto,47010
+Forlì-Cesena,Predappio,47016
+Forlì-Cesena,Premilcuore,47010
+Forlì-Cesena,Rocca San Casciano,47017
+Forlì-Cesena,Roncofreddo,47020
+Forlì-Cesena,San Mauro Pascoli,47030
+Forlì-Cesena,Santa Sofia,47018
+Forlì-Cesena,Sarsina,47027
+Forlì-Cesena,Savignano sul Rubicone,47039
+Forlì-Cesena,Sogliano al Rubicone,47030
+Forlì-Cesena,Tredozio,47019
+Forlì-Cesena,Verghereto,47028
 Frosinone,Acquafondata,03040
 Frosinone,Acuto,03010
 Frosinone,Alatri,03011
@@ -3162,7 +3162,7 @@ Genova,Santa Margherita Ligure,16038
 Genova,Sant'Olcese,16010
 Genova,Santo Stefano d'Aveto,16049
 Genova,Savignone,16010
-Genova,Serra RiccÃ²,16010
+Genova,Serra Riccò,16010
 Genova,Sestri Levante,16039
 Genova,Sori,16031
 Genova,Tiglieto,16010
@@ -3174,7 +3174,7 @@ Genova,Vobbia,16010
 Genova,Zoagli,16035
 Gorizia,Capriva del Friuli,34070
 Gorizia,Cormons,34071
-Gorizia,DoberdÃ² del Lago,34070
+Gorizia,Doberdò del Lago,34070
 Gorizia,Dolegna del Collio,34070
 Gorizia,Farra d'Isonzo,34072
 Gorizia,Fogliano Redipuglia,34070
@@ -3270,7 +3270,7 @@ Imperia,Pigna,18037
 Imperia,Pompeiana,18015
 Imperia,Pontedassio,18027
 Imperia,Pornassio,18024
-Imperia,PrelÃ ,18020
+Imperia,Prelà,18020
 Imperia,Ranzo,18020
 Imperia,Rezzo,18026
 Imperia,Riva Ligure,18015
@@ -3310,7 +3310,7 @@ Isernia,Civitanova del Sannio,86094
 Isernia,Colli a Volturno,86073
 Isernia,Conca Casale,86070
 Isernia,Filignano,86074
-Isernia,ForlÃ¬ del Sannio,86084
+Isernia,Forlì del Sannio,86084
 Isernia,Fornelli,86070
 Isernia,Frosolone,86095
 Isernia,Isernia,86170
@@ -3489,7 +3489,7 @@ La Spezia,Maissana,19010
 La Spezia,Monterosso al Mare,19016
 La Spezia,Pignone,19020
 La Spezia,Portovenere,19025
-La Spezia,RiccÃ² del Golfo di Spezia,19020
+La Spezia,Riccò del Golfo di Spezia,19020
 La Spezia,Riomaggiore,19017
 La Spezia,Rocchetta di Vara,19020
 La Spezia,Santo Stefano di Magra,19037
@@ -3583,7 +3583,7 @@ Lecce,Monteroni di Lecce,73047
 Lecce,Montesano Salentino,73030
 Lecce,Morciano di Leuca,73040
 Lecce,Muro Leccese,73036
-Lecce,NardÃ²,73048
+Lecce,Nardò,73048
 Lecce,Neviano,73040
 Lecce,Nociglia,73020
 Lecce,Novoli,73051
@@ -3591,7 +3591,7 @@ Lecce,Ortelle,73030
 Lecce,Otranto,73028
 Lecce,Palmariggi,73020
 Lecce,Parabita,73052
-Lecce,PatÃ¹,73053
+Lecce,Patù,73053
 Lecce,Poggiardo,73037
 Lecce,Porto Cesareo,73010
 Lecce,Presicce-Acquarica,73054
@@ -3607,7 +3607,7 @@ Lecce,Sannicola,73017
 Lecce,San Pietro in Lama,73010
 Lecce,Santa Cesarea Terme,73020
 Lecce,Scorrano,73020
-Lecce,SeclÃ¬,73050
+Lecce,Seclì,73050
 Lecce,Sogliano Cavour,73010
 Lecce,Soleto,73010
 Lecce,Specchia,73040
@@ -3633,7 +3633,7 @@ Lecco,Airuno,23881
 Lecco,Annone di Brianza,23841
 Lecco,Ballabio,23811
 Lecco,Barzago,23890
-Lecco,BarzanÃ²,23891
+Lecco,Barzanò,23891
 Lecco,Barzio,23816
 Lecco,Bellano,23822
 Lecco,Bosisio Parini,23842
@@ -3699,7 +3699,7 @@ Lecco,Premana,23834
 Lecco,Primaluna,23819
 Lecco,Robbiate,23899
 Lecco,Rogeno,23849
-Lecco,Santa Maria HoÃ¨,23889
+Lecco,Santa Maria Hoè,23889
 Lecco,Sirone,23844
 Lecco,Sirtori,23896
 Lecco,Sueglio,23835
@@ -3712,7 +3712,7 @@ Lecco,Varenna,23829
 Lecco,Vendrogno,23838
 Lecco,Vercurago,23808
 Lecco,Verderio,23879
-Lecco,ViganÃ²,23897
+Lecco,Viganò,23897
 Livorno,Bibbona,57020
 Livorno,Campiglia Marittima,57021
 Livorno,Campo nell'Elba,57034
@@ -4000,12 +4000,12 @@ Matera,Tricarico,75019
 Matera,Tursi,75028
 Matera,Valsinni,75029
 Messina,Acquedolci,98070
-Messina,AlÃ¬,98020
-Messina,AlÃ¬ Terme,98021
 Messina,Alcara li Fusi,98070
+Messina,Alì,98020
+Messina,Alì Terme,98021
 Messina,Antillo,98030
 Messina,Barcellona Pozzo di Gotto,98051
-Messina,BasicÃ²,98060
+Messina,Basicò,98060
 Messina,Brolo,98061
 Messina,Capizzi,98031
 Messina,Capo d'Orlando,98071
@@ -4016,16 +4016,16 @@ Messina,Castel di Lucio,98070
 Messina,Castell'Umberto,98070
 Messina,Castelmola,98030
 Messina,Castroreale,98053
-Messina,CesarÃ²,98033
-Messina,CondrÃ²,98040
+Messina,Cesarò,98033
+Messina,Condrò,98040
 Messina,Falcone,98060
 Messina,Ficarra,98062
 Messina,Fiumedinisi,98022
 Messina,Floresta,98030
 Messina,Fondachelli-Fantina,98050
-Messina,Forza d'AgrÃ²,98030
+Messina,Forza d'Agrò,98030
 Messina,Francavilla di Sicilia,98034
-Messina,FrazzanÃ²,98070
+Messina,Frazzanò,98070
 Messina,Furci Siculo,98023
 Messina,Furnari,98054
 Messina,Gaggi,98030
@@ -4034,7 +4034,7 @@ Messina,Gallodoro,98030
 Messina,Giardini-Naxos,98035
 Messina,Gioiosa Marea,98063
 Messina,Graniti,98036
-Messina,Gualtieri SicaminÃ²,98040
+Messina,Gualtieri Sicaminò,98040
 Messina,Itala,98025
 Messina,Leni,98050
 Messina,Letojanni,98037
@@ -4045,8 +4045,8 @@ Messina,Longi,98070
 Messina,Malfa,98050
 Messina,Malvagna,98030
 Messina,Mandanici,98020
-Messina,MazzarrÃ  Sant'Andrea,98056
-Messina,MerÃ¬,98040
+Messina,Mazzarrà Sant'Andrea,98056
+Messina,Merì,98040
 Messina,Messina,98121
 Messina,Messina,98122
 Messina,Messina,98123
@@ -4121,7 +4121,7 @@ Messina,Roccafiorita,98030
 Messina,Roccalumera,98027
 Messina,Roccavaldina,98040
 Messina,Roccella Valdemone,98030
-Messina,RodÃ¬ Milici,98059
+Messina,Rodì Milici,98059
 Messina,Rometta,98043
 Messina,San Filippo del Mela,98044
 Messina,San Fratello,98075
@@ -4417,7 +4417,7 @@ Monza e della Brianza,Meda,20821
 Monza e della Brianza,Mezzago,20883
 Monza e della Brianza,Misinto,20826
 Monza e della Brianza,Monza,20900
-Monza e della Brianza,MuggiÃ²,20835
+Monza e della Brianza,Muggiò,20835
 Monza e della Brianza,Nova Milanese,20834
 Monza e della Brianza,Ornago,20876
 Monza e della Brianza,Renate,20838
@@ -4533,7 +4533,7 @@ Napoli,San Giuseppe Vesuviano,80047
 Napoli,San Paolo Bel Sito,80030
 Napoli,San Sebastiano al Vesuvio,80040
 Napoli,Sant'Agnello,80065
-Napoli,Santa Maria la CaritÃ ,80050
+Napoli,Santa Maria la Carità,80050
 Napoli,Sant'Anastasia,80048
 Napoli,Sant'Antimo,80029
 Napoli,Sant'Antonio Abate,80057
@@ -4646,7 +4646,7 @@ Nuoro,Atzara,08030
 Nuoro,Austis,08030
 Nuoro,Bari Sardo,08042
 Nuoro,Baunei,08040
-Nuoro,BelvÃ¬,08030
+Nuoro,Belvì,08030
 Nuoro,Birori,08010
 Nuoro,Bitti,08021
 Nuoro,Bolotana,08011
@@ -4660,7 +4660,7 @@ Nuoro,Elini,08040
 Nuoro,Fonni,08023
 Nuoro,Gadoni,08030
 Nuoro,Gairo,08040
-Nuoro,GaltellÃ¬,08020
+Nuoro,Galtellì,08020
 Nuoro,Gavoi,08020
 Nuoro,Girasole,08040
 Nuoro,Ilbono,08040
@@ -4670,7 +4670,7 @@ Nuoro,Lanusei,08045
 Nuoro,Lei,08010
 Nuoro,Loceri,08040
 Nuoro,Loculi,08020
-Nuoro,LodÃ¨,08020
+Nuoro,Lodè,08020
 Nuoro,Lodine,08020
 Nuoro,Lotzorai,08040
 Nuoro,Lula,08020
@@ -4682,7 +4682,7 @@ Nuoro,Nuoro,08100
 Nuoro,Oliena,08025
 Nuoro,Ollolai,08020
 Nuoro,Olzai,08020
-Nuoro,OnanÃ¬,08020
+Nuoro,Onanì,08020
 Nuoro,Onifai,08020
 Nuoro,Oniferi,08020
 Nuoro,Orani,08026
@@ -4707,8 +4707,8 @@ Nuoro,Tertenia,08047
 Nuoro,Teti,08030
 Nuoro,Tiana,08020
 Nuoro,Tonara,08039
-Nuoro,TorpÃ¨,08020
-Nuoro,TortolÃ¬,08048
+Nuoro,Torpè,08020
+Nuoro,Tortolì,08048
 Nuoro,Triei,08040
 Nuoro,Ulassai,08040
 Nuoro,Urzulei,08040
@@ -4727,7 +4727,7 @@ Oristano,Baradili,09090
 Oristano,Baratili San Pietro,09070
 Oristano,Baressa,09090
 Oristano,Bauladu,09070
-Oristano,BidonÃ¬,09080
+Oristano,Bidonì,09080
 Oristano,Bonarcado,09070
 Oristano,Boroneddu,09080
 Oristano,Bosa,09089
@@ -4739,7 +4739,7 @@ Oristano,Flussio,09090
 Oristano,Fordongianus,09083
 Oristano,Ghilarza,09074
 Oristano,Gonnoscodina,09090
-Oristano,GonnosnÃ²,09090
+Oristano,Gonnosnò,09090
 Oristano,Gonnostramatza,09093
 Oristano,Laconi,09090
 Oristano,Magomadas,09090
@@ -4767,7 +4767,7 @@ Oristano,Riola Sardo,09070
 Oristano,Ruinas,09085
 Oristano,Sagama,09090
 Oristano,Samugheo,09086
-Oristano,San NicolÃ² d'Arcidano,09097
+Oristano,San Nicolò d'Arcidano,09097
 Oristano,Santa Giusta,09096
 Oristano,Santu Lussurgiu,09075
 Oristano,San Vero Milis,09070
@@ -4783,7 +4783,7 @@ Oristano,Simala,09090
 Oristano,Simaxis,09088
 Oristano,Sini,09090
 Oristano,Siris,09090
-Oristano,SoddÃ¬,09080
+Oristano,Soddì,09080
 Oristano,Solarussa,09077
 Oristano,Sorradile,09080
 Oristano,Suni,09090
@@ -4792,7 +4792,7 @@ Oristano,Terralba,09098
 Oristano,Tinnura,09090
 Oristano,Tramatza,09070
 Oristano,Tresnuraghes,09079
-Oristano,UlÃ  Tirso,09080
+Oristano,Ulà Tirso,09080
 Oristano,Uras,09099
 Oristano,Usellus,09090
 Oristano,Villanova Truschedu,09084
@@ -4805,7 +4805,7 @@ Padova,Abano Terme,35031
 Padova,Agna,35021
 Padova,Albignasego,35020
 Padova,Anguillara Veneta,35022
-Padova,ArquÃ  Petrarca,35032
+Padova,Arquà Petrarca,35032
 Padova,Arre,35020
 Padova,Arzergrande,35020
 Padova,Bagnoli di Sopra,35023
@@ -4848,7 +4848,7 @@ Padova,Legnaro,35020
 Padova,Limena,35010
 Padova,Loreggia,35010
 Padova,Lozzo Atestino,35034
-Padova,MaserÃ  di Padova,35020
+Padova,Maserà di Padova,35020
 Padova,Masi,35040
 Padova,Massanzago,35010
 Padova,Megliadino San Vitale,35040
@@ -4890,7 +4890,7 @@ Padova,Piove di Sacco,35028
 Padova,Polverara,35020
 Padova,Ponso,35040
 Padova,Pontelongo,35029
-Padova,Ponte San NicolÃ²,35020
+Padova,Ponte San Nicolò,35020
 Padova,Pozzonovo,35020
 Padova,Rovolon,35030
 Padova,Rubano,35030
@@ -4951,8 +4951,8 @@ Palermo,Castelbuono,90013
 Palermo,Casteldaccia,90014
 Palermo,Castellana Sicula,90020
 Palermo,Castronovo di Sicilia,90030
-Palermo,CefalÃ¹,90015
-Palermo,CefalÃ  Diana,90030
+Palermo,Cefalà Diana,90030
+Palermo,Cefalù,90015
 Palermo,Cerda,90010
 Palermo,Chiusa Sclafani,90033
 Palermo,Ciminna,90023
@@ -5094,7 +5094,7 @@ Pavia,Arena Po,27040
 Pavia,Badia Pavese,27010
 Pavia,Bagnaria,27050
 Pavia,Barbianello,27041
-Pavia,BascapÃ¨,27010
+Pavia,Bascapè,27010
 Pavia,Bastida Pancarana,27050
 Pavia,Battuda,27020
 Pavia,Belgioioso,27011
@@ -5152,7 +5152,7 @@ Pavia,Fortunago,27040
 Pavia,Frascarolo,27030
 Pavia,Galliavola,27034
 Pavia,Gambarana,27030
-Pavia,GambolÃ²,27025
+Pavia,Gambolò,27025
 Pavia,Garlasco,27026
 Pavia,Gerenzago,27010
 Pavia,Giussago,27010
@@ -5177,13 +5177,13 @@ Pavia,Mezzana Bigli,27030
 Pavia,Mezzana Rabattone,27030
 Pavia,Mezzanino,27040
 Pavia,Miradolo Terme,27010
-Pavia,MontÃ¹ Beccaria,27040
 Pavia,Montalto Pavese,27040
 Pavia,Montebello della Battaglia,27054
 Pavia,Montecalvo Versiggia,27047
 Pavia,Montescano,27040
 Pavia,Montesegale,27052
 Pavia,Monticelli Pavese,27010
+Pavia,Montù Beccaria,27040
 Pavia,Mornico Losana,27040
 Pavia,Mortara,27036
 Pavia,Nicorvo,27020
@@ -5244,7 +5244,7 @@ Pavia,Torre de' Negri,27011
 Pavia,Torre d'Isola,27020
 Pavia,Torrevecchia Pia,27010
 Pavia,Torricella Verzate,27050
-Pavia,TravacÃ² Siccomario,27020
+Pavia,Travacò Siccomario,27020
 Pavia,Trivolzio,27020
 Pavia,Tromello,27020
 Pavia,Trovo,27020
@@ -5270,7 +5270,7 @@ Pavia,Zeccone,27010
 Pavia,Zeme,27030
 Pavia,Zenevredo,27049
 Pavia,Zerbo,27017
-Pavia,ZerbolÃ²,27020
+Pavia,Zerbolò,27020
 Pavia,Zinasco,27030
 Perugia,Assisi,06081
 Perugia,Bastia Umbra,06083
@@ -5283,8 +5283,8 @@ Perugia,Castel Ritaldi,06044
 Perugia,Castiglione del Lago,06061
 Perugia,Cerreto di Spoleto,06041
 Perugia,Citerna,06010
-Perugia,CittÃ  della Pieve,06062
-Perugia,CittÃ  di Castello,06012
+Perugia,Città della Pieve,06062
+Perugia,Città di Castello,06012
 Perugia,Collazzone,06050
 Perugia,Corciano,06073
 Perugia,Costacciaro,06021
@@ -5410,7 +5410,7 @@ Pescara,Carpineto della Nora,65010
 Pescara,Castiglione a Casauria,65020
 Pescara,Catignano,65011
 Pescara,Cepagatti,65012
-Pescara,CittÃ  Sant'Angelo,65013
+Pescara,Città Sant'Angelo,65013
 Pescara,Civitaquana,65010
 Pescara,Civitella Casanova,65010
 Pescara,Collecorvino,65010
@@ -5780,7 +5780,7 @@ Reggio Calabria,Cardeto,89060
 Reggio Calabria,Careri,89030
 Reggio Calabria,Casignana,89030
 Reggio Calabria,Caulonia,89041
-Reggio Calabria,CiminÃ ,89040
+Reggio Calabria,Ciminà,89040
 Reggio Calabria,Cinquefrondi,89021
 Reggio Calabria,Cittanova,89022
 Reggio Calabria,Condofuri,89030
@@ -5802,7 +5802,7 @@ Reggio Calabria,Mammola,89045
 Reggio Calabria,Marina di Gioiosa Ionica,89046
 Reggio Calabria,Maropati,89020
 Reggio Calabria,Martone,89040
-Reggio Calabria,MelicuccÃ ,89020
+Reggio Calabria,Melicuccà,89020
 Reggio Calabria,Melicucco,89020
 Reggio Calabria,Melito di Porto Salvo,89063
 Reggio Calabria,Molochio,89010
@@ -5814,7 +5814,7 @@ Reggio Calabria,Palizzi,89038
 Reggio Calabria,Palmi,89015
 Reggio Calabria,Pazzano,89040
 Reggio Calabria,Placanica,89040
-Reggio Calabria,PlatÃ¬,89039
+Reggio Calabria,Platì,89039
 Reggio Calabria,Polistena,89024
 Reggio Calabria,Portigliola,89040
 Reggio Calabria,Reggio di Calabria,89121
@@ -5844,7 +5844,7 @@ Reggio Calabria,San Giorgio Morgeto,89017
 Reggio Calabria,San Giovanni di Gerace,89040
 Reggio Calabria,San Lorenzo,89069
 Reggio Calabria,San Luca,89030
-Reggio Calabria,San Pietro di CaridÃ ,89020
+Reggio Calabria,San Pietro di Caridà,89020
 Reggio Calabria,San Procopio,89020
 Reggio Calabria,San Roberto,89050
 Reggio Calabria,Santa Cristina d'Aspromonte,89056
@@ -6216,7 +6216,7 @@ Roma,Vivaro Romano,00020
 Roma,Zagarolo,00039
 Rovigo,Adria,45011
 Rovigo,Ariano nel Polesine,45012
-Rovigo,ArquÃ  Polesine,45031
+Rovigo,Arquà Polesine,45031
 Rovigo,Badia Polesine,45021
 Rovigo,Bagnolo di Po,45022
 Rovigo,Bergantino,45032
@@ -6438,7 +6438,7 @@ Salerno,Vibonati,84079
 Salerno,Vietri sul Mare,84019
 Sassari,Aggius,07020
 Sassari,Aglientu,07020
-Sassari,AlÃ  dei Sardi,07020
+Sassari,Alà dei Sardi,07020
 Sassari,Alghero,07041
 Sassari,Anela,07010
 Sassari,Ardara,07010
@@ -6454,7 +6454,7 @@ Sassari,Bonorva,07012
 Sassari,Bortigiadas,07030
 Sassari,Borutta,07040
 Sassari,Bottidda,07010
-Sassari,BuddusÃ²,07020
+Sassari,Buddusò,07020
 Sassari,Budoni,07051
 Sassari,Bultei,07010
 Sassari,Bulzi,07030
@@ -6485,7 +6485,7 @@ Sassari,Monteleone Rocca Doria,07010
 Sassari,Monti,07020
 Sassari,Mores,07013
 Sassari,Muros,07030
-Sassari,Nughedu San NicolÃ²,07010
+Sassari,Nughedu San Nicolò,07010
 Sassari,Nule,07010
 Sassari,Nulvi,07032
 Sassari,Olbia,07026
@@ -6521,7 +6521,7 @@ Sassari,Tergu,07030
 Sassari,Thiesi,07047
 Sassari,Tissi,07040
 Sassari,Torralba,07048
-Sassari,TrinitÃ  d'Agultu e Vignola,07038
+Sassari,Trinità d'Agultu e Vignola,07038
 Sassari,Tula,07010
 Sassari,Uri,07040
 Sassari,Usini,07049
@@ -6794,7 +6794,7 @@ Sud Sardegna,San Basilio,09040
 Sud Sardegna,San Gavino Monreale,09037
 Sud Sardegna,San Giovanni Suergiu,09010
 Sud Sardegna,Sanluri,09025
-Sud Sardegna,San NicolÃ² Gerrei,09040
+Sud Sardegna,San Nicolò Gerrei,09040
 Sud Sardegna,San Sperate,09026
 Sud Sardegna,Santadi,09010
 Sud Sardegna,Sant'Andrea Frius,09040
@@ -6804,7 +6804,7 @@ Sud Sardegna,San Vito,09040
 Sud Sardegna,Sardara,09030
 Sud Sardegna,Segariu,09040
 Sud Sardegna,Selegas,09040
-Sud Sardegna,SenorbÃ¬,09040
+Sud Sardegna,Senorbì,09040
 Sud Sardegna,Serdiana,09040
 Sud Sardegna,Serramanna,09038
 Sud Sardegna,Serrenti,09027
@@ -6948,7 +6948,7 @@ Terni,San Gemini,05029
 Terni,San Venanzo,05010
 Terni,Stroncone,05039
 Terni,Terni,05100
-Torino,AgliÃ¨,10011
+Torino,Agliè,10011
 Torino,Airasca,10060
 Torino,Ala di Stura,10070
 Torino,Albiano d'Ivrea,10010
@@ -7032,7 +7032,7 @@ Torino,Chivasso,10034
 Torino,Ciconio,10080
 Torino,Cintano,10080
 Torino,Cinzano,10090
-Torino,CiriÃ¨,10073
+Torino,Ciriè,10073
 Torino,Claviere,10050
 Torino,Coassolo Torinese,10070
 Torino,Coazze,10050
@@ -7044,7 +7044,7 @@ Torino,Corio,10070
 Torino,Cossano Canavese,10010
 Torino,Cuceglio,10090
 Torino,Cumiana,10040
-Torino,CuorgnÃ¨,10082
+Torino,Cuorgnè,10082
 Torino,Druento,10040
 Torino,Exilles,10050
 Torino,Favria,10083
@@ -7083,10 +7083,10 @@ Torino,Levone,10070
 Torino,Locana,10080
 Torino,Lombardore,10040
 Torino,Lombriasco,10040
-Torino,LoranzÃ¨,10010
+Torino,Loranzè,10010
 Torino,Luserna San Giovanni,10062
 Torino,Lusernetta,10060
-Torino,LusigliÃ¨,10080
+Torino,Lusigliè,10080
 Torino,Macello,10060
 Torino,Maglione,10030
 Torino,Mappano,10079
@@ -7094,7 +7094,7 @@ Torino,Marentino,10020
 Torino,Massello,10060
 Torino,Mathi,10075
 Torino,Mattie,10050
-Torino,MazzÃ¨,10035
+Torino,Mazzè,10035
 Torino,Meana di Susa,10050
 Torino,Mercenasco,10010
 Torino,Mezzenile,10070
@@ -7170,7 +7170,7 @@ Torino,Roletto,10060
 Torino,Romano Canavese,10090
 Torino,Ronco Canavese,10080
 Torino,Rondissone,10030
-Torino,RorÃ ,10060
+Torino,Rorà,10060
 Torino,Rosta,10090
 Torino,Roure,10060
 Torino,Rubiana,10040
@@ -7275,9 +7275,8 @@ Torino,Venaria Reale,10078
 Torino,Venaus,10050
 Torino,Verolengo,10038
 Torino,Verrua Savoia,10020
-Torino,VestignÃ¨,10030
-Torino,ViÃ¹,10070
-Torino,VialfrÃ¨,10090
+Torino,Vestignè,10030
+Torino,Vialfrè,10090
 Torino,Vidracco,10080
 Torino,Vigone,10067
 Torino,Villafranca Piemonte,10068
@@ -7293,6 +7292,7 @@ Torino,Vinovo,10048
 Torino,Virle Piemonte,10060
 Torino,Vische,10030
 Torino,Vistrorio,10080
+Torino,Viù,10070
 Torino,Volpiano,10088
 Torino,Volvera,10040
 Trapani,Alcamo,91011
@@ -7328,7 +7328,7 @@ Trento,Amblar-Don,38011
 Trento,Andalo,38010
 Trento,Arco,38062
 Trento,Avio,38063
-Trento,Baselga di PinÃ¨,38042
+Trento,Baselga di Pinè,38042
 Trento,Bedollo,38043
 Trento,Besenello,38060
 Trento,Bieno,38050
@@ -7342,7 +7342,7 @@ Trento,Brentonico,38060
 Trento,Bresimo,38020
 Trento,Brez,38021
 Trento,Caderzone Terme,38080
-Trento,CagnÃ²,38028
+Trento,Cagnò,38028
 Trento,Calceranica al Lago,38050
 Trento,Caldes,38022
 Trento,Caldonazzo,38052
@@ -7375,7 +7375,7 @@ Trento,Cles,38023
 Trento,Cloz,38020
 Trento,Comano Terme,38077
 Trento,Commezzadura,38020
-Trento,ContÃ ,38093
+Trento,Contà,38093
 Trento,Croviana,38027
 Trento,Daiano,38030
 Trento,Dambel,38010
@@ -7385,7 +7385,7 @@ Trento,Drena,38074
 Trento,Dro,38074
 Trento,Faedo,38010
 Trento,Fai della Paganella,38010
-Trento,FiavÃ¨,38075
+Trento,Fiavè,38075
 Trento,Fierozzo,38050
 Trento,Folgaria,38064
 Trento,Fondo,38013
@@ -7405,7 +7405,7 @@ Trento,Livo,38020
 Trento,Lona-Lases,38040
 Trento,Luserna,38040
 Trento,Madruzzo,38076
-Trento,MalÃ©,38027
+Trento,Malé,38027
 Trento,Malosco,38013
 Trento,Massimeno,38086
 Trento,Mazzin,38030
@@ -7422,8 +7422,8 @@ Trento,Nomi,38060
 Trento,Novaledo,38050
 Trento,Ospedaletto,38050
 Trento,Ossana,38026
-Trento,PalÃ¹ del Fersina,38050
-Trento,PanchiÃ ,38030
+Trento,Palù del Fersina,38050
+Trento,Panchià,38030
 Trento,Peio,38024
 Trento,Pellizzano,38020
 Trento,Pelugo,38079
@@ -7437,7 +7437,7 @@ Trento,Predaia,38012
 Trento,Predazzo,38037
 Trento,Primiero San Martino di Castrozza,38054
 Trento,Rabbi,38020
-Trento,RevÃ²,38028
+Trento,Revò,38028
 Trento,Riva del Garda,38066
 Trento,Romallo,38028
 Trento,Romeno,38010
@@ -7445,9 +7445,9 @@ Trento,Roncegno Terme,38050
 Trento,Ronchi Valsugana,38050
 Trento,Ronzo-Chienis,38060
 Trento,Ronzone,38010
-Trento,RoverÃ¨ della Luna,38030
+Trento,Roverè della Luna,38030
 Trento,Rovereto,38068
-Trento,RuffrÃ¨-Mendola,38010
+Trento,Ruffrè-Mendola,38010
 Trento,Rumo,38020
 Trento,Sagron Mis,38050
 Trento,Samone,38059
@@ -7514,7 +7514,7 @@ Treviso,Cessalto,31040
 Treviso,Chiarano,31040
 Treviso,Cimadolmo,31010
 Treviso,Cison di Valmarino,31030
-Treviso,CodognÃ¨,31013
+Treviso,Codognè,31013
 Treviso,Colle Umberto,31014
 Treviso,Conegliano,31015
 Treviso,Cordignano,31016
@@ -7531,7 +7531,7 @@ Treviso,Godega di Sant'Urbano,31010
 Treviso,Gorgo al Monticano,31040
 Treviso,Istrana,31036
 Treviso,Loria,31037
-Treviso,MansuÃ¨,31040
+Treviso,Mansuè,31040
 Treviso,Mareno di Piave,31010
 Treviso,Maser,31010
 Treviso,Maserada sul Piave,31052
@@ -7554,7 +7554,7 @@ Treviso,Pieve del Grappa,31017
 Treviso,Pieve di Soligo,31053
 Treviso,Ponte di Piave,31047
 Treviso,Ponzano Veneto,31050
-Treviso,PortobuffolÃ¨,31040
+Treviso,Portobuffolè,31040
 Treviso,Possagno,31054
 Treviso,Povegliano,31050
 Treviso,Preganziol,31022
@@ -7760,80 +7760,80 @@ Udine,Verzegnis,33020
 Udine,Villa Santina,33029
 Udine,Visco,33040
 Udine,Zuglio,33020
-Valle d'Aosta/VallÃ©e d'Aoste,Allein,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Antey-Saint-AndrÃ©,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Aosta,11100
-Valle d'Aosta/VallÃ©e d'Aoste,Arnad,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Arvier,11011
-Valle d'Aosta/VallÃ©e d'Aoste,Avise,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Ayas,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Aymavilles,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Bard,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Bionaz,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Brissogne,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Brusson,11022
-Valle d'Aosta/VallÃ©e d'Aoste,ChÃ¢tillon,11024
-Valle d'Aosta/VallÃ©e d'Aoste,Challand-Saint-Anselme,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Challand-Saint-Victor,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Chambave,11023
-Valle d'Aosta/VallÃ©e d'Aoste,Chamois,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Champdepraz,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Champorcher,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Charvensod,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Cogne,11012
-Valle d'Aosta/VallÃ©e d'Aoste,Courmayeur,11013
-Valle d'Aosta/VallÃ©e d'Aoste,Donnas,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Doues,11010
-Valle d'Aosta/VallÃ©e d'Aoste,EmarÃ¨se,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Etroubles,11014
-Valle d'Aosta/VallÃ©e d'Aoste,FÃ©nis,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Fontainemore,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Gaby,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Gignod,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Gressan,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Gressoney-La-TrinitÃ©,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Gressoney-Saint-Jean,11025
-Valle d'Aosta/VallÃ©e d'Aoste,HÃ´ne,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Introd,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Issime,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Issogne,11020
-Valle d'Aosta/VallÃ©e d'Aoste,JovenÃ§an,11020
-Valle d'Aosta/VallÃ©e d'Aoste,La Magdeleine,11020
-Valle d'Aosta/VallÃ©e d'Aoste,La Salle,11015
-Valle d'Aosta/VallÃ©e d'Aoste,La Thuile,11016
-Valle d'Aosta/VallÃ©e d'Aoste,Lillianes,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Montjovet,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Morgex,11017
-Valle d'Aosta/VallÃ©e d'Aoste,Nus,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Ollomont,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Oyace,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Perloz,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Pollein,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Pontboset,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Pontey,11024
-Valle d'Aosta/VallÃ©e d'Aoste,Pont-Saint-Martin,11026
-Valle d'Aosta/VallÃ©e d'Aoste,PrÃ©-Saint-Didier,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Quart,11020
-Valle d'Aosta/VallÃ©e d'Aoste,RhÃªmes-Notre-Dame,11010
-Valle d'Aosta/VallÃ©e d'Aoste,RhÃªmes-Saint-Georges,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Roisan,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Saint-Christophe,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Saint-Denis,11023
-Valle d'Aosta/VallÃ©e d'Aoste,Saint-Marcel,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Saint-Nicolas,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Saint-Oyen,11014
-Valle d'Aosta/VallÃ©e d'Aoste,Saint-Pierre,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Saint-RhÃ©my-en-Bosses,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Saint-Vincent,11027
-Valle d'Aosta/VallÃ©e d'Aoste,Sarre,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Torgnon,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Valgrisenche,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Valpelline,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Valsavarenche,11010
-Valle d'Aosta/VallÃ©e d'Aoste,Valtournenche,11028
-Valle d'Aosta/VallÃ©e d'Aoste,VerrÃ¨s,11029
-Valle d'Aosta/VallÃ©e d'Aoste,Verrayes,11020
-Valle d'Aosta/VallÃ©e d'Aoste,Villeneuve,11018
+Valle d'Aosta/Vallée d'Aoste,Allein,11010
+Valle d'Aosta/Vallée d'Aoste,Antey-Saint-André,11020
+Valle d'Aosta/Vallée d'Aoste,Aosta,11100
+Valle d'Aosta/Vallée d'Aoste,Arnad,11020
+Valle d'Aosta/Vallée d'Aoste,Arvier,11011
+Valle d'Aosta/Vallée d'Aoste,Avise,11010
+Valle d'Aosta/Vallée d'Aoste,Ayas,11020
+Valle d'Aosta/Vallée d'Aoste,Aymavilles,11010
+Valle d'Aosta/Vallée d'Aoste,Bard,11020
+Valle d'Aosta/Vallée d'Aoste,Bionaz,11010
+Valle d'Aosta/Vallée d'Aoste,Brissogne,11020
+Valle d'Aosta/Vallée d'Aoste,Brusson,11022
+Valle d'Aosta/Vallée d'Aoste,Challand-Saint-Anselme,11020
+Valle d'Aosta/Vallée d'Aoste,Challand-Saint-Victor,11020
+Valle d'Aosta/Vallée d'Aoste,Chambave,11023
+Valle d'Aosta/Vallée d'Aoste,Chamois,11020
+Valle d'Aosta/Vallée d'Aoste,Champdepraz,11020
+Valle d'Aosta/Vallée d'Aoste,Champorcher,11020
+Valle d'Aosta/Vallée d'Aoste,Charvensod,11020
+Valle d'Aosta/Vallée d'Aoste,Châtillon,11024
+Valle d'Aosta/Vallée d'Aoste,Cogne,11012
+Valle d'Aosta/Vallée d'Aoste,Courmayeur,11013
+Valle d'Aosta/Vallée d'Aoste,Donnas,11020
+Valle d'Aosta/Vallée d'Aoste,Doues,11010
+Valle d'Aosta/Vallée d'Aoste,Emarèse,11020
+Valle d'Aosta/Vallée d'Aoste,Etroubles,11014
+Valle d'Aosta/Vallée d'Aoste,Fénis,11020
+Valle d'Aosta/Vallée d'Aoste,Fontainemore,11020
+Valle d'Aosta/Vallée d'Aoste,Gaby,11020
+Valle d'Aosta/Vallée d'Aoste,Gignod,11010
+Valle d'Aosta/Vallée d'Aoste,Gressan,11020
+Valle d'Aosta/Vallée d'Aoste,Gressoney-La-Trinité,11020
+Valle d'Aosta/Vallée d'Aoste,Gressoney-Saint-Jean,11025
+Valle d'Aosta/Vallée d'Aoste,Hône,11020
+Valle d'Aosta/Vallée d'Aoste,Introd,11010
+Valle d'Aosta/Vallée d'Aoste,Issime,11020
+Valle d'Aosta/Vallée d'Aoste,Issogne,11020
+Valle d'Aosta/Vallée d'Aoste,Jovençan,11020
+Valle d'Aosta/Vallée d'Aoste,La Magdeleine,11020
+Valle d'Aosta/Vallée d'Aoste,La Salle,11015
+Valle d'Aosta/Vallée d'Aoste,La Thuile,11016
+Valle d'Aosta/Vallée d'Aoste,Lillianes,11020
+Valle d'Aosta/Vallée d'Aoste,Montjovet,11020
+Valle d'Aosta/Vallée d'Aoste,Morgex,11017
+Valle d'Aosta/Vallée d'Aoste,Nus,11020
+Valle d'Aosta/Vallée d'Aoste,Ollomont,11010
+Valle d'Aosta/Vallée d'Aoste,Oyace,11010
+Valle d'Aosta/Vallée d'Aoste,Perloz,11020
+Valle d'Aosta/Vallée d'Aoste,Pollein,11020
+Valle d'Aosta/Vallée d'Aoste,Pontboset,11020
+Valle d'Aosta/Vallée d'Aoste,Pontey,11024
+Valle d'Aosta/Vallée d'Aoste,Pont-Saint-Martin,11026
+Valle d'Aosta/Vallée d'Aoste,Pré-Saint-Didier,11010
+Valle d'Aosta/Vallée d'Aoste,Quart,11020
+Valle d'Aosta/Vallée d'Aoste,Rhêmes-Notre-Dame,11010
+Valle d'Aosta/Vallée d'Aoste,Rhêmes-Saint-Georges,11010
+Valle d'Aosta/Vallée d'Aoste,Roisan,11010
+Valle d'Aosta/Vallée d'Aoste,Saint-Christophe,11020
+Valle d'Aosta/Vallée d'Aoste,Saint-Denis,11023
+Valle d'Aosta/Vallée d'Aoste,Saint-Marcel,11020
+Valle d'Aosta/Vallée d'Aoste,Saint-Nicolas,11010
+Valle d'Aosta/Vallée d'Aoste,Saint-Oyen,11014
+Valle d'Aosta/Vallée d'Aoste,Saint-Pierre,11010
+Valle d'Aosta/Vallée d'Aoste,Saint-Rhémy-en-Bosses,11010
+Valle d'Aosta/Vallée d'Aoste,Saint-Vincent,11027
+Valle d'Aosta/Vallée d'Aoste,Sarre,11010
+Valle d'Aosta/Vallée d'Aoste,Torgnon,11020
+Valle d'Aosta/Vallée d'Aoste,Valgrisenche,11010
+Valle d'Aosta/Vallée d'Aoste,Valpelline,11010
+Valle d'Aosta/Vallée d'Aoste,Valsavarenche,11010
+Valle d'Aosta/Vallée d'Aoste,Valtournenche,11028
+Valle d'Aosta/Vallée d'Aoste,Verrayes,11020
+Valle d'Aosta/Vallée d'Aoste,Verrès,11029
+Valle d'Aosta/Vallée d'Aoste,Villeneuve,11018
 Varese,Agra,21010
 Varese,Albizzate,21041
 Varese,Angera,21021
@@ -7970,7 +7970,7 @@ Varese,Vedano Olona,21040
 Varese,Venegono Inferiore,21040
 Varese,Venegono Superiore,21040
 Varese,Vergiate,21029
-Varese,ViggiÃ¹,21059
+Varese,Viggiù,21059
 Varese,Vizzola Ticino,21010
 Venezia,Annone Veneto,30020
 Venezia,Campagna Lupia,30010
@@ -7987,9 +7987,9 @@ Venezia,Concordia Sagittaria,30023
 Venezia,Dolo,30031
 Venezia,Eraclea,30020
 Venezia,Fiesso d'Artico,30032
-Venezia,FossÃ²,30030
 Venezia,Fossalta di Piave,30020
 Venezia,Fossalta di Portogruaro,30025
+Venezia,Fossò,30030
 Venezia,Gruaro,30020
 Venezia,Jesolo,30016
 Venezia,Marcon,30020
@@ -8005,11 +8005,11 @@ Venezia,Portogruaro,30026
 Venezia,Pramaggiore,30020
 Venezia,Quarto d'Altino,30020
 Venezia,Salzano,30030
-Venezia,San DonÃ  di Piave,30027
+Venezia,San Donà di Piave,30027
 Venezia,San Michele al Tagliamento,30028
 Venezia,San Stino di Livenza,30029
 Venezia,Santa Maria di Sala,30036
-Venezia,ScorzÃ¨,30037
+Venezia,Scorzè,30037
 Venezia,Spinea,30038
 Venezia,Stra,30039
 Venezia,Teglio Veneto,30025
@@ -8157,7 +8157,7 @@ Vercelli,Arborio,13031
 Vercelli,Asigliano Vercellese,13032
 Vercelli,Balmuccia,13020
 Vercelli,Balocco,13040
-Vercelli,BianzÃ¨,13041
+Vercelli,Bianzè,13041
 Vercelli,Boccioleto,13022
 Vercelli,Borgo d'Ale,13040
 Vercelli,Borgosesia,13011
@@ -8217,7 +8217,7 @@ Vercelli,Sali Vercellese,13040
 Vercelli,Saluggia,13040
 Vercelli,San Germano Vercellese,13047
 Vercelli,San Giacomo Vercellese,13030
-Vercelli,SanthiÃ ,13048
+Vercelli,Santhià,13048
 Vercelli,Scopa,13027
 Vercelli,Scopello,13028
 Vercelli,Serravalle Sesia,13037
@@ -8261,8 +8261,8 @@ Verona,Cologna Veneta,37044
 Verona,Colognola ai Colli,37030
 Verona,Concamarise,37050
 Verona,Costermano sul Garda,37010
-Verona,DolcÃ¨,37020
-Verona,ErbÃ¨,37060
+Verona,Dolcè,37020
+Verona,Erbè,37060
 Verona,Erbezzo,37020
 Verona,Ferrara di Monte Baldo,37020
 Verona,Fumane,37022
@@ -8286,18 +8286,18 @@ Verona,Negrar di Valpolicella,37024
 Verona,Nogara,37054
 Verona,Nogarole Rocca,37060
 Verona,Oppeano,37050
-Verona,PalÃ¹,37050
+Verona,Palù,37050
 Verona,Pastrengo,37010
 Verona,Pescantina,37026
 Verona,Peschiera del Garda,37019
 Verona,Povegliano Veronese,37064
 Verona,Pressana,37040
 Verona,Rivoli Veronese,37010
-Verona,RoncÃ ,37030
+Verona,Roncà,37030
 Verona,Ronco all'Adige,37055
-Verona,RoverÃ¨ Veronese,37028
 Verona,Roverchiara,37050
-Verona,Roveredo di GuÃ ,37040
+Verona,Roveredo di Guà,37040
+Verona,Roverè Veronese,37028
 Verona,Salizzole,37056
 Verona,San Bonifacio,37047
 Verona,San Giovanni Ilarione,37035
@@ -8314,7 +8314,7 @@ Verona,Selva di Progno,37030
 Verona,Soave,37038
 Verona,Sommacampagna,37066
 Verona,Sona,37060
-Verona,SorgÃ ,37060
+Verona,Sorgà,37060
 Verona,Terrazzo,37040
 Verona,Torri del Benaco,37010
 Verona,Tregnago,37039
@@ -8356,7 +8356,7 @@ Vibo Valentia,Briatico,89817
 Vibo Valentia,Brognaturo,89822
 Vibo Valentia,Capistrano,89818
 Vibo Valentia,Cessaniti,89816
-Vibo Valentia,DasÃ ,89832
+Vibo Valentia,Dasà,89832
 Vibo Valentia,Dinami,89833
 Vibo Valentia,Drapia,89862
 Vibo Valentia,Fabrizia,89823
@@ -8422,7 +8422,7 @@ Vicenza,Caltrano,36030
 Vicenza,Calvene,36030
 Vicenza,Camisano Vicentino,36043
 Vicenza,Campiglia dei Berici,36020
-Vicenza,CarrÃ¨,36010
+Vicenza,Carrè,36010
 Vicenza,Cartigliano,36050
 Vicenza,Cassola,36022
 Vicenza,Castegnero,36020
@@ -8480,7 +8480,7 @@ Vicenza,Quinto Vicentino,36050
 Vicenza,Recoaro Terme,36076
 Vicenza,Roana,36010
 Vicenza,Romano d'Ezzelino,36060
-Vicenza,RosÃ ,36027
+Vicenza,Rosà,36027
 Vicenza,Rossano Veneto,36028
 Vicenza,Rotzo,36010
 Vicenza,Salcedo,36040
@@ -8510,7 +8510,7 @@ Vicenza,Velo d'Astico,36010
 Vicenza,Vicenza,36100
 Vicenza,Villaga,36021
 Vicenza,Villaverla,36030
-Vicenza,ZanÃ¨,36010
+Vicenza,Zanè,36010
 Vicenza,Zermeghedo,36050
 Vicenza,Zovencedo,36020
 Vicenza,Zugliano,36030
