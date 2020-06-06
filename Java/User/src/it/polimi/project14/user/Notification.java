@@ -8,12 +8,12 @@ import it.polimi.project14.common.Event;
 import it.polimi.project14.common.SearchFilter;
 import it.polimi.project14.user.gui.EventsNotificationShower;
 
-public abstract class Notification {
+public abstract class Notificator {
   private Set<Event> notifiedEvents = new HashSet<Event>();
   private EventsNotificationShower notificationShower;
   private User user;
 
-  public Notification(User user, EventsNotificationShower notificationShower) {
+  public Notificator(User user, EventsNotificationShower notificationShower) {
     this.user = Objects.requireNonNull(user);
     this.notificationShower = Objects.requireNonNull(notificationShower);
 
