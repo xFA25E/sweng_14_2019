@@ -31,7 +31,6 @@ import java.util.SortedSet;
 import it.polimi.project14.common.Event;
 import it.polimi.project14.common.EventStatus;
 import it.polimi.project14.common.SearchFilter;
-import it.polimi.project14.user.Caps;
 import it.polimi.project14.user.User;
 import it.polimi.project14.user.gui.components.*;
 
@@ -57,9 +56,8 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
    Timer clockTimer;
    Boolean isTraySupported = false;
 
-   // TODO: put icon in jar resources
    final Image civilProtectionIcon = Toolkit.getDefaultToolkit()
-         .createImage("java/user/data/protezione-civile-icona.png");
+                                    .getImage(getClass().getClassLoader().getResource("protezione-civile.png"));
    TrayIcon trayIcon;
 
    public FrameCivilProtectionUser(User user) {
