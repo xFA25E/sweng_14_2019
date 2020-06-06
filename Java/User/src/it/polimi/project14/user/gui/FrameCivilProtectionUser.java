@@ -304,7 +304,7 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
       if (isTraySupported) {
          this.trayIcon.displayMessage(title, message, MessageType.WARNING);
       } else {
-         System.out.println(title + "%n" + message);
+         System.out.println(String.format(title + "%n" + message));
       }
    }
 
