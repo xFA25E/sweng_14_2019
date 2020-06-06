@@ -5,6 +5,7 @@ import java.util.Set;
 
 import it.polimi.project14.common.Event;
 import it.polimi.project14.source.Source;
+import it.polimi.project14.source.TimedForecast;
 import it.polimi.project14.source.RandomEvent;
 
 public class CivilProtectionSource {
@@ -16,7 +17,8 @@ public class CivilProtectionSource {
             Event randomEvent = RandomEvent.generate();
             eventList.add(randomEvent);
         }
-        Source source = new Source();
+        TimedForecast timedForecast = new TimedForecast();
+        Source source = new Source(timedForecast);
         try {
           source.sendForecasts(eventList);
           System.out.println("10 random events genereted");
