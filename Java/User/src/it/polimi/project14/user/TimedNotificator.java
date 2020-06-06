@@ -18,7 +18,7 @@ public class TimedNotificator extends Notificator {
     public class Notify extends TimerTask {
         public void run() {
             try {
-                getForecasts().stream().forEach(e -> sendEventToNotify(e));
+                getEvents().stream().forEach(e -> sendEventToNotify(e));
             } catch (final Exception e) {
                 // TODO: handle exception
             }

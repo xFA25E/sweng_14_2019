@@ -18,7 +18,7 @@ public abstract class Notificator {
     this.notificationShower = Objects.requireNonNull(notificationShower);
 
     try {
-      notifiedEvents.addAll(getForecasts());
+      notifiedEvents.addAll(getEvents());
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -32,7 +32,7 @@ public abstract class Notificator {
     return notificationShower;
   }
 
-  protected Set<Event> getForecasts() throws Exception {
+  protected Set<Event> getEvents() throws Exception {
     SearchFilter searchFilter = new SearchFilter();
     searchFilter.setCapList(user.getFavoriteCaps());
     Set<Event> eventsToNotify = user.searchEvents(searchFilter);
