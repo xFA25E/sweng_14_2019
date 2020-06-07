@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.concurrent.Semaphore;
 
 import it.polimi.project14.common.Event;
 import it.polimi.project14.common.EventStatus;
@@ -24,6 +25,7 @@ import it.polimi.project14.common.SearchFilter;
 public class EventStorageImpl extends UnicastRemoteObject implements EventStorage {
     private static final long serialVersionUID = 1L;
     private static final String defaultUrl = "jdbc:sqlite:civil_protection.db";
+    private static final Semaphore mutex = new Semaphore(1);
 
     private static final String createQuery = ""
             + "CREATE TABLE IF NOT EXISTS event ("
@@ -87,6 +89,14 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
 
     public void storeEvents(Set<Event> eventList) throws SQLException, RemoteException {
         if (eventList != null && eventList.size() > 0) {
+
+            try {
+                mutex.acquire();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.exit(1);
+            }
+
             try (Connection conn = DriverManager.getConnection(url);
                  PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
 
@@ -109,6 +119,8 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
                     pstmt.addBatch();
                 }
                 pstmt.executeBatch();
+            } finally {
+                mutex.release();
             }
         }
     }
@@ -119,6 +131,13 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
         Long expectedUntil = getExpectedUntil(searchFilter);
         String query = generateSelectQuery(searchFilter);
         Set<Event> eventList = new HashSet<Event>();
+
+        try {
+            mutex.acquire();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
 
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -145,6 +164,8 @@ public class EventStorageImpl extends UnicastRemoteObject implements EventStorag
                     eventList.add(event);
                 }
             }
+        } finally {
+            mutex.release();
         }
 
         if (isMaxSeverity(searchFilter)) {
