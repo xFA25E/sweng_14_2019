@@ -19,11 +19,5 @@ public class CivilProtectionSource {
         }
         TimedForecast timedForecast = new TimedForecast();
         Source source = new Source(timedForecast);
-        try {
-          source.sendForecasts(eventList);
-          System.out.println("10 random events genereted");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
