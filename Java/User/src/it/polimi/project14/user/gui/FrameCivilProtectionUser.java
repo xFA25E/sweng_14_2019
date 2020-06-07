@@ -246,7 +246,6 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
       try {
          urgentEvents = user.getUrgentEvents();
       } catch (Exception e) {
-         // TODO: show exception to user
          System.out.println("It wasn't possible to load uregnt events");
       }
 
@@ -259,7 +258,6 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
       try {
          myEvents = user.searchEvents(myCapsEventsOn24h);
       } catch (Exception e) {
-         // TODO: show exception to user
          System.out.println("It wasn't possible to load personal events");
       }
 

@@ -92,7 +92,6 @@ public class PnlSearch extends JPanel implements ActionListener {
          try {
             foundEvents = user.searchEvents(currFilter);
          } catch (Exception ex) {
-            // TODO: show exception to user
             System.out.println("It wasn't possible to load personal events");
          }
 
