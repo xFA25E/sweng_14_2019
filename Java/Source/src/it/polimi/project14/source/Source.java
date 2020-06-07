@@ -14,7 +14,7 @@ public class Source {
 
 	// milliseconds
 	private static final long URGENT_SLEEP = 5 * 1000;
-	private static final long NORMAL_SLEEP = 4 * 60 * 60 * 1000;
+    private static final long NORMAL_SLEEP = 20 * 1000; // should be 4 hours
 
 	private int id = (int) (Math.random() * Integer.MAX_VALUE);
 	private Forecast forecast;
@@ -33,17 +33,21 @@ public class Source {
 	}
 
 	public Source(long normalSleep, long urgentSleep, Forecast forecast) {
-		timer = new Timer();
-		timer.schedule(timerTask4H, normalSleep);
-		timer.schedule(timerTask5S, urgentSleep);
+        this.forecast = forecast;
+        timer = new Timer();
+		timer.schedule(timerTask4H, 0, normalSleep);
+		timer.schedule(timerTask5S, 0, urgentSleep);
 	}
 
 	public class taskGetForecast extends TimerTask {
 		public void run() {
 			try {
-				sendForecasts(forecast.getForecasts());
+                Set<Event> forecasts = forecast.getForecasts();
+                forecasts.stream().forEach(e -> e.setSourceId(id));
+                sendForecasts(forecasts);
 			} catch (Exception e) {
-				//TODO: handle exception
+                System.out.println(e.getMessage());
+                e.printStackTrace();
 			}
 		}
 	}
@@ -52,14 +56,16 @@ public class Source {
 		public void run() {
 			try {
 				Set<Event> forecasts = forecast.getForecasts();
-				sendForecasts(forecasts.stream()
+                forecasts.stream().forEach(e -> e.setSourceId(id));
+                sendForecasts(forecasts.stream()
 							  .filter(e -> shouldSend(e))
 							  .collect(Collectors.toSet()));
 				forecast.removeForecasts(forecasts.stream()
 										 .filter(e -> shouldRemove(e))
 										 .collect(Collectors.toSet()));
 			} catch (Exception e) {
-				//TODO: handle exception
+                System.out.println(e.getMessage());
+                e.printStackTrace();
 			}
 		}
 	}
