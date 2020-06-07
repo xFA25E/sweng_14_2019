@@ -3,15 +3,12 @@
   <edu.toronto.cs.openome_model:Model xmi:id="_NoPt8V1kEeqBkrrQVKmemQ">
     <intentions xmi:type="edu.toronto.cs.openome_model:Resource" xmi:id="_ue9ZkF2WEeqk5toGwxJhEw" dependencyFrom="_ICDZUF2XEeqk5toGwxJhEw" dependencyTo="_lQvkgKirEeqt4dMMmrFhnQ" name="Query Dati Richiesti"/>
     <intentions xmi:type="edu.toronto.cs.openome_model:Resource" xmi:id="_lQmsQF2ZEeqk5toGwxJhEw" dependencyFrom="_lzdQAKirEeqt4dMMmrFhnQ" dependencyTo="_mZCCQKirEeqt4dMMmrFhnQ" name="Dati Richiesti"/>
-    <intentions xmi:type="edu.toronto.cs.openome_model:Resource" xmi:id="_fLwPEF2zEeqk5toGwxJhEw" dependencyFrom="_nPMyAF28Eeqk5toGwxJhEw" dependencyTo="_kAO7oF28Eeqk5toGwxJhEw" name="Previsione 24h Aggiornate"/>
     <intentions xmi:type="edu.toronto.cs.openome_model:Resource" xmi:id="_hPPK0GuKEeq3HMvglhXW7g" dependencyFrom="_nv6VoKirEeqt4dMMmrFhnQ" dependencyTo="_NY_jsGuLEeq3HMvglhXW7g" name="Query per Notifica"/>
     <intentions xmi:type="edu.toronto.cs.openome_model:Resource" xmi:id="_lu8QUGuKEeq3HMvglhXW7g" dependencyFrom="_M_DZsGuLEeq3HMvglhXW7g _qVqP4KirEeqt4dMMmrFhnQ" name="Notifica"/>
     <dependencies xmi:type="edu.toronto.cs.openome_model:Dependency" xmi:id="_l6do8F2WEeqk5toGwxJhEw" dependencyFrom="_icj0IF2VEeqk5toGwxJhEw" dependencyTo="_lIIUcF2TEeqk5toGwxJhEw"/>
     <dependencies xmi:type="edu.toronto.cs.openome_model:Dependency" xmi:id="_ICDZUF2XEeqk5toGwxJhEw" dependencyFrom="_qpnfsF2WEeqk5toGwxJhEw" dependencyTo="_ue9ZkF2WEeqk5toGwxJhEw"/>
     <dependencies xmi:type="edu.toronto.cs.openome_model:Dependency" xmi:id="_d4dRoF2nEeqk5toGwxJhEw" dependencyFrom="_av1LEF1rEeqBkrrQVKmemQ" dependencyTo="_9n-mIF2hEeqk5toGwxJhEw"/>
     <dependencies xmi:type="edu.toronto.cs.openome_model:Dependency" xmi:id="_eeCD4F2nEeqk5toGwxJhEw" dependencyFrom="_av1LEF1rEeqBkrrQVKmemQ" dependencyTo="_vupFgF2mEeqk5toGwxJhEw"/>
-    <dependencies xmi:type="edu.toronto.cs.openome_model:Dependency" xmi:id="_kAO7oF28Eeqk5toGwxJhEw" dependencyFrom="_fLwPEF2zEeqk5toGwxJhEw" dependencyTo="_73OUoF1pEeqBkrrQVKmemQ"/>
-    <dependencies xmi:type="edu.toronto.cs.openome_model:Dependency" xmi:id="_nPMyAF28Eeqk5toGwxJhEw" dependencyFrom="_2TVVAF27Eeqk5toGwxJhEw" dependencyTo="_fLwPEF2zEeqk5toGwxJhEw"/>
     <dependencies xmi:type="edu.toronto.cs.openome_model:Dependency" xmi:id="_5ktwwF28Eeqk5toGwxJhEw" dependencyFrom="_1qU-0F28Eeqk5toGwxJhEw" dependencyTo="_av1LEF1rEeqBkrrQVKmemQ"/>
     <dependencies xmi:type="edu.toronto.cs.openome_model:Dependency" xmi:id="_77e14GuIEeq3HMvglhXW7g" dependencyFrom="_UfejgF28Eeqk5toGwxJhEw" dependencyTo="_RhqkoF1mEeqBkrrQVKmemQ"/>
     <dependencies xmi:type="edu.toronto.cs.openome_model:Dependency" xmi:id="__7tKEGuIEeq3HMvglhXW7g" dependencyFrom="_RhqkoF1mEeqBkrrQVKmemQ" dependencyTo="_2TVVAF27Eeqk5toGwxJhEw"/>
@@ -27,6 +24,7 @@
     <dependencies xmi:type="edu.toronto.cs.openome_model:Dependency" xmi:id="_nv6VoKirEeqt4dMMmrFhnQ" dependencyFrom="_-2oPAKiqEeqt4dMMmrFhnQ" dependencyTo="_hPPK0GuKEeq3HMvglhXW7g"/>
     <dependencies xmi:type="edu.toronto.cs.openome_model:Dependency" xmi:id="_qVqP4KirEeqt4dMMmrFhnQ" dependencyFrom="_QRlC8KirEeqt4dMMmrFhnQ" dependencyTo="_lu8QUGuKEeq3HMvglhXW7g"/>
     <dependencies xmi:type="edu.toronto.cs.openome_model:Dependency" xmi:id="_VOoWUKisEeqt4dMMmrFhnQ" dependencyFrom="_lIIUcF2TEeqk5toGwxJhEw" dependencyTo="_iehGgF2WEeqk5toGwxJhEw"/>
+    <dependencies xmi:type="edu.toronto.cs.openome_model:Dependency" xmi:id="_aln6QajaEeqonpMjJMBkJg" dependencyFrom="_RhqkoF1mEeqBkrrQVKmemQ" dependencyTo="_73OUoF1pEeqBkrrQVKmemQ"/>
     <decompositions xmi:type="edu.toronto.cs.openome_model:OrDecomposition" xmi:id="_-2VKEF1pEeqBkrrQVKmemQ" source="_73OUoF1pEeqBkrrQVKmemQ" target="_o7m_MF1pEeqBkrrQVKmemQ"/>
     <decompositions xmi:type="edu.toronto.cs.openome_model:OrDecomposition" xmi:id="_8QMU0F2WEeqk5toGwxJhEw" source="_qpnfsF2WEeqk5toGwxJhEw" target="_iehGgF2WEeqk5toGwxJhEw"/>
     <decompositions xmi:type="edu.toronto.cs.openome_model:OrDecomposition" xmi:id="_owMFoF2mEeqk5toGwxJhEw" source="_G4l5EF2mEeqk5toGwxJhEw" target="_iehGgF2WEeqk5toGwxJhEw"/>
@@ -49,14 +47,14 @@
     <decompositions xmi:type="edu.toronto.cs.openome_model:OrDecomposition" xmi:id="_cWGysKjVEeqt4dMMmrFhnQ" source="_E4MnoF3zEeqK6Oi3lFvciQ" target="_C-P-gF1mEeqBkrrQVKmemQ"/>
     <containers xmi:type="edu.toronto.cs.openome_model:Actor" xmi:id="_9pjAIF1kEeqBkrrQVKmemQ" name="Sorgente">
       <intentions xmi:type="edu.toronto.cs.openome_model:Goal" xmi:id="_C-P-gF1mEeqBkrrQVKmemQ" name="Aggiornamento Dati sulle Previsioni" parentDecompositions="_5Ez-IF27Eeqk5toGwxJhEw _v6r9gGuIEeq3HMvglhXW7g _cWGysKjVEeqt4dMMmrFhnQ"/>
-      <intentions xmi:type="edu.toronto.cs.openome_model:Resource" xmi:id="_RhqkoF1mEeqBkrrQVKmemQ" dependencyFrom="_77e14GuIEeq3HMvglhXW7g" dependencyTo="__7tKEGuIEeq3HMvglhXW7g" name="Previsioni 24H"/>
-      <intentions xmi:type="edu.toronto.cs.openome_model:Task" xmi:id="_2TVVAF27Eeqk5toGwxJhEw" dependencyFrom="__7tKEGuIEeq3HMvglhXW7g" dependencyTo="_nPMyAF28Eeqk5toGwxJhEw" name="Invio Dati ogni 4h" decompositions="_5Ez-IF27Eeqk5toGwxJhEw"/>
+      <intentions xmi:type="edu.toronto.cs.openome_model:Resource" xmi:id="_RhqkoF1mEeqBkrrQVKmemQ" dependencyFrom="_77e14GuIEeq3HMvglhXW7g" dependencyTo="__7tKEGuIEeq3HMvglhXW7g _aln6QajaEeqonpMjJMBkJg" name="Previsioni 24H"/>
+      <intentions xmi:type="edu.toronto.cs.openome_model:Task" xmi:id="_2TVVAF27Eeqk5toGwxJhEw" dependencyFrom="__7tKEGuIEeq3HMvglhXW7g" name="Invio Dati ogni 4h" decompositions="_5Ez-IF27Eeqk5toGwxJhEw"/>
       <intentions xmi:type="edu.toronto.cs.openome_model:Task" xmi:id="_UfejgF28Eeqk5toGwxJhEw" dependencyTo="_77e14GuIEeq3HMvglhXW7g" name="Elaborare Dati su Previsioni" decompositions="_v6r9gGuIEeq3HMvglhXW7g"/>
       <intentions xmi:type="edu.toronto.cs.openome_model:Task" xmi:id="_E4MnoF3zEeqK6Oi3lFvciQ" name="Valutare se l'evento è successo o rientrato" decompositions="_cWGysKjVEeqt4dMMmrFhnQ"/>
     </containers>
     <containers xmi:type="edu.toronto.cs.openome_model:Actor" xmi:id="_FHjX4F1nEeqBkrrQVKmemQ" name="Sistema Centrale">
       <intentions xmi:type="edu.toronto.cs.openome_model:Goal" xmi:id="_o7m_MF1pEeqBkrrQVKmemQ" name="Gestione Previsioni" parentDecompositions="_-2VKEF1pEeqBkrrQVKmemQ _4OSwYF28Eeqk5toGwxJhEw"/>
-      <intentions xmi:type="edu.toronto.cs.openome_model:Task" xmi:id="_73OUoF1pEeqBkrrQVKmemQ" dependencyFrom="_kAO7oF28Eeqk5toGwxJhEw" name="Ricevere Previsioni" decompositions="_-2VKEF1pEeqBkrrQVKmemQ"/>
+      <intentions xmi:type="edu.toronto.cs.openome_model:Task" xmi:id="_73OUoF1pEeqBkrrQVKmemQ" dependencyFrom="_aln6QajaEeqonpMjJMBkJg" name="Ricevere Previsioni" decompositions="_-2VKEF1pEeqBkrrQVKmemQ"/>
       <intentions xmi:type="edu.toronto.cs.openome_model:Task" xmi:id="_QZnaoF1qEeqBkrrQVKmemQ"/>
       <intentions xmi:type="edu.toronto.cs.openome_model:Resource" xmi:id="_av1LEF1rEeqBkrrQVKmemQ" dependencyFrom="_5ktwwF28Eeqk5toGwxJhEw _HJ8ngGuLEeq3HMvglhXW7g" dependencyTo="_d4dRoF2nEeqk5toGwxJhEw _eeCD4F2nEeqk5toGwxJhEw _JSaI0GuLEeq3HMvglhXW7g" name="DB Eventi"/>
       <intentions xmi:type="edu.toronto.cs.openome_model:Task" xmi:id="_9n-mIF2hEeqk5toGwxJhEw" dependencyFrom="_d4dRoF2nEeqk5toGwxJhEw _lQvkgKirEeqt4dMMmrFhnQ" name="Eseguire Query Dati Richiesti"/>
@@ -125,12 +123,12 @@
           <children xmi:type="notation:DecorationNode" xmi:id="_E4Oc0V3zEeqK6Oi3lFvciQ" type="5028">
             <layoutConstraint xmi:type="notation:Location" xmi:id="_E4Oc0l3zEeqK6Oi3lFvciQ" y="5"/>
           </children>
-          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_E4N1wV3zEeqK6Oi3lFvciQ" x="193" y="37" width="165" height="85"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_E4N1wV3zEeqK6Oi3lFvciQ" x="193" y="49" width="165" height="85"/>
         </children>
         <styles xmi:type="notation:SortingStyle" xmi:id="_9pkOQl1kEeqBkrrQVKmemQ"/>
         <styles xmi:type="notation:FilteringStyle" xmi:id="_9pkOQ11kEeqBkrrQVKmemQ"/>
       </children>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9pjnMV1kEeqBkrrQVKmemQ" x="312" y="336" width="534" height="530"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9pjnMV1kEeqBkrrQVKmemQ" x="294" y="378" width="534" height="530"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_FHmbMF1nEeqBkrrQVKmemQ" type="2001" element="_FHjX4F1nEeqBkrrQVKmemQ" fontName="Segoe UI">
       <children xmi:type="notation:DecorationNode" xmi:id="_FHnCQF1nEeqBkrrQVKmemQ" type="5005"/>
@@ -140,14 +138,14 @@
           <children xmi:type="notation:DecorationNode" xmi:id="_o7rQoF1pEeqBkrrQVKmemQ" type="5025">
             <layoutConstraint xmi:type="notation:Location" xmi:id="_o7rQoV1pEeqBkrrQVKmemQ" y="5"/>
           </children>
-          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_o7qCgV1pEeqBkrrQVKmemQ" x="133" y="445"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_o7qCgV1pEeqBkrrQVKmemQ" x="277" y="517"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_73PiwF1pEeqBkrrQVKmemQ" type="3004" element="_73OUoF1pEeqBkrrQVKmemQ" fontName="Segoe UI">
           <children xmi:type="notation:DecorationNode" xmi:id="_73QJ0V1pEeqBkrrQVKmemQ" type="5004"/>
           <children xmi:type="notation:DecorationNode" xmi:id="_73QJ0l1pEeqBkrrQVKmemQ" type="5028">
             <layoutConstraint xmi:type="notation:Location" xmi:id="_73Qw4F1pEeqBkrrQVKmemQ" y="5"/>
           </children>
-          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_73QJ0F1pEeqBkrrQVKmemQ" x="133" y="571"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_73QJ0F1pEeqBkrrQVKmemQ" x="91" y="517"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_QZpP0F1qEeqBkrrQVKmemQ" type="3004" element="_QZnaoF1qEeqBkrrQVKmemQ" fontName="Segoe UI">
           <children xmi:type="notation:DecorationNode" xmi:id="_QZp24F1qEeqBkrrQVKmemQ" type="5004"/>
@@ -161,7 +159,7 @@
           <children xmi:type="notation:DecorationNode" xmi:id="_av5cgF1rEeqBkrrQVKmemQ" type="5027">
             <layoutConstraint xmi:type="notation:Location" xmi:id="_av5cgV1rEeqBkrrQVKmemQ" y="5"/>
           </children>
-          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_av4OYV1rEeqBkrrQVKmemQ" x="295" y="295"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_av4OYV1rEeqBkrrQVKmemQ" x="277" y="295"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_9n_0QF2hEeqk5toGwxJhEw" type="3004" element="_9n-mIF2hEeqk5toGwxJhEw" fontName="Segoe UI">
           <children xmi:type="notation:DecorationNode" xmi:id="_9n_0Ql2hEeqk5toGwxJhEw" type="5004"/>
@@ -182,7 +180,7 @@
           <children xmi:type="notation:DecorationNode" xmi:id="_1qXbEF28Eeqk5toGwxJhEw" type="5028">
             <layoutConstraint xmi:type="notation:Location" xmi:id="_1qXbEV28Eeqk5toGwxJhEw" y="5"/>
           </children>
-          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1qW0AV28Eeqk5toGwxJhEw" x="133" y="295"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_1qW0AV28Eeqk5toGwxJhEw" x="277" y="415"/>
         </children>
         <children xmi:type="notation:Shape" xmi:id="_uf-BEGuKEeq3HMvglhXW7g" type="3004" element="_uf8y8GuKEeq3HMvglhXW7g" fontName="Segoe UI">
           <children xmi:type="notation:DecorationNode" xmi:id="_uf-BEmuKEeq3HMvglhXW7g" type="5004"/>
@@ -365,13 +363,6 @@
       </children>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lQn6YV2ZEeqk5toGwxJhEw" x="1614" y="486" width="150" height="72"/>
     </children>
-    <children xmi:type="notation:Shape" xmi:id="_fLyEQF2zEeqk5toGwxJhEw" type="2008" element="_fLwPEF2zEeqk5toGwxJhEw" fontName="Segoe UI">
-      <children xmi:type="notation:DecorationNode" xmi:id="_fLyEQl2zEeqk5toGwxJhEw" type="5024"/>
-      <children xmi:type="notation:DecorationNode" xmi:id="_fLyEQ12zEeqk5toGwxJhEw" type="5044">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_fLyrUF2zEeqk5toGwxJhEw" y="5"/>
-      </children>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fLyEQV2zEeqk5toGwxJhEw" x="630" y="870" width="149" height="73"/>
-    </children>
     <children xmi:type="notation:Shape" xmi:id="_hPPx4GuKEeq3HMvglhXW7g" type="2008" element="_hPPK0GuKEeq3HMvglhXW7g" fontName="Segoe UI">
       <children xmi:type="notation:DecorationNode" xmi:id="_hPQY8GuKEeq3HMvglhXW7g" type="5024"/>
       <children xmi:type="notation:DecorationNode" xmi:id="_hPQY8WuKEeq3HMvglhXW7g" type="5044">
@@ -426,14 +417,6 @@
     <edges xmi:type="notation:Connector" xmi:id="_5E3BcF27Eeqk5toGwxJhEw" type="4003" element="_5Ez-IF27Eeqk5toGwxJhEw" source="_2TYYUF27Eeqk5toGwxJhEw" target="_C-RzsF1mEeqBkrrQVKmemQ">
       <styles xmi:type="notation:FontStyle" xmi:id="_5E3BcV27Eeqk5toGwxJhEw" fontName="Segoe UI"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_5E3Bcl27Eeqk5toGwxJhEw" points="[-44, -4, 123, 2]$[-121, -4, 46, 2]"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_kAQw0F28Eeqk5toGwxJhEw" type="4001" element="_kAO7oF28Eeqk5toGwxJhEw" source="_73PiwF1pEeqBkrrQVKmemQ" target="_fLyEQF2zEeqk5toGwxJhEw">
-      <styles xmi:type="notation:FontStyle" xmi:id="_kAQw0V28Eeqk5toGwxJhEw" fontName="Segoe UI"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_kAQw0l28Eeqk5toGwxJhEw" points="[-12, -21, 141, 258]$[-141, -250, 12, 29]"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_nPOnMF28Eeqk5toGwxJhEw" type="4001" element="_nPMyAF28Eeqk5toGwxJhEw" source="_fLyEQF2zEeqk5toGwxJhEw" target="_2TYYUF27Eeqk5toGwxJhEw">
-      <styles xmi:type="notation:FontStyle" xmi:id="_nPOnMV28Eeqk5toGwxJhEw" fontName="Segoe UI"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_nPPOQF28Eeqk5toGwxJhEw" points="[-17, 27, 347, -499]$[-320, 525, 44, -1]"/>
     </edges>
     <edges xmi:type="notation:Connector" xmi:id="_4OVzsF28Eeqk5toGwxJhEw" type="4003" element="_4OSwYF28Eeqk5toGwxJhEw" source="_1qW0AF28Eeqk5toGwxJhEw" target="_o7qCgF1pEeqBkrrQVKmemQ">
       <styles xmi:type="notation:FontStyle" xmi:id="_4OWawF28Eeqk5toGwxJhEw" fontName="Segoe UI"/>
@@ -550,6 +533,10 @@
     <edges xmi:type="notation:Connector" xmi:id="_cWKdEKjVEeqt4dMMmrFhnQ" type="4003" element="_cWGysKjVEeqt4dMMmrFhnQ" source="_E4N1wF3zEeqK6Oi3lFvciQ" target="_C-RzsF1mEeqBkrrQVKmemQ">
       <styles xmi:type="notation:FontStyle" xmi:id="_cWKdEajVEeqt4dMMmrFhnQ" fontName="Segoe UI"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cWKdEqjVEeqt4dMMmrFhnQ" points="[6, 31, 10, -55]$[17, 61, 21, -25]"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_altZ0KjaEeqonpMjJMBkJg" type="4001" element="_aln6QajaEeqonpMjJMBkJg" source="_73PiwF1pEeqBkrrQVKmemQ" target="_RhtA4F1mEeqBkrrQVKmemQ">
+      <styles xmi:type="notation:FontStyle" xmi:id="_altZ0ajaEeqonpMjJMBkJg" fontName="Segoe UI"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_altZ0qjaEeqonpMjJMBkJg" points="[-43, -8, 326, 63]$[-324, -49, 45, 22]"/>
     </edges>
   </notation:Diagram>
 </xmi:XMI>
