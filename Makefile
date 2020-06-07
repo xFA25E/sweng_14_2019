@@ -150,18 +150,14 @@ tests: $(TESTS_JAR)
 $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(TESTS_JAR): DATA_ARG =
 $(USER_JAR): DATA_ARG = -C $(USER_DIR)/data .
 
-$(COMMON_JAR): SOURCES = $(COMMON_SOURCES)
-$(SERVER_JAR): SOURCES = $(SERVER_SOURCES)
-$(SERVER_JAR): $(COMMON_JAR)
-$(USER_JAR): SOURCES = $(USER_SOURCES)
-$(USER_JAR): $(COMMON_JAR) $(DATETIMEPICKER_JAR)
-$(SOURCE_JAR): SOURCES = $(SOURCE_SOURCES)
-$(SOURCE_JAR): $(COMMON_JAR)
-$(TESTS_JAR): SOURCES = $(TESTS_SOURCES)
-$(TESTS_JAR): $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) | $(JUNIT_JAR)
+$(COMMON_JAR): $(COMMON_SOURCES)
+$(SERVER_JAR): $(COMMON_JAR) $(SERVER_SOURCES)
+$(USER_JAR): $(COMMON_JAR) $(USER_SOURCES) | $(DATETIMEPICKER_JAR)
+$(SOURCE_JAR): $(COMMON_JAR) $(SOURCE_SOURCES)
+$(TESTS_JAR): $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) $(TESTS_SOURCES) | $(JUNIT_JAR)
 
 $(COMMON_JAR) $(SERVER_JAR) $(USER_JAR) $(SOURCE_JAR) $(TESTS_JAR): | $$(addprefix $$(dir $$(@D)),bin/ target/)
-	$(JAVAC) -d $(firstword $|) -cp "$(call join-cp,$^ $(filter %.jar,$|))" $(SOURCES)
+	$(JAVAC) -d $(firstword $|) -cp "$(call join-cp,$(filter %.jar,$^ $|))" $(filter %.java,$^)
 	jar cf $@ -C $(firstword $|) . $(DATA_ARG)
 
 # DEPS ########################################################################
