@@ -20,7 +20,8 @@ public class TimedNotificator extends Notificator {
             try {
                 getEvents().stream().forEach(e -> sendEventToNotify(e));
             } catch (final Exception e) {
-                // TODO: handle exception
+                System.out.println(e.getMessage());
+
             }
         }
     }
