@@ -1,43 +1,53 @@
 @startuml
-left to right direction
 skinparam packageStyle rectangle
-actor Sorgente
-actor Sistema_Centrale
-actor Applicazione_Mobile
+actor "Sorgente"
 actor Utente
+
 rectangle "Sistema di Allerta" {
-    Sorgente -- (Aggiornare Dati Previsioni)
-    (Aggiornare Dati Previsioni) ..> (Elaborazione Dati Previsione) : include
-    (Aggiornare Dati Previsioni) ..> (Invio Dati) : include
-    Sistema_Centrale -- (Aggiornare Dati Previsioni) : Ricevere Previsioni
-    Sistema_Centrale -- (Gestione Previsioni)
-    (Gestione Previsioni) ..> (Valutazione Evento Successo o Rientrato) : include
-    Applicazione_Mobile -- (Formulare Query)
-    Sistema_Centrale -- (Formulare Query) : Ricezione Query ed Invio Risposte
-    (Formulare Query) ..> (Query Previsioni) : include
-    (Formulare Query) ..> (Query Allarmi) : include
-    (Formulare Query) ..> (Query Notifiche) : include
-    (Formulare Query) <.. (Query Storico) : extends
-    Applicazione_Mobile -- (Gestione Dati Utente)
-    Sistema_Centrale -- (Gestione Dati Utente) : Ricevere Dati per Query
-    Utente -- (Gestione Dati Utente) : Comunicare Dati
-    (Gestione Dati Utente) ..> (Memorizzare CAP) : include
-    (Gestione Dati Utente) <.. (Memorizzare Dati Identificazione) : extends
-    (Gestione Dati Utente) <.. (Gestione Dati Ricerca) : extends
-    Applicazione_Mobile -- (Inviare Notifica)
-    Utente -- (Inviare Notifica) : Essere Notificato
-    Applicazione_Mobile -- (Gestione Eventi)
-    (Gestione Eventi) ..> (Visualizzare Previsioni) : include
-    (Gestione Eventi) ..> (Visualizzare Allarmi) : include
-    Utente -- (Inserimento Dati)
-    (Inserimento Dati) ..> (Inserimento CAP) : include
-    (Inserimento Dati) <.. (Inserimetno Dati Identificazione) : extends
-    Utente -- (Effettuare Ricerca)
-    (Effettuare Ricerca) <|-- (Scelta Dati di Ricerca)
-    (Scelta Dati di Ricerca) <.. (Scelta Regione) : extends
-    (Scelta Dati di Ricerca) <.. (Scelta Provincia) : extends
-    (Scelta Dati di Ricerca) <.. (Scelta Comune) : extends
-    (Scelta Dati di Ricerca) <.. (Scelta Tipo) : extends
-    (Scelta Dati di Ricerca) <.. (Scelta Istante Temporale) : extends
+    actor "Sistema Centrale" as SisCentrale
+    Sorgente - (Aggiornare dati previsione)
+    Sorgente - (Inviare dati eventi in corso)
+
+    SisCentrale -- (Aggiornare dati previsione)
+    SisCentrale -- (Inviare dati eventi in corso)
+    SisCentrale -- (Inviare dati richiesti)
+    SisCentrale -- (Inviare notifiche per eventi di interesse dell'utente)
+    SisCentrale -- (Invia allarmi in evidenza)
+
+    (Inviare notifiche per eventi di interesse dell'utente) - Utente
+    (Invia allarmi in evidenza) - Utente
+    (Inserire Cap preferiti) - Utente
+    (Effettuare richerche) - Utente
+
+    together {
+        (Effettuare richerche) <.. (Scegli istante temporale) : extends
+        (Effettuare richerche) <.. (Scegli tipo) : extends
+        (Effettuare richerche) <.. (Scegli Cap) : extends
+    }
+
+    (Scegli Cap) <|- (Autogenera Cap)
+    (Scegli Cap) <|- (Inserisce Cap)
+
+    together {
+        (Autogenera Cap) .> (Seleziona provincia) : extends
+        (Autogenera Cap) .> (Seleziona comune) : extends
+    }
+    (Inserire Cap preferiti) .> (Scegli Cap) : include
+    (Effettuare richerche) .> (Inviare dati richiesti) : include
 }
+
+'Layout only
+SisCentrale -[hidden]- Sorgente
+SisCentrale -[hidden] Utente
+(Inviare dati eventi in corso) -[hidden]- (Aggiornare dati previsione)
+(Inviare dati eventi in corso) -[hidden] (Inviare dati richiesti)
+(Inviare dati richiesti) -[hidden] (Inviare notifiche per eventi di interesse dell'utente)
+(Inviare dati richiesti) -[hidden] (Inserire Cap preferiti)
+(Inviare notifiche per eventi di interesse dell'utente) -[hidden]- (Inserire Cap preferiti)
+(Inserire Cap preferiti) -[hidden]- (Effettuare richerche)
+(Scegli Cap) -[hidden] (Scegli tipo)
+(Scegli tipo) -[hidden] (Scegli istante temporale)
+(Inserisce Cap) --[hidden] (Autogenera Cap)
+(Scegli Cap) -[hidden]- (Inserisce Cap)
+(Seleziona provincia) --[hidden] (Seleziona comune)
 @enduml
