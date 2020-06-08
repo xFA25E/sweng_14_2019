@@ -83,11 +83,12 @@ package user {
             + visualizzaNotifica(Evento)
         }
 
-        FinestraGUI ..> components
-        FinestraGUI ..|> VisualizzatoreNotificaEvento
+        components <. FinestraGUI 
+        FinestraGUI .|> VisualizzatoreNotificaEvento: \t\t
     }
 
-    VisualizzatoreNotificaEvento "\n1" <-- Notificatore
+    VisualizzatoreNotificaEvento "\n\n1" <-- Notificatore
+    FinestraGUI --> "\n\n\n1" Utente
 }
 
 package common {

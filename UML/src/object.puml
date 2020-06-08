@@ -1,7 +1,8 @@
 @startuml
 title Object Diagram
-object currGestorePrevisioni {
+object currPrevisioniATempo {
     previsione24H = {EventoTerr, Evento1}
+    timer = currTimer
 }
 
 object currSorgente {
@@ -10,28 +11,40 @@ object currSorgente {
 }
 
 object currServer {
-    jdbcConnection = currConnection
+    JDBCurl = "jdbc:sqlite:civil_protection.db"
 }
 
 object currUtente {
     capPreferiti = {"91026", "22100"}
-    GestoreNotifica = currGestoreNotifica
+    GestoreNotifica = currNotificatoreATempo
 }
 
-object currFiltroRicerca {
-    listaCAP = {"91026"}
-    tipo = "terremoto"
-    istanteTemporale = 30/03/2020 18:00
+Object "risultatoRicerca: Set<Evento>" as risultatoRicerca
+
+object filtroRicerca {
+    caps = {22100, 22200}
+    tipo = "terr"
+    massimoPericolo = no
+    previstoDal = "8/06/2020 00:00"
+    previstoAl = "8/06/2020 24:00"
 }
 
-object currGestoreNotifica {
+object currNotificatoreATempo {
     utente = currUtente
+    notificatoreGUI = currGUI
     timer = currTimer
 }
 
-currSorgente -- currGestorePrevisioni
+Object currGUI {
+    utente = currUtente
+}
+
+currSorgente -- currPrevisioniATempo
 currSorgente - currServer
 currServer - currUtente
-currUtente -- currFiltroRicerca
-currUtente -- currGestoreNotifica
+currUtente -- filtroRicerca
+currUtente -- risultatoRicerca
+currUtente -- currNotificatoreATempo
+currUtente - currGUI
+currGUI -- currNotificatoreATempo
 @enduml
