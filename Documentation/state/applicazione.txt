@@ -1,0 +1,37 @@
+                   _________________________________
+
+                    STATE DIAGRAM DELL'APPLICAZIONE
+
+                           Valeriy Litkovskyy
+                   _________________________________
+
+
+Table of Contents
+_________________
+
+1. Stato `Richiesta Eventi'
+2. Stato `Ricerca Previsioni'
+
+
+All'accensione l'applicazione passa nello stato `Acceso'.  Dopo di che
+si avviano 2 stati paralleli.  Da qualsiasi sottostato di questi stati
+si può passare nello stato `Spento'.
+
+
+1 Stato `Richiesta Eventi'
+==========================
+
+  In questo stato vengono richieste tutte le previsioni future che
+  rigiardano i CAP preferiti d'utente.  Dopo di si notifica l'utente con
+  possibili aggiornamenti delle varie previsioni.  Consecutivamente si
+  passa nello stato di `Sonno 10 secondi'.  Dopo aver aspettato 10
+  secondi, si ricomincia con la richiesta previsioni.
+
+
+2 Stato `Ricerca Previsioni'
+============================
+
+  Si aspetta finché l'utente effettui una ricerca di eventi. Quando
+  viene effuttuata una ricerca, vengono richiesti i dati necessari al
+  sistema centrale e vengono mostrati gli eventi trovati all'utentie.
+  Dopo di che si passa di nuovo nello stato di `Aspetto Richiesta'.

@@ -1,0 +1,39 @@
+#+TITLE: State Diagram della Sorgente
+#+AUTHOR: Valeriy Litkovskyy
+
+All'accensione la sorgente passa nello stato ~Acceso~.  Dopo di che si avviano 3
+stati paralleli.  Da qualsiasi sottostato di questi stati si può passare nello
+stato ~Spento~.
+
+* Stato ~Invio Previsioni~
+  È lo stato più semplice tra i 3 stati paralleli.  Semplicemente, invia
+  previsioni nuove al sistema centrale e passa nello stato di ~Sonno 4 ore~.
+  Dopo aver aspettato per 4 ore, si ricomincia con l'invio delle previsioni.
+
+* Stato ~Invio Previsioni Urgenti o Immutabili~
+  Questo stato parte con un controllo della lista delle previsioni.  Tramite
+  questo controllo si vuole trovare delle previsioni urgenti o immutabili che
+  devono essere subito inviate al sistema centrale.  Le previsioni sono
+  considerate /Urgenti/ se hanno un livello di gravità maggiore di 8.  Le
+  previsioni sono /Immutabili/ se sono nello stato di *Accaduto* o *Rientrato*.
+  Se sono stati trovati previsioni /Urgenti/ o /Immutabili/ si passa nello stato
+  di ~Invio Previsioni~.  Durante questo stato si inviano le previsioni
+  /Urgenti/ e /Immutabili/ al sistema centrale, dopo di che si tolgono gli
+  eventi /Immutabili/ dalla lista delle previsioni.  Consecutivamente si passo
+  nello stato di ~Sonno 5 secondi~.  Se non sono state trovate previsioni
+  /Urgenti/ o /Immutabili/ si passa direttamente nello stato di ~Sonno 5
+  secondi~.  Dopo aver aspettato per 5 secondi, si ricomincia con il controllo
+  delle previsioni.
+
+* Stato ~Generazione Previsioni~
+  Si comincia con lo stato di ~Generazione Previsioni~ durante la quale si
+  generano e vengono aggiunti nuove previsioni nella lista previsioni.  Se tra
+  la lista previsioni vengono trovate previsioni /Scadute/, ad essi viene
+  cambiato lo stato.  Una previsione viene considerata /Scaduta/ se l'istante,
+  per il quale la previsione viene prevista, è minore di 30 minuti del tempo
+  corrente.  Lo stato viene cambiato in seguente modo: se la previsione è nello
+  stato *Previsto* ad essa viene assegnato lo stato *Rientrato*; se la
+  previsione è nello stato *In Corso* ad essa viene assegnato lo stato
+  *Avvenuto*.  Consecutivamente si passa nello stato ~Sonno 5 secondi~.  Dopo
+  aver aspettato per 5 secondi, si ricomincia con la generazione delle
+  previsioni.

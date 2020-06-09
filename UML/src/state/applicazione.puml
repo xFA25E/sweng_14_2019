@@ -8,12 +8,12 @@ state Acceso {
     state "Notifica Utente" as NotificaUtente
     state "Sonno" as Sonno
 
-    [*] --> RichiestaEventi
+    [*] -right-> RichiestaEventi
 
     RichiestaEventi: richiedi eventi
     RichiestaEventi: calcola differenze
-    RichiestaEventi --> Sonno: non ci sono differenze
-    RichiestaEventi -right-> NotificaUtente: ci sono differenze
+    RichiestaEventi --> Sonno: non ci sono previsoni nuove
+    RichiestaEventi -right-> NotificaUtente: ci sono previsioni nuove
 
     NotificaUtente: do/ notifica l'utente
     NotificaUtente --> Sonno
@@ -24,20 +24,16 @@ state Acceso {
     --
 
     state "Aspetto Richiesta" as AspettoRichiesta
-    state "Richiesta Ricerca" as RichiestaRicerca
     state "Mostra Dati" as MostraDati
 
     [*] -right-> AspettoRichiesta
 
     AspettoRichiesta: aspetta la richesta di ricerca d'utente
-    AspettoRichiesta --> RichiestaRicerca: utente effetua ricerca
+    AspettoRichiesta -right-> MostraDati: utente effetua ricerca
 
-    RichiestaRicerca: do/ richiedi dati di ricerca
-    RichiestaRicerca --> AspettoRichiesta: cancella ricerca
-    RichiestaRicerca -right-> MostraDati
-
+    MostraDati: effettua ricerca
     MostraDati: mostra dati all'utente
-    MostraDati --> AspettoRichiesta: indietro
+    MostraDati -left-> AspettoRichiesta
 }
 
 Acceso --> [*]: spegnimento
