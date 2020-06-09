@@ -276,7 +276,7 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
       String title, message;
       switch (status) {
          case EXPECTED:
-            title = "Evento previsto nei i tuoi CAP";
+             title = "Evento previsto nei tuoi CAP";
             message = String.format("%s: alle %td del %td %tB, gravità: %d, CAP: %s", kind, expectedAt, expectedAt,
                   expectedAt, severity, cap);
 
@@ -289,7 +289,7 @@ public class FrameCivilProtectionUser extends JFrame implements ActionListener, 
             break;
 
          case CANCELED:
-            title = "Evento cancellato nei i tuoi CAP";
+             title = "Evento cancellato nei tuoi CAP";
             message = String.format("L'evento di tipo %s previsto per le %td del %td %tB, CAP: %s è stato cancellato",
                   kind, expectedAt, expectedAt, expectedAt, cap);
 
