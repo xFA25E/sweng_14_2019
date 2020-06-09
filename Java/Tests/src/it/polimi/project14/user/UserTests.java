@@ -18,12 +18,11 @@ public class UserTests {
         User user = new User(favCaps);
         Assert.assertEquals(favCaps, user.getFavoriteCaps());
 
-        Set<String> newFavCaps = new HashSet<>();
-        newFavCaps.add("11111");
-        newFavCaps.add("22222");
-        newFavCaps.add("33333");
-        newFavCaps.add("44444");
-        user.addFavoriteCaps(newFavCaps);
-        Assert.assertEquals(newFavCaps, user.getFavoriteCaps());
+        favCaps.add("11111");
+        favCaps.add("22222");
+        favCaps.add("33333");
+        favCaps.add("44444");
+        user.addFavoriteCaps(favCaps);
+        Assert.assertEquals(favCaps, user.getFavoriteCaps());
     }
 }
