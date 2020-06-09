@@ -29,11 +29,6 @@ public class TimedForecast implements Forecast {
 		timer.schedule(timerTask, 0, SLEEP);
 	}
 
-	/*
-	 * public TimedForecast(ArrayList<Event> forecast24H, Timer timer){
-	 * this.forecast24H = forecast24H; this.timer = timer; }
-	 */
-
 	@Override
 	public Set<Event> getForecasts() {
         try {
@@ -61,12 +56,15 @@ public class TimedForecast implements Forecast {
 
 	private void generateForecast() {
 		Set<Event> forecastGenerated = new HashSet<>();
-		for (int i = 0; i < 10; i++) {
+
+		// Every time that genereteForecast is called
+		// there is 50% of probability to generate 1 Event. 
+		if (Math.random() >= 0.5) {
 			Event generated = RandomEvent.generate();
 			forecastGenerated.add(generated);
 		}
 
-        try {
+		try {
             mutex.acquire();
         } catch (Exception e) {
             System.out.println(e.getMessage());

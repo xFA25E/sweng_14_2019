@@ -1,0 +1,2 @@
+Il package diagram ci mostra le dipendenze fra i vari package. Sappiamo che modificanto una classe all'interno del common potrebbe avere ripercussioni in tutti gli altri package dal momento che dipendono da lui(source, server, user).
+source e user dipendono da server  perché un'implementazione diversa ad esempio delle query potrebbe modificare il comportamento di questi due package.

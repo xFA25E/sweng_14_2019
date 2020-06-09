@@ -1,0 +1,22 @@
+Nel class diagram è possibile vedere la strutture del progetto e le classi utilizzate. Vediamo che il sistema è diviso in 4 package: Source, Server, User e Common. Quest'ultimo è un package che contiene tutte le classi usate da più di uno degli altri package. Per semplicità, sono stati omessi dai grafici i getter e setter che non danno informazioni aggiuntive e i dettagli delle classi della GUI. Vediamo più nel dettaglio le varie classi:
+
+Package common:
+ArchivioEventi: è l'interfaccia utilizzata da tutti gli attori per la comunicazione attraverso RMI. Definisce due metodi necessari alla gestione del DB localizzato sul server.
+Evento: Oggetto che contiene tutte le informazioni(così come saranno sul DB) del tipo di dato Evento.
+StatoEvento: Enum con i possibili stati dell'Evento,
+FiltroRicerca: Classe che contiene le informazioni per effettuare una ricerca di eventi nel DB.
+
+Package source:
+Sorgente: Classe che si occupa di comunicare con il server, attraverso RMI, al fine di inviare gli eventi generati dall'interfaccia Previsioni.
+Previsioni: Interfaccia che definisce i metodi, utilizzati dal sorgente, per comunicare con il generatore di previsioni.
+PrevisioniATempo: Classe che implementa Previsioni che, attraverso un timer, stabilisce ogni quanto tempo generare delle nuove previsioni per le prossime 24 ore, da salvare in previsioni24H. Sarà possibile, attraverso il metodo getPrevisioni, per la classe Sorgente, leggere gli eventi salvati in Previsioni24H.
+È stata utilizzata un'interfaccia per rendere il sistema più modulare e poter creare dell classi che implementano Previsioni con un principio diverso da quello del timer.
+
+package server:
+ArchivioEventiImpl: Classe che si occupa di implementare l'interfaccia ArchivioEventi.
+
+package user:
+Utente: classe che contiene i cap preferiti dell'utente(da utilizzare per le notifiche e gli eventi in home page) e i metodi per ottenere gli eventi dal server attraverso RMI.
+Notificatore: Classe astratta che si occupa di ottenere i nuovi eventi ed inviarli all'Interfaccia VisualizzatoreNotificaEvento che li mostrerà all'utente. Gli eventi notificati con successo vengono inseriti nel Set eventiNotificati e non verranno più notificati.
+NotificatoreATempo: Classe che estende Notificatore ed implementa un timer che controllerà i nuovi eventi del DB ogni 10sec.
+Caps: Classe che contine metodi statici, utilizzata per filtrare caps da una coppia di provincia, comune. 

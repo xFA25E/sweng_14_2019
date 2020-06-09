@@ -1,0 +1,20 @@
+In questo documento discuteremo le tecniche implementative utilizzate. Per evitare di ripeterci, ometteremo le informazioni già riportate nella documentazione di UML (soprattutto nella descrizione del class diagram).
+
+source:
+Dal momento che all'interno del package, durante l'esecuzione, ci sono 2 timer che lavorano contemporanemante (1 in source ed 1 in TimedForecast) e che, entrambi accedono all'attributo forecast24H di TimedForecast, potrebbero nascere problemi di conflitto dei dati.
+Per gestire i problemi di concorrenza, abbiamo implementato un Semaphore.
+
+server:
+Anche in questo caso, visto che più client possono contemporanemante accedere, attraverso RMI, al DB, è stato implementato un Semaphore per gestire la concorrenza. Come DB abbiamo utilizzato SQLite connettendoci attraverso JDBC(con il driver SQLite). Nel metodo sotreEvents abbimo utilizzato la funzionalità di batch di JDBC per raggruppare più events in una sola query ed inviarla al DB.
+
+user:
+La classe TimedNotificator si occupa, attraverso i timer, di inviare richieste continue(ogni 5 sec) al server per richiedere i nuovi eventi dei cap preferiti dell'utente (per nuovi eventi si intendono gli eventi che hanno come attributo data una data successiva all'istante corrente). Per farlo utilizza il metodo user.getEvents(SearchFilter). Una volta ottenuti, li sottrae a quelli del Set notifiedEvents e il risultato lo invia all'interfaccia EventsNotificationShower.
+Se l'interfaccia riesce ad inviarli all'utente senza lanciare eccezioni, allora vengono inseriti in notifiedEvents e non verranno visualizzati nuovamente.
+
+    gui: La gui è stata costruita con la libreria swing e progettata in maniera modulare. Infatti, all'interno di gui.component, si trovano tutti i componenti che compongono il Frame(FrameCivilProtectionUser). Questa soluzione ci offre un vantaggio in termini di riutilizzo e modificabilità. Es: è possibile modificare l'aspetto della classe PnlEventsTable per modificarne l'aspetto in tutte le tabelle, che mostrano gli eventi, della gui.
+    Per implementare la funzionalità di notifica, è stato utilizzato il System.Tray che attraverso il metodo trayIcon.sendMessage invia notifiche al SO. Tale soluzione è multipiattaforma e, in ogni caso, controlliamo se il sitema, su cui sta girando il software, supporta tale funzionalità e in caso non la supportasse, vengono inviate le notifiche sul terminale con System.out.println. La classe FrameCivilProtectionUser implementa l'interfaccia EventsNotificationShower.
+
+common:
+La classe common è una classe da cui tutte le altr dipendono che contiene funzionalità utili all'intero sistema come la classe Event.
+In quest'ultima, al fine di utilizzarla in un SortedSet, è stata implementata l'interfaccia Comparable che ordina gli eventi per: Data, Gravità, etc...
+Abbiamo anche effettuato l'override dei metodi equals e hashCode perchè quelli quelli predefiniti non calcolavano i valori degli attributi non permettendo l'utilizzo degli HashSet.
