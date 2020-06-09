@@ -95,16 +95,11 @@ all clean-java clean-uml common datetimepicker hamcrest junit libs pluntuml \
 run-server run-source run-tests run-uber-server run-uber-source run-uber-user \
 run-user server source sqlite tests uberjar uml user
 
-.SECONDEXPANSION:
-
 all: uml common server user source
 
 # UML #########################################################################
 
 uml: $(UML_TARGETS)
-
-$(UML_TARGET)/%.$(UML_TARGET_EXT): $(UML_SRC)/%.$(UML_SRC_EXT) | $(PLANTUML_JAR) $$(@D)/
-	$(JAVA) -jar $(PLANTUML_JAR) $(PLANTUML_ARGS) <$< >$@
 
 # Java ########################################################################
 
@@ -125,13 +120,6 @@ run-tests: MAIN = $(TESTS_MAIN)
 $(SERVER_UBERJAR): $(SERVER_JAR) $(COMMON_JAR) | $(SQLITE_JAR)
 $(USER_UBERJAR): $(USER_JAR) $(COMMON_JAR) | $(DATETIMEPICKER_JAR) $(SQLITE_JAR)
 $(SOURCE_UBERJAR): $(SOURCE_JAR) $(COMMON_JAR) | $(SQLITE_JAR)
-
-$(SERVER_UBERJAR) $(USER_UBERJAR) $(SOURCE_UBERJAR): | $$(@D)/
-	-rm -r $(JAVA_BIN)
-	mkdir -p $(JAVA_BIN)
-	cp $^ $(filter %.jar,$|) $(JAVA_BIN)
-	cd $(JAVA_BIN) && (for jar in $(^F) $(notdir $(filter %.jar,$|)) ; do jar xf "$${jar}" ; rm "$${jar}" ; done)
-	jar cfe $@ $(MAIN) -C $(JAVA_BIN) .
 
 run-server: $(SERVER_JAR) $(COMMON_JAR) | $(SQLITE_JAR)
 run-user: $(USER_JAR) $(COMMON_JAR) | $(DATETIMEPICKER_JAR) $(SQLITE_JAR)
@@ -156,10 +144,6 @@ $(USER_JAR): $(COMMON_JAR) $(USER_SOURCES) | $(DATETIMEPICKER_JAR)
 $(SOURCE_JAR): $(COMMON_JAR) $(SOURCE_SOURCES)
 $(TESTS_JAR): $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) $(TESTS_SOURCES) | $(JUNIT_JAR)
 
-$(COMMON_JAR) $(SERVER_JAR) $(USER_JAR) $(SOURCE_JAR) $(TESTS_JAR): | $$(addprefix $$(dir $$(@D)),bin/ target/)
-	$(JAVAC) -d $(firstword $|) -cp "$(call join-cp,$(filter %.jar,$^ $|))" $(filter %.java,$^)
-	jar cf $@ -C $(firstword $|) . $(DATA_ARG)
-
 # DEPS ########################################################################
 
 $(PLANTUML_JAR): URL := $(PLANTUML_URL)
@@ -168,18 +152,42 @@ $(JUNIT_JAR): URL := $(JUNIT_URL)
 $(HAMCREST_JAR): URL := $(HAMCREST_URL)
 $(DATETIMEPICKER_JAR): URL := $(DATETIMEPICKER_URL)
 
-$(PLANTUML_JAR) $(SQLITE_JAR) $(JUNIT_JAR) $(HAMCREST_JAR) $(DATETIMEPICKER_JAR): | $$(@D)/
-	wget -O $@ "$(URL)"
-
 # CLEAN #######################################################################
 
 clean-uml:
 	-rm -r $(UML_TARGET)
 
 clean-java:
-	-rm -r $(foreach pref,$(COMMON_DIR) $(SERVER_DIR) $(USER_DIR) $(SOURCE_DIR) $(TESTS_DIR),$(addprefix $(pref)/,bin/ target/)) $(JAVA_BIN) $(JAVA_TARGET)
+	-rm -r $(foreach pref,$(COMMON_DIR) $(SERVER_DIR) $(USER_DIR) $(SOURCE_DIR) $(TESTS_DIR) $(JAVA_DIR),$(addprefix $(pref)/,bin target))
 
 # DIRECTORIES #################################################################
-.PRECIOUS: %/
-%/:
-	mkdir -p $@
+.PRECIOUS: %/.
+%/.:
+	mkdir -p $*
+
+# SECONDEXPANSION #############################################################
+
+.SECONDEXPANSION:
+
+# UML
+
+$(UML_TARGET)/%.$(UML_TARGET_EXT): $(UML_SRC)/%.$(UML_SRC_EXT) | $(PLANTUML_JAR) $$(@D)/.
+	$(JAVA) -jar $(PLANTUML_JAR) $(PLANTUML_ARGS) <$< >$@
+
+# Java
+
+$(SERVER_UBERJAR) $(USER_UBERJAR) $(SOURCE_UBERJAR): | $$(@D)/.
+	-rm -r $(JAVA_BIN)
+	mkdir -p $(JAVA_BIN)
+	cp $^ $(filter %.jar,$|) $(JAVA_BIN)
+	cd $(JAVA_BIN) && (for jar in $(^F) $(notdir $(filter %.jar,$|)) ; do jar xf "$${jar}" ; rm "$${jar}" ; done)
+	jar cfe $@ $(MAIN) -C $(JAVA_BIN) .
+
+$(COMMON_JAR) $(SERVER_JAR) $(USER_JAR) $(SOURCE_JAR) $(TESTS_JAR): | $$(addprefix $$(dir $$(@D)),bin/. target/.)
+	$(JAVAC) -d $(firstword $|) -cp "$(call join-cp,$(filter %.jar,$^ $|))" $(filter %.java,$^)
+	jar cf $@ -C $(firstword $|) . $(DATA_ARG)
+
+# DEPS
+
+$(PLANTUML_JAR) $(SQLITE_JAR) $(JUNIT_JAR) $(HAMCREST_JAR) $(DATETIMEPICKER_JAR): | $$(@D)/.
+	wget -O $@ "$(URL)"
