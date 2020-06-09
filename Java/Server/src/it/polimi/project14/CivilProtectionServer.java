@@ -16,9 +16,9 @@ public class CivilProtectionServer {
             Remote remoteEventStorage = new EventStorageImpl();
             LocateRegistry.createRegistry(6666);
             Naming.rebind("rmi://localhost:6666/EVENT_STORAGE", remoteEventStorage);
+            System.out.println("Server is running");
         } catch (Exception e) {
             System.out.println("RMI error: " + e.getMessage());
         }
-        System.out.println("Server is running");
     }
 }
