@@ -1,1 +1,23 @@
 #+TITLE: Protezione Civile
+
+Protezione Civile è un sistema che permette di allertare gli utenti sui disastri naturali. 
+È composto da 3 applicativi che comunicano fra di loro:
+CivilProtectionSource: gestisce le informazioni inviate dai sensori(che nel nostro caso sono generate pseudo-casualmente) e invia previsioni (ed eventi in corso) al sistema centrale. Possono esserci da 1 a n source. 
+CivilProtectionServer: si occupa di immagazzinamento dei dati spediti dai vari source nel DB e dell'invio di tali dati all'utente. Può esistere una sola istanza di server.
+CivilProtectionUser: è l'applicativo usato dai cittadini che è composto da un'interfaccia grafica e permette di: visualizzare i dati nella home("Allarmi in Evidenza" e "Prossimi allarmi nei tuoi cap"). È anche possibile effettuare una ricerca sugli eventi e gestire i cap preferiti.
+
+#How to launch
+1 - Avviare Java/server.bat
+2 - Attendere affinché venga visualizzato "Server is running".
+3 - Avviare N volte Java/source.bat.
+4 - Avviare Java/user.bat
+
+#Makefile
+Attraverso il makefile è possibile compilare l'intero progetto.
+requisiti per Windows: GitBash, make e CygWin.
+Comandi disponibili:
+make uml: crea, nella cartella uml/target, i diagrammi in formato png, a partire dai file puml attraverso il software plantUML.
+make all: make uml + build di common, source, server e user.
+make uberjar: crea dei jar indipendenti che contengono all'interno tutte le librerie e dipendenze necessarie.
+make clean-uml: elimina il contenuto della cartella uml/target 
+make clean-java: elimina il contenuto delle cartella java/**/target e java/**/bin.
