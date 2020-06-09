@@ -24,14 +24,6 @@ public abstract class Notificator {
     }
   }
 
-  protected void setNotificationShower(EventsNotificationShower notificationShower) {
-    this.notificationShower = notificationShower;
-  }
-
-  protected EventsNotificationShower getNotificationShower() {
-    return notificationShower;
-  }
-
   protected Set<Event> getEvents() throws Exception {
     SearchFilter searchFilter = new SearchFilter();
     searchFilter.setCapList(user.getFavoriteCaps());
