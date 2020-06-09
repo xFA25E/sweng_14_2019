@@ -40,6 +40,7 @@ JAVA_TARGET := $(JAVA_DIR)/target
 SERVER_UBERJAR := $(JAVA_TARGET)/server-uberjar.jar
 USER_UBERJAR := $(JAVA_TARGET)/user-uberjar.jar
 SOURCE_UBERJAR := $(JAVA_TARGET)/source-uberjar.jar
+TESTS_UBERJAR := $(JAVA_TARGET)/tests-uberjar.jar
 
 COMMON_DIR := $(JAVA_DIR)/Common
 COMMON_JAR := $(COMMON_DIR)/target/common.jar
@@ -106,21 +107,22 @@ uml: $(UML_TARGETS)
 run-uber-server: $(SERVER_UBERJAR)
 run-uber-user: $(USER_UBERJAR)
 run-uber-source: $(SOURCE_UBERJAR)
+run-uber-tests: $(TESTS_UBERJAR)
 
-run-uber-server run-uber-user run-uber-source:
+run-uber-server run-uber-user run-uber-source run-uber-tests:
 	$(JAVA) -jar "$<"
 
-uberjar: $(SERVER_UBERJAR) $(USER_UBERJAR) $(SOURCE_UBERJAR)
+uberjar: $(SERVER_UBERJAR) $(USER_UBERJAR) $(SOURCE_UBERJAR) $(TESTS_UBERJAR)
 
 $(SERVER_UBERJAR) run-server: MAIN = $(SERVER_MAIN)
 $(USER_UBERJAR) run-user: MAIN = $(USER_MAIN)
 $(SOURCE_UBERJAR) run-source: MAIN = $(SOURCE_MAIN)
-run-tests: MAIN = $(TESTS_MAIN)
+$(TESTS_UBERJAR) run-tests: MAIN = $(TESTS_MAIN)
 
 $(SERVER_UBERJAR) run-server: $(SERVER_JAR) $(COMMON_JAR) | $(SQLITE_JAR)
 $(USER_UBERJAR) run-user: $(USER_JAR) $(COMMON_JAR) | $(DATETIMEPICKER_JAR) $(SQLITE_JAR)
 $(SOURCE_UBERJAR) run-source: $(SOURCE_JAR) $(COMMON_JAR) | $(SQLITE_JAR)
-run-tests: $(TESTS_JAR) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) | $(JUNIT_JAR) $(SQLITE_JAR) $(HAMCREST_JAR)
+$(TESTS_UBERJAR) run-tests: $(TESTS_JAR) $(COMMON_JAR) $(SERVER_JAR) $(SOURCE_JAR) $(USER_JAR) | $(JUNIT_JAR) $(SQLITE_JAR) $(HAMCREST_JAR)
 
 run-server run-user run-source run-tests:
 	$(JAVA) -cp "$(call join-cp,$^ $|)" $(MAIN)
@@ -172,7 +174,7 @@ $(UML_TARGET)/%.$(UML_TARGET_EXT): $(UML_SRC)/%.$(UML_SRC_EXT) | $(PLANTUML_JAR)
 
 # Java
 
-$(SERVER_UBERJAR) $(USER_UBERJAR) $(SOURCE_UBERJAR): | $$(@D)/.
+$(SERVER_UBERJAR) $(USER_UBERJAR) $(SOURCE_UBERJAR) $(TESTS_UBERJAR): | $$(@D)/.
 	-rm -r $(JAVA_BIN)
 	mkdir -p $(JAVA_BIN)
 	cp $^ $(filter %.jar,$|) $(JAVA_BIN)
