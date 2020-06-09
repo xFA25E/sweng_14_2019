@@ -19,5 +19,6 @@ public class CivilProtectionSource {
         }
         TimedForecast timedForecast = new TimedForecast();
         Source source = new Source(timedForecast);
+        System.out.println("Source is running...");
     }
 }

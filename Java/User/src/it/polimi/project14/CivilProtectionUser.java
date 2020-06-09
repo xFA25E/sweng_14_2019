@@ -15,5 +15,6 @@ public class CivilProtectionUser {
 
         TimedNotificator timedNotification = new TimedNotificator(user, userGui);
         userGui.setSize(750, 700);
+        System.out.println("User is running...");
     }
 }
