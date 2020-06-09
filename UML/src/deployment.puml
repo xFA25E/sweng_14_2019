@@ -6,7 +6,7 @@ node Sorgente  [
 {JVM}
 
 ---
-allarmSorgente.jar
+ProtezioneCivileSorgente.jar
 ]
 
 node AppMobile[
@@ -14,7 +14,7 @@ node AppMobile[
 {JVM}
 
 ---
-allarmMobile.jar
+ProtezioneCivileClient.jar
 ]
 
 node Server {
@@ -23,7 +23,7 @@ node Server {
     {JVM}
 
     ---
-    allarmServer.jar
+    ProtezioneCivileServer.jar
     ]
 
     database DB [
