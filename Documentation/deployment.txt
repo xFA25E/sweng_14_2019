@@ -1,7 +1,0 @@
-Il deployment diagram mostra la distribuzione fisica del sistema. Possiamo vedere come il sistema distribuito sia composta da 3 software separati:
-ProtezioneCivileSource.jar per il source
-ProtezioneCivileServer.jar per il server
-ProtezioneCivileUser.jar per lo user
-
-source e user comunicano con il server attraverso RMI.
-Il server comunica con un DB SQL(nel nostro caso SQLite) attraverso JDBC.
