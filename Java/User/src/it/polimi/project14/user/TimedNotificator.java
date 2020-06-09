@@ -1,10 +1,8 @@
 package it.polimi.project14.user;
 
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import it.polimi.project14.common.Event;
 import it.polimi.project14.user.gui.EventsNotificationShower;
 
 public class TimedNotificator extends Notificator {
