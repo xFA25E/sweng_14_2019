@@ -72,3 +72,5 @@
   - Gli eventi generati posseggono *CAP* della provincia di Como;
   - L'utente viene creato settando come cap preferiti i *CAP* della provincia di
     *Como*.
+  - Nel database sono presenti gli eventi a partire dal 5 giugno fino al 9
+    giugno
