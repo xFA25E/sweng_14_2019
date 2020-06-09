@@ -1,68 +1,63 @@
 @startuml
 title Package Diagram
 package source {
-    interface IGestorePrevisioni<<interface>> 
+    interface Previsioni<<interface>>
 
-    class GestorePrevisioni 
+    class PrevisioniATempo
 
-    class Sorgente 
+    class Sorgente
 
-    Sorgente -[hidden]- IGestorePrevisioni
-    IGestorePrevisioni -[hidden]- GestorePrevisioni
+    Sorgente -[hidden]- Previsioni
+    Previsioni -[hidden]- PrevisioniATempo
 }
 
 package server{
-    interface IServer<<interface>> 
-
-    class Server 
-
-    Server -[hidden]- IServer
+    class ArchivioEventiImpl
 }
-
-Sorgente .> IServer
-
-package user {
-    class Utente 
-
-    interface IGestoreNotifica 
-    
-    class GestoreNotifica 
-
-    Utente -[hidden]- IGestoreNotifica
-    IGestoreNotifica -[hidden]- GestoreNotifica
-}
-
-Utente ..> IServer
 
 package common {
+    interface ArchivioEventi<<interface>>
 
-    enum StatoEvento 
+    enum StatoEvento
 
-    class Evento<<dataType>> 
+    class Evento
 
-    class ListaEventi <<dataType>>
-
-    ListaEventi -[hidden]- Evento
     Evento -[hidden]- StatoEvento
 
-    class FiltroRicerca 
+    class FiltroRicerca
 
-    class ListaCAP <<dataType>>
-
-    FiltroRicerca -[hidden]- ListaCAP
+    ArchivioEventi -[hidden]- Evento
+    Evento -[hidden]> FiltroRicerca
 }
 
-Sorgente ..> ListaEventi
-IServer ..> ListaEventi
-IServer ..> FiltroRicerca
-Utente ..>  ListaEventi
-Utente ..>  FiltroRicerca
+package user {
+    class Utente
+
+    interface Notificatore
+
+    class NotificatoreATempo
+
+    class Caps
+
+    Utente -[hidden]- Notificatore
+    Notificatore -[hidden]- NotificatoreATempo
+    NotificatoreATempo -[hidden]- Caps
+
+    package gui {
+
+    }
+
+    gui -[hidden]- Utente
+}
+
+source .> common
+source .> server
+server ..> common
+user .> common
+user .> server
 
 'Layout only
 hide empty members
 skinparam classAttributeIconSize 0
-ListaEventi -[hidden] FiltroRicerca
-GestorePrevisioni -[hidden]-- StatoEvento
-Server .[hidden].> ListaEventi
-Utente .[hidden].> FiltroRicerca
+Sorgente -[hidden]> StatoEvento
 @enduml
