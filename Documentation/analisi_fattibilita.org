@@ -1,0 +1,71 @@
+#+TITLE: Analisi Fattibilità
+#+AUTHOR: Alessio Spagnolo, Valeriy Litkovskyy, Gabriele Bianchi, Christian Premoli
+#+EXPORT_FILE_NAME: analisi_fattibilita/analisi_fattibilita.tex
+
+* Fattibilità Finanziaria
+  I costi legati allo sviluppo del progetto sono quelli di:
+  - Risorse umane necessarie allo sviluppo e al design
+  - Servizio di hosting + server + database (circa €120 annuali)
+  - Costi legati alla possibilità di caricare l'applicazione Android su Play
+    Store (circa €25)
+
+  Il prodotto è finanziato dal governo, gli utenti non dovranno pagare per
+  utilizzare il servizio.
+* Fattibilità Tecnica
+  Il progetto utilizza le seguenti tecnologie:
+  - JVM
+  - SQLite
+  - Android
+  - Editor di testo/IDE
+
+ Ognuna di queste tecnologie è disponibile gratuitamente e le abilità tecniche
+ richieste non sono altissime.
+
+ Il sistema necessiterà di un servizio di hosting a pagamento per essere certi
+ che il sistema non vada down. Noi utilizzeremo un servizio free hosting.
+* Fattibilità delle Risorse
+  Le risorse richieste per lo sviluppo sono:
+  - Un dispositivo per la programmazione (portatile)
+  - Uno spazio hosting (disponibile gratuitamente)
+  - Gli strumenti per lo sviluppo (disponibili gratuitamente)
+  - Programmatori
+* Rischi
+** Rischi legati allo sviluppo
+*** Il software per la progettazione
+    OpenOME verrà usato come lo strumento di progettazione ed è disponibile
+    gratuitamente.
+*** I compilatori e linguaggi di programmazione
+    Per questo progetto verrà usato Java e il JVM. Entrambi sono disponibili
+    gratuitamente.
+*** Strumenti di testing
+    Per il testing verrà usato JUNIT. JUNIT è disponibile gratuitamente.
+*** Sistema di controllo delle versioni
+    Per questo verrà utilizzato GIT, che è disponibilie gratuitamente.
+*** Database
+    SQLite è disponibile gratuitamente.
+** Rischi tecnici
+*** Documentazione
+    Il progetta verrà completamente documentato.
+** Rischi tecnologici
+*** Eta delle tecnologie
+    Tutte lo tecnologie utilizzate nel progetto sono molto mature e non sono
+    obsolete.
+* Fattibilità Sociale o Legale
+  Il sistema userà gli strumenti che sono disponibili gratuitamente e verrà
+  distribuito in modalità open source.
+* Considerazioni varie
+** Performance
+   Il sistema utilizzerà pochissima banda. Inoltre, il database SQLite risulta
+   avere un equilibrio quasi perfetto per questo progetto in termini di
+   performance e la facilità di utilizzo.
+** Sicurezza
+   Il sistema utilizzerà i sistemi di sicurezza di SQLite, ovvero,
+   l'autenticazione tramite username e password. Ogni utenza avrà accesso
+   soltanto ad una tabella e avrà soltanto i permessi di lettura su di esso.
+** Scalability
+   Il sistema può accomodare molti utenti e sensori simultaneamente.
+
+   Ogni evento occuperà circa 300Byte e quindi con 10,000,000 eventi il sistema
+   in totale occuperà 3GB. Il che vuol dire che lo spazio richiesto è minimo.
+** Disponibilità orario
+   L'obiettivo del sistema è quello di rimanere online h24.
